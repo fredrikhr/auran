@@ -1,0 +1,1359 @@
+AURAN GAME SCRIPT COMPILER
+==========================
+
+1.0 | Introduction
+2.0 | The language
+
+      2.1 | Comments
+      2.2 | Keywords
+      2.3 | Identifiers
+      2.4 | Constants
+      2.5 | Types
+      2.6 | Operators
+      2.7 | Class declaraion
+      2.8 | Function declaration
+      2.9 | Control flow statements
+      2.10| Grammar
+
+3.0 | The compiler
+
+      3.0 | The basics
+      3.1 | compiler switches
+
+4.0 | The library file
+5.0 | The byte code
+6.0 | The runtime environment
+  
+      6.1 | The runtime stack
+      6.2 | Script References
+
+7.0 | The Compiler source files
+8.0 | The runtime source files
+
+9.0 | Using AURAN GameScript
+
+
+1.0 Introduction
+================
+
+  The AURAN Game Script (GS) was written for use with the Trainz YardMaster product, but with the intention
+for reuse in other AURAN games.  This document explains the language syntax, the binaray representation of 
+scripts, and the ingame execution.  GS is a scripting language, with similar syntax to c and also JAVA.  This
+document does not attempt to explain programming languages, but descibes the syntax of GS in full.  Any 
+concepts in the language not commonly found in other languages are described in full.
+
+NOTE:  many of the code samples may not compile in your games version of the runtime... but they still represent
+the gs language features.
+
+=============================================================================================================
+=============================================================================================================
+
+2.0 The Language
+
+=============================================================================================================
+=============================================================================================================
+
+=============================================================================================================
+2.1 Comments
+=============================================================================================================
+
+Comments are specified as they are in c++.
+
+\\ (double back slash) will comment to the end of line
+
+/* 
+will comment 
+blocks
+* /
+
+Note that the c-sytle comments cannot be nested
+
+=============================================================================================================
+2.2 Keywords
+=============================================================================================================
+                                                           
+"break"       - break from a for, while or switch statement
+"case"        - case statement, same as c sytax
+"continue"    - continue a for or while statment
+"default"     - default switch statment, same as c
+"else"        - if - else
+"for"         - for statement, same as c
+"goto"        - goto statment, same as c
+"if"          - if statement, same as c
+"null"        - null, A null reference
+"return"      - return from a function
+"switch"      - switch statemnt, same as c
+"while"       - while statment, same as c
+"and"         - and, same as && in c
+"or"          - or, same as || in c
+"true"        - true, boolean constant
+"false"       - false, boolean constant
+"void"        - void, used for blank function return types
+"bool"        - bool, boolean variable type which may take the values true or false
+"int"         - integer, signed natural number variable type (32 bit)
+"float"       - floating point number, (32 bit)
+"string"      - string type
+"object"      - object type
+"class"       - class declaration keyword
+"static"      - static, class type specifier
+"include"     - include keyword to include other .gs files
+"public"      - public, type specifier to publically declare a variable or function
+"native"      - native, function type specifier, to denote that this function is implemented in the game source
+"final"       - class or function specifier to indicate that the class cannot be extended, or the function cannot be overridden
+"thread"      - function specifier to indicate the function is to start a new execution thread
+"game"        - class specifier to indicate a game class, automatic if a function has a thread specifier
+"size"        - size operator for arrays and strings
+"isclass"     - isclass operator to test is a class is of another classes type, also used to extend or inherit from other classes.
+"copy"        - copy operator for strings and arrays
+"new"         - new operator to create arrays, strings and objects
+"me"          - me, keyword simialar to c++'s this
+"cast"        - cast<> to cast from one type to another, also can use () in non object cases.
+"wait"        - control flow statement for blocking on messages
+"on"          - blocking command
+"define"      - const define declarator.
+
+The next section will give an explanation and brief example of all keywords.  These are in no specific order.
+
+KEYWORD break
+=============================================================================================================
+
+break will break execution from a for, wait, switch, or while statment.  for example.
+
+<CODE>
+  int i;
+
+  for(i = 0; i < 10; ++i)
+  {
+    if(i == 5) break;
+  }
+</CODE>
+
+when i is equal to 5, execution will continue after the for loop with i = 5 (the ++i does not execute on a break).
+
+KEYWORD case
+=============================================================================================================
+
+case statements are used in the switch control flow statement to declare an integer option.  case syntax is
+
+  case CONSTANT_INT_EXPRESSION : statement
+
+The following code will print the days of the week from sunday to saturday
+
+<CODE>
+  int i;
+  string dayOfWeek;
+
+  for(i = 0; i < 6; ++i)
+  {
+    switch(i)
+    {
+      case 0 : dayOfWeek = "Sunday"; break;
+      case 1 : dayOfWeek = "Monday"; break;
+      case 2 : dayOfWeek = "Tuesday"; break;
+      case 3 : dayOfWeek = "Wednesday"; break;
+      case 4 : dayOfWeek = "Thursday"; break;
+      case 5 : dayOfWeek = "Friday"; break;
+      case 6 : dayOfWeek = "Saturday"; break;
+      default :
+        dayOfWeek = "ERROR";
+    }
+
+    Interface.Print(dayOfWeek);
+  }
+</CODE>
+
+KEYWORD continue
+=============================================================================================================
+
+continue will jump to the next iteration of a for, while or wait statement.  for example
+
+<CODE>
+  int i;
+
+  for(i = 0; i < 10; ++i)
+  {
+    if(i == 5) continue;
+    Interface.Print(i);
+  }
+</CODE>
+
+The above code will print 0 to 4, skip 5, then 6 to 9.
+
+KEYWORD default
+=============================================================================================================
+
+default is used within a switch statement for the case when the switch value does not match any case.
+in the KEYWORD case example, dayOfWeek would be set to "ERROR" if i was not in the 0 - 6 range.
+
+KEYWORD if, else
+=============================================================================================================
+
+if and else are a control flow statement, and evaluate boolean expressions.  for example.
+
+<CODE>
+
+  int i = Math.Rand(0, 3);
+
+  if(i == 0)
+  {
+    Interface.Print("i is 0");
+  }
+  else if(i == 1)
+  {
+    Interface.Print("i is 1");
+  }
+  else
+  {
+    Interface.Print("i is 2");
+  }
+
+</CODE>
+
+It is valid to have an if statement by itself.
+
+KEYWORD for
+=============================================================================================================
+
+The for statment is a control flow loop statement.  a for loop has 4 main parts.
+
+for(A;B;C) D
+
+A is the initialiser, and is executed before the looping begines
+B is the condition, looping will continue while B is true
+C is the loop expression, and will be executed at the end of every loop
+D is the body statement, and is exected every loop.
+
+<CODE>
+
+  int i = 5;
+  for(; i > 0; --i)
+  {
+    Interface.Print(i);
+  }
+
+</CODE>
+
+The above code will print 5 4 3 2 1
+
+KEYWORD goto
+=============================================================================================================
+
+goto is a statment that will brach to a label statment.
+
+<CODE>
+
+  int i = 5
+
+A: // label statement
+
+  Interface.Print("hello");
+
+  if(i--) goto A;
+
+</CODE>
+
+The above code will print hello 5 times
+
+KEYWORD null
+=============================================================================================================
+
+null is a non initialised reference expression.  every reference that is not assigned to an object has the value
+null.
+
+<CODE>
+
+  sting a;
+
+  if(a == null)
+  {
+    Interface.Print("a is null");
+  }
+
+</CODE>
+
+The above code will print "a is null"
+
+KEYWORD return
+=============================================================================================================
+
+the return statement allow yow to exit from a class method.
+
+<CODE>
+
+  static class Foo
+  {
+    public int AddInts(int a, int b)
+    {
+      return a + b;
+    }
+  };
+
+</CODE>
+
+Foo.AddInts(10, 5) will return the value 15.
+
+KEYWORD switch
+=============================================================================================================
+
+see the KEWORD break example
+
+KEYWORD while
+=============================================================================================================
+
+while is a looping control flow statement and will loop while its expression is true.  for example
+
+<CODE>
+
+  int i = 5;
+  while(i--)
+  {
+    Interface.Print(i);
+  }
+
+</CODE>
+
+The above code will print 4 3 2 1 0
+
+KEYWORD and
+=============================================================================================================
+
+and is a logical and expression operator.  
+
+true and true = true
+true and false = false
+false and true = false
+false and false = false
+  
+for example
+
+the following expressions evaluate to true
+  
+  (1 and 2)
+  (true and true)
+  (!0 and !false)
+  ("a" and 3.4f)
+
+the following expressions evaluate to false
+
+  (1 and 0)
+  (true and false)
+  ("a" and null)
+
+KEYWORD or
+=============================================================================================================
+
+or is a logical or expression operator.  
+
+true or true = true
+true or false = true
+false or true = true
+false or false = false
+  
+for example
+
+the following expressions evaluate to true
+  
+  (1 or 2)
+  (true or true)
+  (0 or !false)
+  ("a" or 0.0)
+
+the following expressions evaluate to false
+
+  (0 or !2)
+  (!true or false)
+
+KEYWORD true
+=============================================================================================================
+
+true is a constant boolean expression
+boolean variables may only be true or false
+
+KEYWORD false
+=============================================================================================================
+
+false is a constant boolean expression
+boolean variables may only be true or false
+
+KEYWORD void
+=============================================================================================================
+
+void is a null type used for methods that have no return values.
+
+KEYWORD bool
+=============================================================================================================
+
+bool is a variable type and may take the values true or false.
+
+<CODE>
+
+  bool state = true; // state = true
+  bool state1 = (1 == 0); // state1 = false
+
+</CODE>
+
+KEYWORD int
+=============================================================================================================
+
+int is a variable type.  int variables are natural numbers and may take the values from -2147483647 to 2147483647
+
+KEYWORD float
+=============================================================================================================
+
+float is a variable type.  float variables are real numbers and may take values such as 4.32234f;
+
+KEYWORD string
+=============================================================================================================
+
+string is a reference variable type.  string variables have a few operators to make using strings easy.
+
+<CODE>
+ 
+  string a;  // a == null
+
+  a = "Hello World";  // a == "Hello World"
+  a = a + " Golf."; // a == "Hello World Golf."
+  a = "My " + a + " " + 400 + true; // a = "My Hello World Golf. 400true"
+  a = "apple";
+
+  (a == "apple"); // evaluates to true
+  
+  int char = a[0]; // char = 'a'
+  char = a[3]; // char = 'l'
+
+  int len = a.size();  // len = 5
+
+  string b = a[1,4]; // b = "ppl"
+  b = a[,a.size()]; // b = "apple"
+  b = a[1,]; // b = "pple"
+  b = a[,3]; // b = "app"
+
+  b = "Hello World";
+  b[6,6] = "My "; // b = "Hello My World"
+  
+</CODE>
+
+KEYWORD object
+=============================================================================================================
+
+object is a base class that may be used to store references to class objects.
+
+<CODE>
+
+  Foo myFoo = new Foo();
+  object o = myFoo;
+
+  o.isclass(Foo) // evaluates to true.
+
+</CODE>
+
+KEYWORD class
+=============================================================================================================
+
+class is a class declarator.  for example
+
+<CODE>
+
+class Foo
+{
+  public int a, b = 7;
+};
+
+</CODE>
+
+The above code declares a class Foo with two public members a and b.  when a Foo object is created with new,
+all non initialised members will by 0 or null.  in this case, a == 0 and b == 7;
+
+KEYWORD static
+=============================================================================================================
+
+static is a class specifier to denote that the class is a singlton.  static classes cannot be created using 
+the new operator.  Instead, to access a static class, scope its members or methods using the class name as 
+follows
+
+<CODE>
+
+  static class Foo
+  {
+    public int m_a = 4;
+  };
+
+  class X
+  {
+    void main()
+    {
+      Interface.Print(Foo.m_a);
+    }
+  }
+
+</CODE>
+
+KEYWORD inlclude
+=============================================================================================================
+
+include statements appear before any class declarations and include the contents of a script file. similar to
+c #include, but is not preprocessed like c.  include directives simply add all class, member and method info to
+the symbol table.
+
+KEYWORD public
+=============================================================================================================
+
+the public keyword is requried for any class member or method that is to be accessed from outside of that class.
+public is a member or method specifier only.
+
+KEYWORD native
+=============================================================================================================
+
+native is a method specifier that indicates the the method is implemented with native code.  (not script code)
+
+KEYWORD final
+=============================================================================================================
+
+final is a class or method specifier that stops users from isclassing, or overriding the class or method
+respecitively.
+
+KEYWORD thread
+=============================================================================================================
+
+thread is a method specifier.  
+
+A thread is basically a path of execution through a program. A script always has a main thread and additional
+threads started and synchronised by the main thread.  A thread consists of a stack, and its blocking states.
+Many threads may be running at the same time during the game.  Also, up to 8 threads may be running on the same
+object.
+
+thread methods may only be declared in classes extending the GameObject class.
+
+<CODE>
+
+class Foo isclass GameObject
+{
+  thread void PrintInts()
+  {
+    int a = 0;
+    while(1)
+    {
+      Interface.Print("Thead PrintInts " + a++);
+      Sleep(5);
+    }
+  }
+
+  thread void PrintFloats()
+  {
+    float a = 0;
+    while(1)
+    {
+      Interface.Print("Thead PrintFloats " + a++);
+      Sleep(3);
+    }
+  }
+};
+
+static class Main
+{
+  void main()
+  {
+    Foo myFoo = Router.GetGameObject("MyFoo");
+
+    myFoo.PrintInts(); // this will start a PrintInts() thread on the myFoo object.  execution will continue here though
+    myFoo.PrintFloats();
+  }
+};
+
+</CODE>
+
+The above code will print out the following
+
+Thead PrintInts 0
+Thead PrintFloats 0.0
+Thead PrintFloats 3.0
+Thead PrintInts 5
+Thead PrintFloats 6.0
+Thead PrintFloats 9.0
+Thead PrintInts 10
+Thead PrintFloats 12.0
+Thead PrintInts 15
+Thead PrintFloats 15.0
+..
+
+
+KEYWORD game
+=============================================================================================================
+
+game is a class specifier that indicates the the class cannot be created using the new operator.  only game
+code may create an object of this class type.
+
+KEYWORD size
+=============================================================================================================
+
+size is an operator used on strings and arrays.  for example
+
+<CODE>
+
+  int[] intArray = new int[5];
+
+  Interface.Print(intArray.size()) // 5
+
+</CODE>
+
+KEYWORD isclass
+=============================================================================================================
+
+see KEYWORD object example
+
+KEYWORD copy
+=============================================================================================================
+
+copy is an operator used on array types.
+
+<CODE>
+
+  int[] intArray = new int[5];
+  int[] anotherArray;
+
+  anotherArray.copy(intArray);  // anotherArray will now be a duplicate of intArray.
+
+</CODE>
+
+note that this is not the same as saying anotherArray = intArray.  using the = operator on arrays just sets
+the reference, it does not duplicate the array like the copy operator.
+
+KEYWORD new
+=============================================================================================================
+
+new is an opeator that may be used to create strings, arrays, arrays of strings and objects.
+
+int[] ia = new int[5];  // create an array of 5 ints.
+float[] fa = new float[2]; // create an array of 2 floats
+string s = new string();  // creates a new empty string
+string[] sa = new string[2]; // creates an array of 2 null strings
+Foo foo = new Foo(); // creates a new Foo object, iff Foo is not a game class
+Foo[] fooa = new Foo[4]; // creates an array of null foo references.
+
+KEYWORD me
+=============================================================================================================
+
+me is the same as the this keyword in c++.  it is the current object.  for example.
+
+static class Main
+{
+  int a;
+
+  void main()
+  {
+    me.a = 3; // a = 3
+  }
+};
+
+
+KEYWORD cast
+=============================================================================================================
+
+cast is a operator used for object casting.  you may used the (cast) syntax for ints, floats, bools etc.
+the syntx is 
+
+  cast<object> expression
+
+where object is the object you are casting to.
+expression is the object you are casting from.
+
+If the cast fails, null is result of the cast expression.  This is a dynamic cast.
+
+KEYWORD wait
+=============================================================================================================
+
+wait is a control flow statement that blocks the current thread waiting for a message of a given type.
+wait is similar to a switch statment, in that you may wait on multiple message types using the "on" statment.
+when a wait statement is executed, execution stops on the thead untill one of the on conditions is met.
+see gs.gs for information on how to Post and Send messages.
+
+<CODE>
+
+  wait()
+  {
+    on "hello", "world" :
+    {
+      // code here will execute for any message "hello" "world" message
+      continue;
+    }
+    on "hi", "there" :
+    {
+      // code here will execute for any message "hi" "there" message
+      break;
+    }
+    on "hey", "" :
+    {
+      // code here will execute for any message with a major type of "hey"
+      // this will break by default.
+    }
+  }
+
+
+</CODE>
+
+
+KEYWORD on
+=============================================================================================================
+
+see KEWORD wait.
+
+synax for on is
+
+  on CONSTANT_STRING , CONSTANT_STRING : statement
+  on CONSTANT_STRING , CONSTANT_STRING , object : statement
+
+where object may be a message reference.  for example
+
+<CODE>
+
+
+  Message msg;
+
+  // execution on this thread will stop untill a hello world message is recieved.
+  on "hello", "world", msg :
+
+  Interface.Print((cast<GameObject> msg.src).GetName() + " sent the message");
+  Interface.Print((cast<GameObject> msg.dst).GetName() + " got the message");
+
+</CODE>
+
+KEYWORD define
+=============================================================================================================
+
+define is used to declare a constant.  defined is a member specifier.  define variables must be initialised.
+
+  define public int a = 7;
+
+=============================================================================================================
+2.3 Identifiers
+=============================================================================================================
+
+DIGIT     [0-9]
+LETTER    [a-zA-Z_]
+
+IDENTIFIER {LETTER}({LETTER}|{DIGIT})*
+
+Identifiers are used for class names, function names, variable names and labels. 
+
+=============================================================================================================
+2.4 Constants
+=============================================================================================================
+
+int         {DIGIT}+
+char        L?'(\\.|[^\\'])+'     - supports \r, \n, \t, \l, \a, \b, \\, \", \', \0
+float       {DIGIT}*"."{DIGIT}+
+float       {DIGIT}+"."{DIGIT}*
+string      L?\"(\\.|[^\\"])*\"   - supports \r, \n, \t, \l, \a, \b, \\, \", \', \0
+int         0[xX]{HEX}+           - hex constant
+
+=============================================================================================================
+2.5 Types
+=============================================================================================================
+
+The GS language supports the following types, all of which are 32-bit values
+
+void      - only used to specify no return type for function declarations
+int       - 32 bit signed integer type
+float     - 32 bit floating point value
+bool      - 32 bit boolean, which is 0 (false) or not zero (true)
+string    - string reference type, (reference to a JET PString)
+object    - object, class reference type (may reference an in-game object)
+
+int[]     - integer array, reference type
+float[]   - float array, reference type
+bool[]    - boolean array, reference type
+string[]  - string array, reference type
+object[]  - object array, reference type
+
+public    - type specifier that may be used with any type to allow the type to be referenced from other
+            classes.
+
+=============================================================================================================
+2.6 Operators
+=============================================================================================================
+
+The following table specifies the operators supported by the GS languge. Note that
+the table is in precedence order, where grouped operators (seperated by blank lines) have equal
+precedence.
+
+Operator           Description               Associativity     Types
+========           ===========               =============     =====
+()                 expression grouping       left to right     
+[]                 array indexing            left to right     array, string
+[,]                array range indexing      left to right     array, string
+.                  dot (dereference)         left to right     reference
+
+!                  not                       right to left     bool, reference, int, float
+~                  bit inverse               right to left     int
+++                 increment (pre and post)  right to left     int, float
+--                 decrement (pre and post)  right to left     int, float
++                  unary plus                right to left     int, float 
+-                  unary minus               right to left     int, float
+(type)             type case                 right to left     int, float, reference, bool
+cast<class type>   object class cast         right to left     objects (class)
+size               size                      right to left     array, string
+copy               copy                      right to left     array, string
+isclass            isclass                   right to left     object
+new                new                       right to left     object, array, string
+
+*                  multiply                  left to right     float, int
+/                  divide                    left to right     float, int
+%                  remainder                 left to right     float, int
+
++                  addition                  left to right     string (concat), float, int
+-                  subtract                  left to right     float, int
+
+<<                 shift left                left to right     int
+>>                 shift right               left to right     int
+
+<                  less than                 left to right     string, float, int, bool, reference, null
+<=                 less than or equal to     left to right     string, float, int, bool, reference, null
+>                  greater than              left to right     string, float, int, bool, reference, null
+>=                 greater than or equal to  left to right     string, float, int, bool, reference, null
+
+==                 equality                  left to right     string, float, int, bool, reference, null
+!=                 not equality              left to right     string, float, int, bool, reference, null
+
+&                  bitwise and               left to right     int
+^                  bitwise xor               left to right     int
+|                  bitwise or                left to right     int
+
+and                logical and               left to right     all types
+or                 logical or                left to right     all types
+
+=                  assignment                right to left     all types
+,                  expression seperation     left to right
+
+
+The following sections describe in brief each of the operators.
+
+operator []
+=============================================================================================================
+
+Array index operator may be used on array and string types.  This is a 0 based index, which means you may
+index from 0 to array.size() - 1.
+
+<CODE>
+
+  int[] myArray = new int[5];   // myArray is an array reference to an array of 5 ints
+  int[] myNullArray;            // myNullArray hasnt been assigned to an array, it is a null reference.
+
+  myArray[0] = 0;
+  myArray[9] = 300;  // this will resize myArray to size 10
+  int a = myArray[15]; // this will cause an exception, as the array has only 10 elements.
+
+  string str = "hello";
+  int c = str[1]; // c will equal 'e'
+
+  str[2] = 'f'; // str will equal "heflo"
+
+</CODE>
+
+operator [,]
+=============================================================================================================
+
+Array range index operator may be used with array and string types.  The array range operator takes 2 values
+which are the lower and upper indexes.  One of the two indexes may be empty.  for example
+
+  array[,5]  - this will index from 0 to 4
+  array[3,] - this will index from 3 to (array.size() - 1)
+
+The lower range is inclusive, the upper range is exclusive.  This is to allow insertion when using the 
+range operator as an l-value.  for example
+
+  string a = "Hello World";
+  string b = "My ";
+
+  a[6,6] = b; // a = "Hellow My World";
+
+=============================================================================================================
+
+All arithmetic, logic and bitwise operators as per the c language.
+
+=============================================================================================================
+2.7 Class declaration
+=============================================================================================================
+
+classes are declared using the "class" declaration keyword.  Classes may be declared as static, in which
+case they may not be instanciated with the new operator, or from c code.  static classes are automatically
+instanciated as a singleton object when their compiled library file is required.  static classes may be
+referenced from any class.  Following a few class declaration examples:
+
+static class system
+{
+  public int a = 7;
+  public float b = 0.4;
+
+  public native void Print(string str);
+};
+
+declares a static class with 2 member variables 'a' and 'b'.  note that when the class is constructed, these
+variables will be assigned with the values 7 and 0.4 respectively.  This is the only way global variables
+may be declared in GS.  note that to reference these variables, one would do the following.
+
+int i = system.a;
+
+The system. will get the global static system class, and access the varaible a declared within it.
+
+Inheritance
+===========
+
+class Trigger
+{
+  public bool OnEnter(object o)
+  {
+  }
+
+  public bool OnLeave(object o)
+  {
+  }
+};
+
+class DeathTrigger isclass Trigger
+{
+  public bool OnEnter(object o)
+  {
+    if(o.isclass(Player)
+    {
+      o.Die();
+    }
+  }
+};
+
+All class functions are virtual.  GS supports multiple inheritance, but does not allow the same class type
+to be inherited more than once.
+
+
+=============================================================================================================
+2.8 Function declaration
+=============================================================================================================
+
+Functions must have a return type, even if there is no return type, void must be used.  Function overloading
+may also be used, but, when calling a function, you must type cast paraemters to the exact type for the
+correct function to be found as the compiler will not try to find the right function, but rather just builds
+a mangled name from the passed parameters to perform the search.  the type specifiers native and public may
+be used with functions.  prototyes are also allowed in the standard c format.  Take the following example
+
+public native object[] GetEnemiesWithin(float x, float y, float z, float radius);
+
+is a function declaration stating that the game runtime will provide the function 
+$@GetEnemiesWithin(float,float,float)
+
+functions must be implemented within the class declaration.
+
+=============================================================================================================
+2.9 Control flow statements
+=============================================================================================================
+
+The GS language supports 6 control flow statements, a "for" loop, a "while", a "switch" statement, and "if" 
+and "else" statement, "goto" staements and labels, and a new "wait" statement for implementing game state 
+machines. Following are examples of each of the control flow statements
+
+if ( expression ) statement
+if ( expression ) statement else statement
+while ( expression ) statement
+for ( assignment_expression assignment_expression expression ) statement
+for ( assignment_expression assignment_expression ) statement
+switch ( expression ) statement
+case constant_expression : statment
+default : statement
+goto identifier ;
+identifier :
+
+Message msg;
+
+wait()
+{
+  on "Trigger", "Enter", msg :
+  {
+  }
+  on "Trigger", "Leave", msg :
+  {
+  }
+}
+
+=============================================================================================================
+2.10 Grammar
+=============================================================================================================
+
+program -> include_list class_declaration_list
+program -> class_declaration_list
+include_list -> include_declaration
+include_list -> include_list include_declaration
+include_declaration -> KEYWORD_INCLUDE include_file
+include_file -> CONSTANT_STRING
+class_declaration_list -> class_declaration
+class_declaration_list -> class_declaration_list class_declaration
+class_declaration -> KEYWORD_CLASS identifier '{' '}' ';'
+class_declaration -> KEYWORD_CLASS identifier KEYWORD_ISCLASS class_list '{' '}' ';'
+class_declaration -> declaration_specifiers KEYWORD_CLASS identifier '{' '}' ';'
+class_declaration -> declaration_specifiers KEYWORD_CLASS identifier KEYWORD_ISCLASS class_list '{' '}' ';'
+class_declaration -> KEYWORD_CLASS identifier '{' declaration_list '}' ';'
+class_declaration -> KEYWORD_CLASS identifier KEYWORD_ISCLASS class_list '{' declaration_list '}' ';'
+class_declaration -> declaration_specifiers KEYWORD_CLASS identifier '{' declaration_list '}' ';'
+class_declaration -> declaration_specifiers KEYWORD_CLASS identifier KEYWORD_ISCLASS class_list '{' declaration_list '}' ';'
+class_list -> identifier
+class_list -> class_list ',' identifier
+declaration_list -> declaration
+declaration_list -> declaration_list declaration
+declaration -> function_declaration
+declaration -> function_prototype_declaration
+declaration -> variable_declaration_list
+declaration -> declaration_specifiers function_declaration
+declaration -> declaration_specifiers function_prototype_declaration
+declaration -> declaration_specifiers variable_declaration_list
+declaration_specifiers -> declaration_specifier
+declaration_specifiers -> declaration_specifiers declaration_specifier
+declaration_specifier -> KEYWORD_PUBLIC
+declaration_specifier -> KEYWORD_NATIVE
+declaration_specifier -> KEYWORD_FINAL
+declaration_specifier -> KEYWORD_THREAD
+declaration_specifier -> KEYWORD_STATIC
+declaration_specifier -> KEYWORD_GAME
+function_prototype_declaration -> type_specifier identifier '(' ')' ';'
+function_prototype_declaration -> type_specifier identifier '(' KEYWORD_VOID ')' ';'
+function_prototype_declaration -> type_specifier identifier '(' parameter_list ')' ';'
+function_declaration -> type_specifier identifier '(' ')' compound_statement
+function_declaration -> type_specifier identifier '(' KEYWORD_VOID ')' compound_statement
+function_declaration -> type_specifier identifier '(' parameter_list ')' compound_statement
+variable_declaration_list -> type_specifier declarator_list ';'
+declarator_list -> declarator
+declarator_list -> declarator_list ',' declarator
+declarator -> identifier
+declarator -> identifier '=' constant_expression
+type_specifier -> primitive_type
+type_specifier -> primitive_type SYMBOL_OP_DIM
+type_specifier -> identifier
+type_specifier -> identifier SYMBOL_OP_DIM
+primitive_type -> KEYWORD_VOID
+primitive_type -> KEYWORD_BOOL
+primitive_type -> KEYWORD_INT
+primitive_type -> KEYWORD_FLOAT
+primitive_type -> KEYWORD_STRING
+primitive_type -> KEYWORD_OBJECT
+parameter_list -> parameter
+parameter_list -> parameter_list ',' parameter
+parameter -> type_specifier identifier
+compound_statement -> '{' '}'
+compound_statement -> '{' statement_list '}'
+statement_list -> statement
+statement_list -> statement_list statement
+statement -> variable_declaration_list
+statement -> labeled_statement
+statement -> compound_statement
+statement -> expression_statement
+statement -> selection_statement
+statement -> iteration_statement
+statement -> jump_statement
+labeled_statement -> identifier ':' statement
+labeled_statement -> KEYWORD_CASE constant_expression ':' statement
+labeled_statement -> KEYWORD_DEFAULT ':' statement
+labeled_statement -> KEYWORD_ON constant ',' constant ':' statement
+labeled_statement -> KEYWORD_ON constant ',' constant ',' unary_expression ':' statement
+expression_statement -> ';'
+expression_statement -> expression ';'
+selection_statement -> KEYWORD_IF '(' expression ')' statement
+selection_statement -> KEYWORD_IF '(' expression ')' statement KEYWORD_ELSE statement
+selection_statement -> KEYWORD_SWITCH '(' expression ')' compound_statement
+selection_statement -> KEYWORD_WAIT '(' ')' compound_statement
+iteration_statement -> KEYWORD_WHILE '(' expression ')' statement
+iteration_statement -> KEYWORD_FOR '(' expression_statement expression_statement ')' statement
+iteration_statement -> KEYWORD_FOR '(' expression_statement expression_statement expression ')' statement
+jump_statement -> KEYWORD_GOTO identifier ';'
+jump_statement -> KEYWORD_CONTINUE ';'
+jump_statement -> KEYWORD_BREAK ';'
+jump_statement -> KEYWORD_RETURN ';'
+jump_statement -> KEYWORD_RETURN expression ';'
+constant_expression -> logical_or_expression
+expression -> assignment_expression
+expression -> expression ',' assignment_expression
+assignment_expression -> logical_or_expression
+assignment_expression -> unary_expression '=' assignment_expression
+logical_or_expression -> logical_and_expression
+logical_or_expression -> logical_or_expression KEYWORD_OR logical_and_expression
+logical_and_expression -> inclusive_or_expression
+logical_and_expression -> logical_and_expression KEYWORD_AND inclusive_or_expression
+inclusive_or_expression -> exclusive_or_expression
+inclusive_or_expression -> inclusive_or_expression '|' exclusive_or_expression
+exclusive_or_expression -> and_expression
+exclusive_or_expression -> exclusive_or_expression '^' and_expression
+and_expression -> equality_expression
+and_expression -> and_expression '&' equality_expression
+equality_expression -> relational_expression
+equality_expression -> equality_expression SYMBOL_EQ relational_expression
+equality_expression -> equality_expression SYMBOL_NEQ relational_expression
+relational_expression -> shift_expression
+relational_expression -> relational_expression '<' shift_expression
+relational_expression -> relational_expression '>' shift_expression
+relational_expression -> relational_expression SYMBOL_LTE shift_expression
+relational_expression -> relational_expression SYMBOL_GTE shift_expression
+shift_expression -> additive_expression
+shift_expression -> shift_expression SYMBOL_LEFT_SHIFT additive_expression
+shift_expression -> shift_expression SYMBOL_RIGHT_SHIFT additive_expression
+additive_expression -> multiplicative_expression
+additive_expression -> additive_expression '+' multiplicative_expression
+additive_expression -> additive_expression '-' multiplicative_expression
+multiplicative_expression -> cast_expression
+multiplicative_expression -> multiplicative_expression '*' cast_expression
+multiplicative_expression -> multiplicative_expression '/' cast_expression
+multiplicative_expression -> multiplicative_expression '%' cast_expression
+cast_expression -> unary_expression
+cast_expression -> '(' primitive_type ')' cast_expression
+cast_expression -> '(' primitive_type SYMBOL_OP_DIM ')' cast_expression
+cast_expression -> KEYWORD_CAST '<' type_specifier '>' cast_expression
+unary_expression -> postfix_expression
+unary_expression -> SYMBOL_INC unary_expression
+unary_expression -> SYMBOL_DEC unary_expression
+unary_expression -> unary_operator cast_expression
+unary_operator -> '+'
+unary_operator -> '-'
+unary_operator -> '~'
+unary_operator -> '!'
+postfix_expression -> primary_expression
+postfix_expression -> postfix_expression '[' ',' assignment_expression ']'
+postfix_expression -> postfix_expression '[' assignment_expression ',' ']'
+postfix_expression -> postfix_expression '[' assignment_expression ',' assignment_expression ']'
+postfix_expression -> postfix_expression '[' assignment_expression ']'
+postfix_expression -> postfix_expression '(' ')'
+postfix_expression -> postfix_expression '(' argument_expression_list ')'
+postfix_expression -> postfix_expression '.' identifier
+postfix_expression -> postfix_expression SYMBOL_INC
+postfix_expression -> postfix_expression SYMBOL_DEC
+postfix_expression -> postfix_expression '.' KEYWORD_SIZE '(' ')'
+postfix_expression -> postfix_expression '.' KEYWORD_ISCLASS '(' identifier ')'
+postfix_expression -> postfix_expression '.' KEYWORD_COPY '(' assignment_expression ')'
+argument_expression_list -> assignment_expression
+argument_expression_list -> argument_expression_list ',' assignment_expression
+primary_expression -> identifier
+primary_expression -> KEYWORD_ME
+primary_expression -> KEYWORD_NULL
+primary_expression -> constant
+primary_expression -> new_expression
+primary_expression -> '(' expression ')'
+new_expression -> KEYWORD_NEW primitive_type '(' ')'
+new_expression -> KEYWORD_NEW primitive_type '(' argument_expression_list ')'
+new_expression -> KEYWORD_NEW primitive_type '[' expression ']'
+new_expression -> KEYWORD_NEW identifier '(' ')'
+new_expression -> KEYWORD_NEW identifier '(' argument_expression_list ')'
+new_expression -> KEYWORD_NEW identifier '[' expression ']'
+identifier -> IDENTIFIER
+constant -> CONSTANT_HEX
+constant -> CONSTANT_INT
+constant -> CONSTANT_CHAR
+constant -> CONSTANT_FLOAT
+constant -> CONSTANT_STRING
+constant -> KEYWORD_TRUE
+constant -> KEYWORD_FALSE
+
+=============================================================================================================
+=============================================================================================================
+
+3.0 The Compiler (GS)
+
+=============================================================================================================
+=============================================================================================================
+
+=============================================================================================================
+3.0 The basics
+=============================================================================================================
+
+The AURAN GS compiler will take a game script *.gs as input and convert it to a Game Script Library (.gsl)
+file.  Game script libraries may be loaded by the GS Runtime environment such that classes declared within
+the library may be instanciated and have their threads executed.  When a gs library is loaded, it must
+also load any other libraries that were required for its compilation.  for example, if a script "player.gs"
+includes the script "system.gs", then both libraries must be present for a player class to be created.
+
+The GS compiler creates a unique ID for each .gsl created.  This unique id is the 32 bit CRC of the source file,
+followed by the 32 bit CRC of the script filename.  This is a 64 bit unique identifier (hopefully unique) used
+to mark a library, such that it may be loaded by other libraries at runtime.  A library stores its dependencies
+by thier unique id.
+
+=============================================================================================================
+3.1 compiler switches
+=============================================================================================================
+
+To view the compiler switches, simply run GS with no parameters.
+
+=============================================================================================================
+=============================================================================================================
+
+4.0 The library file
+
+=============================================================================================================
+=============================================================================================================
+  
+omitted for public release
+
+=============================================================================================================
+=============================================================================================================
+  
+5.0 | The byte code
+
+=============================================================================================================
+=============================================================================================================
+
+omitted for public release
+    
+=============================================================================================================
+=============================================================================================================
+      
+6.0 The runtime environment
+
+=============================================================================================================
+=============================================================================================================
+
+omitted for public release
+
+=============================================================================================================
+6.1 Runtime stack
+=============================================================================================================
+
+omitted for public release
+
+=============================================================================================================
+=============================================================================================================
+
+7.0 | The Compiler source files
+
+=============================================================================================================
+=============================================================================================================
+
+omitted for public release
+
+=============================================================================================================
+=============================================================================================================
+
+8.0 | The runtime source files
+
+=============================================================================================================
+=============================================================================================================
+
+omitted for public release
+
+=============================================================================================================
+=============================================================================================================
+
+9.0 | Using AURAN GameScript
+
+=============================================================================================================
+=============================================================================================================
+
+AURAN GameScript is a game control scripting language.  For the most part, AURAN GS is similar to c++ or JAVA,
+It lacks a few of the features common to these languages but has a few other features as well.  The folloing
+list is a few of the differences between AURAN GameScript (gs) and c++.
+
+* gs has no pointers, but has references like java.
+* gs is interpreted.  gs compiles to byte code in a .gsl library.
+* gs uses Object Oriented language features.
+* gs does not support operator overloading
+* gs language has a string class
+* gs does not have a character type
+* gs has a dynamic cast in the following format   cast<Type> expr
+* gs does not support constructors or destructors.
+* gs allows assignments to memebers within the class declaration.
+* gs has threading support (thread function specifier)
+* gs has messages and allows threads to block on messages
+
+AURAN GameScript runtime libraries have a c++ game object class GSGameObject.  Any object that allows scripting
+support within the game must derive this class.  From the scripting side of things, the equivelant class is
+GameObject and exists in the standard GS library gs.gs.  GameObject provides native scripting support of the following
+
+* sending and posting of game messages (IPC).  Messages have a major and minor string type.
+* adding script function handlers to message types. (AddMessage)
+* sleeping the thread for time interavals
+
+Each GameObject resides in the game router (GSRouter)  the standard library gs.gs also provides a static router
+class that allows the scripter to get a reference to a game object by unique name or by unique id.
+
+game objects can not be created from the scripting using the new operator.  however, if the game creates a 
+game object, the scripting function void main(void) is started iff main has the thread specifier.  Thread specifiers will
+cause a runtime exception if they are called on an object not isclass-ing GameObject.  To start a new thread on a game
+object, simply make the call to the threaded function.  execution will continue in the current thread, and on the next
+update of the game object, the new thread will begin execution.
+
+Recieving messages within a game object is done either by a message handler or by the blocking "on" or "wait"
+statement.  wait() allows the scripter to block on multiple messages by using multiple "on" statements. following
+is an example. It is assumed that the game will create 2 game objects and class them to Object1 and Object2.
+Object2 instance will be named to "GameObject2"
+
+include "gs.gs"
+include "interface.gs"
+
+game class Object1 isclass GameObject
+{
+  GameObject object2 = null;
+
+  thread void Thread1()
+  {
+    int i = 10;
+
+    //
+    // loop and send 10 messages
+    //
+    while(i--)
+    {
+      Sleep(.74f);
+      PostMessage(object2, "Tock", "Tick", 0.);
+    }
+  }
+
+  thread void main()
+  {
+    //
+    // get the instance of an Object2 class game object created by the game for this example.
+    //
+    object2 = Router.GetGameObject("GameObject2");
+
+    //
+    // start thread 1
+    //
+    Thread1();
+  
+    int i = 10;
+
+    //
+    // loop and send 10 messages
+    //
+    while(i--)
+    {
+      Sleep(1.0f);
+      PostMessage(object2, "Tick", "Tock", 0.);
+    }
+    PostMessage(object2, "Kill", "Yourself", 0.);
+  }
+};
+
+game class Object2 isclass GameObject
+{
+  thread void main()
+  {
+    Message msg;
+    bool done = false;
+
+    while(!done)
+    {
+      wait()
+      {
+        on "Tock", "Tick", msg :
+        {
+          Interface.Print("Tock, Tick message from class " + (cast<GameObject> msg.src).GetName());
+        }
+        on "Tick", "Tock", msg :
+        {
+          Interface.Print("Tick, Tock message from class " + (cast<GameObject> msg.src).GetName());
+        }
+        on "Kill", "Yourself", msg :
+        {
+          Interface.Print("Tick, Tock message from class " + (cast<GameObject> msg.src).GetName());
+          done = true; 
+        }
+      }
+    }
+  }
+};
+
+
+The above example will have 2 threads running on object1, and 1 thread running on object 2.  each thread on
+object 1 will send 10 messages to object 2, which will recieve them and display the messages.
+
+OK (0 Errors, 0 Warnings)
