@@ -1,0 +1,16 @@
+kind "behavior"
+kuid <KUID2:520252:100064:0>
+trainz-build 3.2
+script "SectorTrafficManagementRule"
+class "SectorTrafficManagementRule"
+username "SectorTrafficManagementRule"
+description ""
+kuid-table
+{
+}
+string-table
+{
+    sectorAddPropertyName   "Add new sector"
+    sectorAddPropertyDesc   "Add a new sector with the specified name. Sector names must be unique within a Rule object."
+}
+category-class "YR"
