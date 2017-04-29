@@ -1,0 +1,208 @@
+﻿
+script                                  "WorkTable"
+class                                   "WorkTable"
+category-class                          "YR"
+description                             "A rule that is designed to provide input data for various driver schedule commands for various purposes. Please refer to the driver schedule commands' description fields to find out about the specifics of the input data employed by the driver schedule commands.
+	
+	
+NOTES:This rule is the same as 'WorkTable' rule used in TRS2004.  
+"
+username                                "InputTable"
+author                                  "Atila Barut"
+contact-email                           "atila@emailaccount.com"
+kind                                    "behavior"
+kuid                                    <kuid2:131986:1012:1>
+category-region                         "US"
+category-era                            "2000s"
+trainz-build                            2.5
+
+string-table
+{
+  description                           "Rule for creating messages to be used for various purposes"
+  html_description                      "Rule for creating messages to be used for various purposes"
+  html_description_unnamed              "Unidentified message entry!"
+  html_description_remove               "remove"
+  html_description_addmessage           "add"
+  html_warning_1                        "<b>No entries!</b>"
+  str_property_name1                    "Short message"
+  str_property_desc1                    "Message name"
+}
+
+thumbnails
+{
+  0
+  {
+    image                               "WorkTable.texture"
+    width                               64
+    height                              64
+  }
+  
+  1
+  {
+    image                               "thumbnail.jpg"
+    width                               240
+    height                              180
+  }
+}
+description-ja                          "さまざまな目的に使用するさまざまな運転士スケジュールコマンドの入力データを提供するためのルールです。運転士スケジュールコマンドで使用される入力データの詳細については、運転士スケジュールコマンドの説明フィールドを参照してください。
+	
+	
+注記：このルールは、TRS2004で使用された「WorkTable」ルールと同じものです。
+"
+
+string-table-ja
+{
+  html_warning_1                        "<b>エントリーがありません！</b>"
+  html_description_addmessage           "追加"
+  str_property_desc1                    "メッセージ名"
+  html_description_remove               "削除"
+  description                           "さまざまな目的に使用されるメッセージを作成するためのルール"
+  html_description                      "さまざまな目的に使用されるメッセージを作成するためのルール"
+  str_property_name1                    "ショートメッセージ"
+  html_description_unnamed              "不明なメッセージエントリーです！"
+}
+username-cz                             "Tabulka vstupů"
+description-cz                          "Pravidlo, jehož účelem je poskytovat vstupní data pro různé příkazy pro strojvůdce. Podrobnosti o vstupních datech, používaných v jízdních řádech pro strojvůdce, najdeš v popisu příkazů pro jízdní řády.
+	
+	
+POZNÁMKA: Toto pravidlo je stejné jako pravidlo 'TabulkaÚkolů' z verze TRS2004.
+"
+
+string-table-cz
+{
+  description                           "Pravidlo pro tvorbu vzkazů, víceúčelové"
+  html_description                      "Pravidlo pro tvorbu vzkazů, víceúčelové"
+  html_description_unnamed              "Neidentifikovaná zpráva!"
+  html_description_remove               "odstranit"
+  html_description_addmessage           "Přidat"
+  html_warning_1                        "<b>Prázdné!</b>"
+  str_property_name1                    "Krátká zpráva"
+  str_property_desc1                    "Název zprávy"
+}
+description-nl                          "Een regel ontworpen om data in te voeren voor verschillende bestuurderstijdschema commando's voor verschillende doelen. Verwijs naar de bestuurderstijdschema commando's omschrijving velden om te achterhalen om wat de specifieke kenmerken zijn van de inputgegevens die worden gebruikt bij de bestuurderstijdschema commando's. 
+	
+	
+Notities: deze regel is hetzelfde als 'worktable' regel gebruikt in trs2004.
+"
+
+string-table-nl
+{
+  description                           "Regel om berichten te maken voor verschillende doelen"
+  html_description                      "Regel om berichten te maken voor verschillende doelen"
+  html_description_unnamed              "Invoer ongeïdentificeerde bericht "
+  html_description_remove               "Verwijder"
+  html_description_addmessage           "voeg toe"
+  str_property_name1                    "Kort bericht"
+  str_property_desc1                    "Berichtnaam"
+}
+username-fr                             "TableauEntrées"
+description-fr                          "Une règle conçue pour fournir des données d'entrée correspondant à plusieurs commandes d'horaire conducteur à différentes fins. Veuillez vous reporter aux champs de description des commandes d'horaire conducteur pour en savoir plus sur les données d'entrée utilisées par les commandes d'horaire conducteur.
+	
+	
+REMARQUE : Cette règle correspond à la règle « Table de travail » utilisée dans TRS2004.  
+"
+
+string-table-fr
+{
+  description                           "Règle pour créer des messages pour être utilisé à des fins diverses"
+  html_description                      "Règle pour créer des messages pour être utilisé à des fins diverses"
+  html_description_unnamed              "Entrée de message non identifiée !"
+  html_description_remove               "retirer"
+  html_description_addmessage           "Ajouter"
+  html_warning_1                        "<b>Aucune entrée !</b>"
+  str_property_name1                    "Message court"
+  str_property_desc1                    "Nom du message"
+}
+username-pl                             "Tabela wejściowa"
+description-pl                          "Reguła służąca do określania informacji używanych do tworzenia rozkładów poleceń do różnych celów. Więcej informacji na temat danych wejściowych wykorzystywanych przez rozkłady poleceń znajdziesz w polu opisu rozkładu poleceń motorniczych
+	
+	
+UWAGI: Ta reguła jest taka sama, jak reguła „WorkTable” stosowana w TRS2004.  
+"
+
+string-table-pl
+{
+  description                           "Reguła tworzenia wiadomości, które będą użyte do różnych celów."
+  html_description                      "Reguła tworzenia wiadomości, które będą użyte do różnych celów."
+  html_description_unnamed              "Nieokreślona treść wiadomości!"
+  html_description_remove               "usuń"
+  html_description_addmessage           "dodaj"
+  html_warning_1                        "<b>Brak wpisów!</b>"
+  str_property_name1                    "Krótka wiadomość"
+  str_property_desc1                    "Nazwa wiadomości"
+}
+username-jp                             "入力表"
+description-jp                          "さまざまな目的に使用するさまざまな運転士スケジュールコマンドの入力データを提供するためのルールです。運転士スケジュールコマンドで使用される入力データの詳細については、運転士スケジュールコマンドの説明フィールドを参照してください。
+	
+	
+注意：このルールは、TRS2004で使用された「WorkTable」ルールと同じものです。
+"
+
+string-table-jp
+{
+  description                           "さまざまな目的に使用されるメッセージを作成するためのルール"
+  html_description                      "さまざまな目的に使用されるメッセージを作成するためのルール"
+  html_description_unnamed              "不明なメッセージエントリです！"
+  html_description_remove               "消去"
+  html_description_addmessage           "追加"
+  html_warning_1                        "<b>エントリがありません！</b>"
+  str_property_name1                    "ショートメッセージ"
+  str_property_desc1                    "メッセージ名"
+}
+username-es                             "Tabla de entrada"
+description-es                          "Una regla que está diseñada para proporcionar datos de entrada para varios comandos de programa en Maquinista para diversos propósitos. Por favor, consulta los campos de descripción de los comandos de programación de maquinista.
+	
+	
+NOTAS:Esta regla es la misma que la regla 'MesaTrabajo' usada en TRS2004.  
+"
+
+string-table-es
+{
+  html_warning_1                        "<b>¡No hay entradas!</b>"
+  str_property_desc1                    "Nombre del mensaje"
+  str_property_name1                    "Mensaje corto"
+  html_description_unnamed              "¡Entrada de mensaje no identificado!"
+  html_description_addmessage           "Añadir"
+  html_description_remove               "remove"
+  description                           "Regla para cPosterior mensajes para utilizarse para varios propósitos"
+  html_description                      "Regla para cPosterior mensajes para utilizarse para varios propósitos"
+}
+username-it                             "TavolaInput"
+description-it                          "Una regola pensata per dare dati informativi nelle varie schede di comando dei guidatori per i vari scopi. Fare riferimento ai campi descrittivi della scheda comandi macchinista per saperne di più sulle specifiche dei dati informativi utilizzati nelle schede.
+	
+	
+NOTE: Questa regola è la stessa della regola 'TabellaLavoro' usata nel TRS2004.  
+"
+
+string-table-it
+{
+  html_warning_1                        "<b>Nessuna informazione!</b>"
+  str_property_desc1                    "Nome messaggio"
+  str_property_name1                    "Breve messaggio"
+  html_description_unnamed              "Voce di messaggio non identificata!"
+  html_description_addmessage           "Aggiungi"
+  html_description_remove               "rimuovi"
+  description                           "Regola per la creazione di messaggi da usare per vari scopi"
+  html_description                      "Regola per la creazione di messaggi da usare per vari scopi"
+}
+username-de                             "InputTable"
+description-de                          "Eine Regel, die es ermöglicht, eingegebene Daten für verschiedene Routenplan-Kommandos für verschiedene Zwecke bereitzustellen. Die Besonderheiten der von den Routenplänen verwendeten eingegebenen Daten können in den Beschreibungsfeldern der Streckenplan-Kommandos nachgelesen werden.
+	
+	\ANMERKUNGEN: Diese Regel ist die gleiche wie die ‚WorkTable‘-Regel, die in TRS2004 verwendet wird. 
+"
+
+string-table-de
+{
+  description                           "Regel zum Erstellen von Nachrichten für verschiedene Zwecke"
+  html_description_unnamed              "Unbekannte Eingabe!"
+  html_description_addmessage           "Hinzufügen"
+  html_warning_1                        "<b>Keine Einträge!</b>"
+  str_property_name1                    "Kurznachricht"
+  str_property_desc1                    "Name der Nachricht"
+  html_description                      "Regel zum Erstellen von Nachrichten für verschiedene Zwecke"
+  html_description_remove               "entfernen"
+}
+
+kuid-table
+{
+}
