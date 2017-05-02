@@ -10,20 +10,23 @@ kuid-table
 }
 string-table
 {
-	exclusivePermssionIdentifier	"Exclusive"
+	itemRemoveHeading				"remove"
 
-	permssionAddPropertyName		"Add new permission"
-	permssionAddPropertyDesc		"Add a new permission with the specified name. Permission names must be unique within a Rule object."
-	sectorAddPropertyName			"Add new sector"
-	sectorAddPropertyDesc			"Add a new sector with the specified name. Sector names must be unique within a Rule object."
+	permissionHeading				"Permissions"
+	permissionDesc					"<i>The Rule manages access permissions for each Traffic Sector. Each permission can either be exclusive or shared.<br>An exclusive permission can only be granted to one single train at a time. The grantee is required to release the permission at it's earliest convenience, so that other trains can be granted access.<br>A shared permission can granted to multiple grantees at the same time, provided they all request the same permission.</i>"
 
-	permissionsHeading				"Permissions"
+	permissionAddDesc				"Add a new Permission"
+	permissionRemoveDesc			"Remove permission"
+	
 	permissionIdHeading				"Name"
-	permissionTypeHeading			"Type"
-	permissionsHtmlText				"<i>The Rule manages access permissions for each Traffic Sector. Each permission can either be exclusive or shared.<br>An exclusive permission can only be granted to one single train at a time. The grantee is required to release the permission at it's earliest convenience, so that other trains can be granted access.<br>A shared permission can granted to multiple grantees at the same time, provided they all request the same permission.</i>"
-	permissionTypeExclusiveText		"exclusive"
-	permissionTypeSharedText		"shared"
-	removeText						"remove"
+	permissionIdDesc				"The unique name for the permission."
+
+	permissionIsSharedHeading		"Type"
+	permissionIsSharedDesc			"The permission type. Permissions are either shared, or exclusive."
+	permissionIsSharedTrue			"shared"
+	permissionIsSharedFalse			"exclusive"
+
+	defaultPermissionIdentifier		"Exclusive"	
 }
 thumbnails
 {

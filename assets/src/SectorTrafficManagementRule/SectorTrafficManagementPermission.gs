@@ -1,10 +1,12 @@
 include "Soup.gs"
 include "Constructors.gs"
 
+include "SectorTrafficManagementConstants.gs"
+
 class SectorTrafficManagementPermission
 {
-	define string identifierSoupName = "id";
-	define string isSharedSoupName = "shared";
+	define string permissionIdProp = SectorTrafficManagementPermissionConst.permissionIdProp;
+	define string permissionIsSharedProp = SectorTrafficManagementPermissionConst.permissionIsSharedProp;
 
 	public string identifier;
 	public bool isShared;
@@ -16,13 +18,13 @@ class SectorTrafficManagementPermission
 			return;
 		}
 
-		if (soup.GetIndexForNamedTag(identifierSoupName) >= 0)
+		if (soup.GetIndexForNamedTag(permissionIdProp) >= 0)
 		{
-			identifier = soup.GetNamedTag(identifierSoupName);
+			identifier = soup.GetNamedTag(permissionIdProp);
 		}
-		if (soup.GetIndexForNamedTag(isSharedSoupName) >= 0)
+		if (soup.GetIndexForNamedTag(permissionIsSharedProp) >= 0)
 		{
-			isShared = soup.GetNamedTagAsBool(isSharedSoupName, isShared);
+			isShared = soup.GetNamedTagAsBool(permissionIsSharedProp, isShared);
 		}
 	}
 
@@ -30,8 +32,8 @@ class SectorTrafficManagementPermission
 	{
 		Soup soup = Constructors.NewSoup();
 
-		soup.SetNamedTag(identifierSoupName, identifier);
-		soup.SetNamedTag(isSharedSoupName, isShared);
+		soup.SetNamedTag(permissionIdProp, identifier);
+		soup.SetNamedTag(permissionIsSharedProp, isShared);
 
 		return soup;
 	}
