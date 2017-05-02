@@ -1,16 +1,31 @@
-kind "behavior"
-kuid <KUID2:520252:100064:0>
-trainz-build 3.2
-script "SectorTrafficManagementRule"
-class "SectorTrafficManagementRule"
-username "SectorTrafficManagementRule"
-description ""
+kind			"behavior"
+kuid			<KUID2:520252:100064:0>
+trainz-build	3.5
+script			"SectorTrafficManagementRule"
+class			"SectorTrafficManagementRule"
+username		"SectorTrafficManagementRule"
+description		""
 kuid-table
 {
 }
 string-table
 {
-    sectorAddPropertyName   "Add new sector"
-    sectorAddPropertyDesc   "Add a new sector with the specified name. Sector names must be unique within a Rule object."
+	exclusivePermssionIdentifier	"Exclusive"
+
+	permssionAddPropertyName		"Add new permission"
+	permssionAddPropertyDesc		"Add a new permission with the specified name. Permission names must be unique within a Rule object."
+	sectorAddPropertyName			"Add new sector"
+	sectorAddPropertyDesc			"Add a new sector with the specified name. Sector names must be unique within a Rule object."
+
+	permissionsHeading				"Permissions"
+	permissionIdHeading				"Name"
+	permissionTypeHeading			"Type"
+	permissionsHtmlText				"<i>The Rule manages access permissions for each Traffic Sector. Each permission can either be exclusive or shared.<br>An exclusive permission can only be granted to one single train at a time. The grantee is required to release the permission at it's earliest convenience, so that other trains can be granted access.<br>A shared permission can granted to multiple grantees at the same time, provided they all request the same permission.</i>"
+	permissionTypeExclusiveText		"exclusive"
+	permissionTypeSharedText		"shared"
+	removeText						"remove"
 }
-category-class "YR"
+thumbnails
+{
+}
+category-class	"YR"
