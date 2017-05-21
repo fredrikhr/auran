@@ -1,0 +1,99 @@
+﻿
+kuid                                    <kuid2:160293:101014:3>
+username                                "Skip if session-variable"
+script                                  "SkipIfSvarCommand"
+class                                   "SkipIfSvarCommand"
+category-class                          "YD"
+supports-null-driver-character          1
+description                             "Version 1.3 2014-04-28
+A driver command to skip over driver schedule commands if a condition is met.  Conditions are available to be chosen from the command's menu list only after they have been inserted into the menu through use of the the InputTable rule.
+Once the correct entries are added to the input table an option will appear in the 
+Skip If S-Variable command menu.
+
+Skipping occurs if the condition is met, and will continue until a buff 'Label' command with the targetted number is encountered. Use the new driver command 'Insert buff label' to define the position where execution of commands will resume.
+
+Variables can be defined and modified using Atila Barut's command 'changesvariables'. There are two formats that can be used to define menu items in the input table:
+
+a. The original format as used in    <kuid:131986:1005> ChangeSVariables.
+b. This format:  The menu is constructed in two parts -  
+   variable names are defined by:
+   svname, <varname> 
+   operations take the form:  
+   svar, <comparitor>, <constant value>
+   
+Valid comparitors are: eq, lt, gt, le, ge, ne 
+  where 
+    eq means 'equal to' 
+    lt means 'less than' 
+    gt means 'greater than'  
+    le means 'less than or equal to' 
+    ge means 'greater than or equal to 
+    ne means 'not equal to' 
+    
+Examples of entries in the input table: 
+  Entry                        Meaning 
+  svname,abc    Define a variable name ABC 
+  svar,eq,5       Test if variable value = 5 
+  svar,lt,3         Test if variable value < 3 
+The comma separators are important.  Only whole numbers are allowed.
+
+Example of the tooltip when examining a scheduled command: 
+  Skip to Label 1 if ABC = 5
+  Skip to Label 9 if consist_count < 3 
+  
+Use the new driver command 'Jump to label' to unconditionally skip over sections of the driver schedule.
+
+Thanks to Atila Barut for the original framework and to Lots_Trains and ElStoko for beta testing.               
+"
+author                                  "trev999"
+contact-email                           "trev999@gmail.com"
+license                                 "Freeware, no warranty. No commercial use without author's permission"
+kind                                    "drivercommand"
+category-region                         "00"
+category-era                            "2000s;2010s"
+trainz-build                            2.9
+
+string-table
+{
+  description                           "Skip to label if session variable meets conditions"
+  label                                 "Label $0 If $1"
+  skip_to                               "Skip to"
+  error1                                "Skip if S-variable : an s-var definition in input table $0 is missing a parameter"
+  cannot_find_label                     "Skip if S-variable :  Could not find label $0"
+  tt1                                   "Skip to label $0 if "
+  tt2                                   "Skip if S-variable : Invalid operator"
+}
+
+extensions
+{
+  svop-160293                           "svar"
+  svname-160293                         "svname"
+  svgroup-160293                        "svgroup"
+  how_many_tables-160293                "4"
+}
+
+thumbnails
+{
+  0
+  {
+    image                               "tag.texture"
+    width                               64
+    height                              64
+  }
+  
+  1
+  {
+    image                               "screenshot.tga"
+    width                               240
+    height                              180
+  }
+}
+
+kuid-table
+{
+  command-sounds                        <kuid:-3:10219>
+  post2inputtable                       <kuid:131986:1012>
+  sessionvariables                      <kuid:-3:10197>
+  insert_buff_label                     <kuid:160293:101002>
+  jump_to_label                         <kuid:160293:101003>
+}

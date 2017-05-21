@@ -1,0 +1,52 @@
+﻿
+username                                "Jump to label"
+kuid                                    <kuid2:160293:101003:2>
+script                                  "SkipCommand"
+class                                   "SkipCommand"
+category-class                          "YD"
+supports-null-driver-character          1
+kind                                    "drivercommand"
+author                                  "trev999"
+contact-email                           "trev999@gmail.com"
+license                                 "Freeware.  No warranty.  Commercial use prohibited with author's permission."
+category-era                            "2000s;2010s"
+category-region                         "00"
+trainz-build                            2.9
+description                             "Unconditionally skip over driver commands until the matching label command is found.  Continue executing commands from that position."
+
+extensions
+{
+  max_labels-160293                     "20"
+  change_to_green_at-160293             "11"
+}
+
+string-table
+{
+  description                           "Skip to label unconditionally"
+  jump_to_label                         "Jump to Label >"
+  error                                 ":  Jump-to-label -  Could not find label $0"
+  buff                                  " (buff)"
+  green                                 " (green)"
+}
+
+thumbnails
+{
+  0
+  {
+    image                               "Skip.texture"
+    width                               64
+    height                              64
+  }
+  
+  1
+  {
+    image                               "package.tga"
+    width                               240
+    height                              180
+  }
+}
+
+kuid-table
+{
+  sessionvariables                      <kuid:-3:10197>
+}

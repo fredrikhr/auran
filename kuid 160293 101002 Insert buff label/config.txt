@@ -1,0 +1,55 @@
+﻿
+username                                "Insert buff label"
+kuid                                    <kuid:160293:101002>
+script                                  "InsertLabelCommand"
+class                                   "InsertLabelCommand"
+category-class                          "YD"
+supports-null-driver-character          1
+kind                                    "drivercommand"
+author                                  "trev999"
+contact-email                           "trev999@gmail.com"
+license                                 "Freeware.  Commercial use prohibited without author's permission"
+category-era                            "2000s;2010s"
+category-region                         "00"
+description                             "A Driver Command to define the start of a block of driver orders. Used in conjunction with Conditional Skip commands to selectively execute sequences of driver commands. Up to ten different buff labels can be defined.
+
+Associated Commands:
+     Skip when (trackmark vacant / occupied)
+     Skip If S-Variable
+     Skip to label
+     Insert green label"
+trainz-build                            2.9
+
+extensions
+{
+  max_labels-160293                     "10"
+}
+
+string-table
+{
+  description                           "Insert a buff label into the driver's schedule"
+  insert_label                          "Insert buff label >"
+  label                                 "Label $0"
+}
+
+thumbnails
+{
+  0
+  {
+    image                               "InsertLabel.texture"
+    width                               64
+    height                              64
+  }
+  
+  1
+  {
+    image                               "screenshot.jpg"
+    width                               240
+    height                              180
+  }
+}
+
+kuid-table
+{
+  sessionvariables                      <kuid:-3:10197>
+}

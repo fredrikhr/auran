@@ -1,0 +1,3 @@
+Primary=tag.tga
+Alpha=tag.tga
+Tile=st

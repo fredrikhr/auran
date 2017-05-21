@@ -1,0 +1,3 @@
+Primary=Skip.tga
+Alpha=skip.tga
+Tile=st

@@ -1,0 +1,3 @@
+Primary=InsertLabel.tga
+Alpha=InsertLabel.tga
+Tile=st
