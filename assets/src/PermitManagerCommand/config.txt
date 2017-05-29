@@ -1,0 +1,18 @@
+kind			"behavior"
+kuid			<KUID2:520252:100102:0>
+trainz-build	3.5
+script			"PermitManagerCommand"
+class			"PermitManagerCommand"
+username		"PermitManagerCommand"
+description		""
+kuid-table
+{
+	PermitManagerRule	<KUID:520252:100101>
+}
+string-table
+{
+}
+thumbnails
+{
+}
+category-class	"YR"
