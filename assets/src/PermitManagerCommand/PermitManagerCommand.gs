@@ -129,13 +129,34 @@ class PermitManagerCommand isclass DriverCommand
 		DriverCharacter driver = cast<DriverCharacter>(msg.src);
 	}
 
+	void AddSubmenuHierarchies(Menu rootMenu, ScenarioBehavior permitManager, PermitManagerPermitType[] permitTypes, PermitManagerPermitObject[] permitObjects, string msgMajor)
+	{
+		int i, j;
+		for (i = 0; i < permitTypes.size(); i++)
+		{
+			PermitManagerPermitType permitType = permitTypes[i];
+			Menu permitTypeSubMenu = Constructors.NewMenu();
+			for (j = 0; j < permitObjects.size())
+			{
+				PermitManagerPermitObject permitObject = permitObjects[j];
+				permitTypeSubMenu.AddItem(permitObject.name, me, msgMajor, PackPermitManagerCommandMenuItemTuple(permitManager, permitType, permitObject));
+			}
+			permitTypeSubMenu.SubdivideItems(true);
+			rootMenu.AddSubmenu(permitType.name, permitTypeSubMenu);
+		}
+		rootMenu.SubdivideItems(true);
+	}
+
 	public void AddCommandMenuItem(DriverCharacter driver, Menu menu)
 	{
 		ScenarioBehavior[] rules = getPermitManagerInstances();
 		if (!rules or rules.size() < 1)
 			return;
 
-		int i, j, k;
+		Menu acquireSubMenu = Constructors.NewMenu();
+		Menu releaseSubMenu = Constructors.NewMenu();
+
+		int i;
 		for (i = 0; i < rules.size(); i++)
 		{
 			Soup ruleProps = rules[i].GetProperties();
@@ -148,18 +169,16 @@ class PermitManagerCommand isclass DriverCommand
 
 			if (permitObjects and permitObjects.size() > 0 and permitTypes and permitTypes.size() > 0)
 			{
-				for (j = 0; j < permitTypes.size(); j++)
-				{
-					PermitManagerPermitType permitType = permitTypes[j];
-					Menu permitTypeSubMenu = Constructors.NewMenu();
-					for (k = 0; k < permitObjects.size(); k++)
-					{
-						PermitManagerPermitObject permitObject = permitObjects[k];
-
-					}
-				}
+				if (acquireSubMenu.CountItems() > 0)
+					acquireSubMenu.AddSeperator();
+				AddSubmenuHierarchies(acquireSubMenu, rules[i], permitTypes, permitObjects, acquireMenuItemMajor);
+				if (releaseSubMenu.CountItems() > 0)
+					releaseSubMenu.AddSeperator();
+				AddSubmenuHierarchies(releaseSubMenu, rules[i], permitTypes, permitObjects, releaseMenuItemMajor);
 			}
 		}
+
+		// TODO: Add submenus to menu
 	}
 
 	public DriverScheduleCommand CreateScheduleCommand(DriverCharacter driver, Soup soup)
