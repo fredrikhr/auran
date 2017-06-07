@@ -4,7 +4,7 @@ include "ScenarioBehavior.gs"
 include "DriverScheduleCommand.gs"
 
 include "PermitManagerShared.gs"
-include "PermitManagerAcqureCustomCommand.gs"
+include "PermitManagerAcquireCustomCommand.gs"
 
 class PermitManagerScheduleCommand isclass DriverScheduleCommand
 {

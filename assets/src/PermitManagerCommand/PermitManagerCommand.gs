@@ -161,7 +161,7 @@ class PermitManagerCommand isclass DriverCommand
 		{
 			PermitManagerPermitType permitType = permitTypes[i];
 			Menu permitTypeSubMenu = Constructors.NewMenu();
-			for (j = 0; j < permitObjects.size())
+			for (j = 0; j < permitObjects.size(); j++)
 			{
 				PermitManagerPermitObject permitObject = permitObjects[j];
 				string msgMinor = PackPermitManagerCommandMenuItemTuple(permitManager, permitType, permitObject);
@@ -212,8 +212,8 @@ class PermitManagerCommand isclass DriverCommand
 
 	public DriverScheduleCommand CreateScheduleCommand(DriverCharacter driver, Soup soup)
 	{
-		PermitManagerScheduleCommand cmd = new PermitManagerScheduleCommand();
-		cmd.Init(driver, me)
+		DriverScheduleCommand cmd = new PermitManagerScheduleCommand();
+		cmd.Init(driver, me);
 		cmd.SetProperties(soup);
 
 		return cmd;
