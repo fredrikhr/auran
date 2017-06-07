@@ -11,6 +11,8 @@ kuid-table
 }
 string-table
 {
+	AcquireCommandMenuItem	"Wait for Permit"
+	ReleaseCommandMenuItem	"Release Permit"
 }
 thumbnails
 {

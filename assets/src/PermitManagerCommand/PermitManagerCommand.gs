@@ -1,5 +1,6 @@
-include "Asset.gs"
 include "gs.gs"
+include "Asset.gs"
+include "StringTable.gs"
 include "DriverCharacter.gs"
 include "Menu.gs"
 include "DriverCommand.gs"
@@ -16,12 +17,15 @@ class PermitManagerCommandMenuItemTuple
 
 class PermitManagerCommand isclass DriverCommand
 {
+	StringTable stringTable;
 	define string acquireMenuItemMajor = "PermitObjectAcquireMenuItem";
 	define string releaseMenuItemMajor = "PermitObjectReleaseMenuItem";
 
 	public void Init(Asset asset)
 	{
 		inherited(asset);
+
+		stringTable = asset.GetStringTable();
 
 		AddHandler(me, acquireMenuItemMajor, null, "OnPermitObjectAcquireMenuItemClicked");
 		AddHandler(me, releaseMenuItemMajor, null, "OnPermitObjectReleaseMenuItemClicked");
@@ -178,7 +182,10 @@ class PermitManagerCommand isclass DriverCommand
 			}
 		}
 
-		// TODO: Add submenus to menu
+		if (acquireSubMenu.CountItems() > 0)
+			menu.AddSubmenu(stringTable.GetString(PermitManagerConst.PermitManagerAcquireCommandMenuItemEntry), acquireSubMenu);
+		if (releaseSubMenu.CountItems() > 0)
+			menu.AddSubmenu(stringTable.GetString(PermitManagerConst.PermitManagerReleaseCommandMenuItemEntry), releaseSubMenu);
 	}
 
 	public DriverScheduleCommand CreateScheduleCommand(DriverCharacter driver, Soup soup)
