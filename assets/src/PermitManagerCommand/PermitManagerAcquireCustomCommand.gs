@@ -32,7 +32,9 @@ class PermitManagerAcquireCustomCommand isclass CustomCommand
 		Soup msgSoup;
 		wait()
 		{
-			on PermitManagerConst.PermitManagerMessageMajor, PermitManagerConst.PermitManagerScheduleCommandOpCodeGranted, msg:
+			// Define Constants syntactically not allowed, inlining string literals
+			//on PermitManagerConst.PermitManagerMessageMajor, PermitManagerConst.PermitManagerScheduleCommandOpCodeGranted, msg:
+			on "PermitManager", "Granted", msg:
 			{
 				msgSoup = cast<Soup>(msg.paramSoup);
 				break;
