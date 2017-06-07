@@ -4,11 +4,22 @@ include "ScenarioBehavior.gs"
 
 static class PermitManagerConst
 {
+	define public string PermitManagerRuleSoupTag = "manager";
 	define public string PermitManagerRuleKuidEntryName = "PermitManagerRule";
+	define public string PermitTypeSoupTag = "type";
 	define public string PermitTypesSoupTag = "types";
 	define public string PermitTypeNameSoupTag = "name";
+	define public string PermitObjectSoupTag = "object";
 	define public string PermitObjectsSoupTag = "objects";
 	define public string PermitObjectNameSoupTag = "name";
+
+	define public string PermitManagerAcquireCommandMenuItemEntry = "AcquireCommandMenuItem";
+	define public string PermitManagerReleaseCommandMenuItemEntry = "ReleaseCommandMenuItem";
+
+	define public string PermitManagerScheduleCommandOpCodeSoupTag = "opcode";
+	define public string PermitManagerScheduleCommandOpCodeAcquire = "Acquire";
+	define public string PermitManagerScheduleCommandOpCodeRelease = "Release";
+	define public string PermitManagerScheduleCommandOpCodeGranted = "Granted";
 };
 
 class PermitManagerPermitType

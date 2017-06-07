@@ -7,6 +7,7 @@ include "DriverCommand.gs"
 include "DriverScheduleCommand.gs"
 
 include "PermitManagerShared.gs"
+include "PermitManagerScheduleCommand.gs"
 
 class PermitManagerCommandMenuItemTuple
 {
@@ -121,16 +122,36 @@ class PermitManagerCommand isclass DriverCommand
 		return tuple;
 	}
 
-	void OnPermitObjectAcquireMenuItemClicked(Message msg)
+	void OnPermitObjectMenutItemClicked(Message msg, string opcode)
 	{
 		DriverCommands commands = GetDriverCommands(msg);
 		DriverCharacter driver = cast<DriverCharacter>(msg.src);
+
+		PermitManagerCommandMenuItemTuple tuple = UnPackPermitManagerCommandMenuItemTuple(msg.minor);
+		if (!tuple)
+			return;
+
+		Soup soup = Constructors.NewSoup();
+		soup.SetNamedTag(PermitManagerConst.PermitManagerScheduleCommandOpCodeSoupTag, opcode);
+		if (tuple.permitManager)
+			soup.SetNamedTag(PermitManagerConst.PermitManagerRuleSoupTag, tuple.permitManager.GetId());
+		if (tuple.permitType)
+			soup.SetNamedSoup(PermitManagerConst.PermitTypeSoupTag, tuple.permitType.GetProperties());
+		if (tuple.permitObject)
+			soup.SetNamedSoup(PermitManagerConst.PermitObjectSoupTag, tuple.permitObject.GetProperties());
+
+		DriverScheduleCommand cmd = CreateScheduleCommand(driver, soup);
+		commands.AddDriverScheduleCommand(cmd);
+	}
+
+	void OnPermitObjectAcquireMenuItemClicked(Message msg)
+	{
+		OnPermitObjectMenutItemClicked(msg, PermitManagerConst.PermitManagerScheduleCommandOpCodeAcquire);
 	}
 
 	void OnPermitObjectReleaseMenuItemClicked(Message msg)
 	{
-		DriverCommands commands = GetDriverCommands(msg);
-		DriverCharacter driver = cast<DriverCharacter>(msg.src);
+		OnPermitObjectMenutItemClicked(msg, PermitManagerConst.PermitManagerScheduleCommandOpCodeRelease);
 	}
 
 	void AddSubmenuHierarchies(Menu rootMenu, ScenarioBehavior permitManager, PermitManagerPermitType[] permitTypes, PermitManagerPermitObject[] permitObjects, string msgMajor)
@@ -143,7 +164,8 @@ class PermitManagerCommand isclass DriverCommand
 			for (j = 0; j < permitObjects.size())
 			{
 				PermitManagerPermitObject permitObject = permitObjects[j];
-				permitTypeSubMenu.AddItem(permitObject.name, me, msgMajor, PackPermitManagerCommandMenuItemTuple(permitManager, permitType, permitObject));
+				string msgMinor = PackPermitManagerCommandMenuItemTuple(permitManager, permitType, permitObject);
+				permitTypeSubMenu.AddItem(permitObject.name, me, msgMajor, msgMinor);
 			}
 			permitTypeSubMenu.SubdivideItems(true);
 			rootMenu.AddSubmenu(permitType.name, permitTypeSubMenu);
@@ -190,6 +212,10 @@ class PermitManagerCommand isclass DriverCommand
 
 	public DriverScheduleCommand CreateScheduleCommand(DriverCharacter driver, Soup soup)
 	{
-		return inherited(driver, soup);
+		PermitManagerScheduleCommand cmd = new PermitManagerScheduleCommand();
+		cmd.Init(driver, me)
+		cmd.SetProperties(soup);
+
+		return cmd;
 	}
 };
