@@ -16,6 +16,7 @@ static class PermitManagerConst
 	define public string PermitManagerAcquireCommandMenuItemEntry = "AcquireCommandMenuItem";
 	define public string PermitManagerReleaseCommandMenuItemEntry = "ReleaseCommandMenuItem";
 
+	define public string PermitManagerMessageMajor = "PermitManager";
 	define public string PermitManagerScheduleCommandOpCodeSoupTag = "opcode";
 	define public string PermitManagerScheduleCommandOpCodeAcquire = "Acquire";
 	define public string PermitManagerScheduleCommandOpCodeRelease = "Release";
