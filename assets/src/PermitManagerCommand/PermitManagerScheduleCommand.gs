@@ -16,8 +16,6 @@ class PermitManagerScheduleCommand isclass DriverScheduleCommand
 	public void Init(DriverCharacter driver, DriverCommand parent)
 	{
 		inherited(driver, parent);
-
-
 	}
 
 	public bool BeginExecute(DriverCharacter driver)
@@ -41,7 +39,12 @@ class PermitManagerScheduleCommand isclass DriverScheduleCommand
 		}
 		else if (opcode == PermitManagerConst.PermitManagerScheduleCommandOpCodeRelease)
 		{
+			PermitManagerReleaseCustomCommand releaseCmd = new PermitManagerReleaseCustomCommand();
+			releaseCmd.manager = manager;
+			releaseCmd.typeSoup = typeSoup;
+			releaseCmd.objectSoup = objectSoup;
 
+			cmd = releaseCmd;
 		}
 		else
 			return false;
