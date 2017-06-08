@@ -1,6 +1,10 @@
+include "gs.gs"
+include "Asset.gs"
+include "StringTable.gs"
+include "ScenarioBehavior.gs"
+include "PropertyObject.gs"
 
-
-class CongestionManagerRule isclass ScenarioBehavior
+class PermitManagerRule isclass ScenarioBehavior
 {
 	private StringTable stringTable;
 
@@ -12,6 +16,11 @@ class CongestionManagerRule isclass ScenarioBehavior
 
 		SetPropertyHandler(null);
 
+
+	}
+
+	thread void MessageLoop()
+	{
 
 	}
 };
