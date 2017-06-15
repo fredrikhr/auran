@@ -15,7 +15,7 @@ class PermitManagerAcquireCustomCommand isclass CustomCommand
 	public bool Execute(Train train, int px, int py, int pz)
 	{
 		if (!train)
-	    	return false;
+			return false;
 
 		Soup soup = Constructors.NewSoup();
 		soup.SetNamedSoup(PermitManagerConst.PermitTypeSoupTag, typeSoup);
