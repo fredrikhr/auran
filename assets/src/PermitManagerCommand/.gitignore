@@ -1,4 +1,1 @@
-# Ignore shared permit managed file.
-# It is located one directory above this one, but for packaging one should
-# create a sym- or hardlink to that file here:
-PermitManagerShared.gs
+excludefiles.txt
