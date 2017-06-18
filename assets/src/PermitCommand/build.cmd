@@ -13,11 +13,11 @@ ECHO.excludefiles.txt > excludefiles.txt
 ECHO..gitignore >> excludefiles.txt
 ECHO.%~nx0 >> excludefiles.txt
 
-MD "..\..\bin\PermitManagerCommand"
-XCOPY "." "..\..\bin\PermitManagerCommand" /E /C /H /Y /EXCLUDE:excludefiles.txt
-COPY /Y "..\PermitManagerShared.gs" "..\..\bin\PermitManagerCommand"
+MD "..\..\bin\PermitCommand"
+XCOPY "." "..\..\bin\PermitCommand" /E /C /H /Y /EXCLUDE:excludefiles.txt
+COPY /Y "..\PermitManagerShared.gs" "..\..\bin\PermitCommand"
 
-PUSHD "..\..\bin\PermitManagerCommand"
+PUSHD "..\..\bin\PermitCommand"
 FOR /R . %%G IN (*.gs) DO (
 	TrainzUtil compile -i"..\..\..\ref\TS12\scripts" -o"%%~dpnG" "%%~G"
 )

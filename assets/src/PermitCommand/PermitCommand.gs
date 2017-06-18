@@ -7,16 +7,16 @@ include "DriverCommand.gs"
 include "DriverScheduleCommand.gs"
 
 include "PermitManagerShared.gs"
-include "PermitManagerScheduleCommand.gs"
+include "PermitScheduleCommand.gs"
 
-class PermitManagerCommandMenuItemTuple
+class PermitCommandMenuItemTuple
 {
 	public ScenarioBehavior permitManager;
-	public PermitManagerPermitType permitType;
-	public PermitManagerPermitObject permitObject;
+	public PermitType permitType;
+	public PermitObject permitObject;
 };
 
-class PermitManagerCommand isclass DriverCommand
+class PermitCommand isclass DriverCommand
 {
 	StringTable stringTable;
 	define string acquireMenuItemMajor = "PermitObjectAcquireMenuItem";
@@ -68,7 +68,7 @@ class PermitManagerCommand isclass DriverCommand
 		return matches;
 	}
 
-	string PackPermitManagerCommandMenuItemTuple(ScenarioBehavior permitManager, PermitManagerPermitType permitType, PermitManagerPermitObject permitObject)
+	string PackPermitCommandMenuItemTuple(ScenarioBehavior permitManager, PermitType permitType, PermitObject permitObject)
 	{
 		string packed;
 		packed = cast<string>(permitManager.GetId());
@@ -82,14 +82,14 @@ class PermitManagerCommand isclass DriverCommand
 		return packed;
 	}
 
-	string PackPermitManagerCommandMenuItemTuple(PermitManagerCommandMenuItemTuple tuple)
+	string PackPermitCommandMenuItemTuple(PermitCommandMenuItemTuple tuple)
 	{
 		if (!tuple)
 			return cast<string>(null);
-		return PackPermitManagerCommandMenuItemTuple(tuple.permitManager, tuple.permitType, tuple.permitObject);
+		return PackPermitCommandMenuItemTuple(tuple.permitManager, tuple.permitType, tuple.permitObject);
 	}
 
-	PermitManagerCommandMenuItemTuple UnPackPermitManagerCommandMenuItemTuple(string packedTuple)
+	PermitCommandMenuItemTuple UnPackPermitCommandMenuItemTuple(string packedTuple)
 	{
 		if (!packedTuple)
 			return null;
@@ -115,10 +115,10 @@ class PermitManagerCommand isclass DriverCommand
 		startIdx = slashIdx + 1;
 		string objName = packedTuple[startIdx, startIdx + objNameLength];
 
-		PermitManagerCommandMenuItemTuple tuple = new PermitManagerCommandMenuItemTuple();
+		PermitCommandMenuItemTuple tuple = new PermitCommandMenuItemTuple();
 		tuple.permitManager = cast<ScenarioBehavior>(Router.GetGameObject(managerId));
-		tuple.permitType = PermitManagerConverter.GetPermitTypeByName(tuple.permitManager, typeName);
-		tuple.permitObject = PermitManagerConverter.GetPermitObjectByName(tuple.permitManager, objName);
+		tuple.permitType = PermitConverter.GetPermitTypeByName(tuple.permitManager, typeName);
+		tuple.permitObject = PermitConverter.GetPermitObjectByName(tuple.permitManager, objName);
 		return tuple;
 	}
 
@@ -127,12 +127,12 @@ class PermitManagerCommand isclass DriverCommand
 		DriverCommands commands = GetDriverCommands(msg);
 		DriverCharacter driver = cast<DriverCharacter>(msg.src);
 
-		PermitManagerCommandMenuItemTuple tuple = UnPackPermitManagerCommandMenuItemTuple(msg.minor);
+		PermitCommandMenuItemTuple tuple = UnPackPermitCommandMenuItemTuple(msg.minor);
 		if (!tuple)
 			return;
 
 		Soup soup = Constructors.NewSoup();
-		soup.SetNamedTag(PermitManagerConst.PermitManagerScheduleCommandOpCodeSoupTag, opcode);
+		soup.SetNamedTag(PermitManagerConst.PermitScheduleCommandOpCodeSoupTag, opcode);
 		if (tuple.permitManager)
 			soup.SetNamedTag(PermitManagerConst.PermitManagerRuleSoupTag, tuple.permitManager.GetId());
 		if (tuple.permitType)
@@ -146,25 +146,25 @@ class PermitManagerCommand isclass DriverCommand
 
 	void OnPermitObjectAcquireMenuItemClicked(Message msg)
 	{
-		OnPermitObjectMenutItemClicked(msg, PermitManagerConst.PermitManagerScheduleCommandOpCodeAcquire);
+		OnPermitObjectMenutItemClicked(msg, PermitManagerConst.PermitScheduleCommandOpCodeAcquire);
 	}
 
 	void OnPermitObjectReleaseMenuItemClicked(Message msg)
 	{
-		OnPermitObjectMenutItemClicked(msg, PermitManagerConst.PermitManagerScheduleCommandOpCodeRelease);
+		OnPermitObjectMenutItemClicked(msg, PermitManagerConst.PermitScheduleCommandOpCodeRelease);
 	}
 
-	void AddSubmenuHierarchies(Menu rootMenu, ScenarioBehavior permitManager, PermitManagerPermitType[] permitTypes, PermitManagerPermitObject[] permitObjects, string msgMajor)
+	void AddSubmenuHierarchies(Menu rootMenu, ScenarioBehavior permitManager, PermitType[] permitTypes, PermitObject[] permitObjects, string msgMajor)
 	{
 		int i, j;
 		for (i = 0; i < permitTypes.size(); i++)
 		{
-			PermitManagerPermitType permitType = permitTypes[i];
+			PermitType permitType = permitTypes[i];
 			Menu permitTypeSubMenu = Constructors.NewMenu();
 			for (j = 0; j < permitObjects.size(); j++)
 			{
-				PermitManagerPermitObject permitObject = permitObjects[j];
-				string msgMinor = PackPermitManagerCommandMenuItemTuple(permitManager, permitType, permitObject);
+				PermitObject permitObject = permitObjects[j];
+				string msgMinor = PackPermitCommandMenuItemTuple(permitManager, permitType, permitObject);
 				permitTypeSubMenu.AddItem(permitObject.name, me, msgMajor, msgMinor);
 			}
 			permitTypeSubMenu.SubdivideItems(true);
@@ -190,8 +190,8 @@ class PermitManagerCommand isclass DriverCommand
 				continue;
 			Soup objsSoup = ruleProps.GetNamedSoup(PermitManagerConst.PermitObjectsSoupTag);
 			Soup typsSoup = ruleProps.GetNamedSoup(PermitManagerConst.PermitTypesSoupTag);
-			PermitManagerPermitObject[] permitObjects = PermitManagerConverter.GetPermitObjectsFromSoup(objsSoup);
-			PermitManagerPermitType[] permitTypes = PermitManagerConverter.GetPermitTypesFromSoup(typsSoup);
+			PermitObject[] permitObjects = PermitConverter.GetPermitObjectsFromSoup(objsSoup);
+			PermitType[] permitTypes = PermitConverter.GetPermitTypesFromSoup(typsSoup);
 
 			if (permitObjects and permitObjects.size() > 0 and permitTypes and permitTypes.size() > 0)
 			{
@@ -212,7 +212,7 @@ class PermitManagerCommand isclass DriverCommand
 
 	public DriverScheduleCommand CreateScheduleCommand(DriverCharacter driver, Soup soup)
 	{
-		DriverScheduleCommand cmd = new PermitManagerScheduleCommand();
+		DriverScheduleCommand cmd = new PermitScheduleCommand();
 		cmd.Init(driver, me);
 		cmd.SetProperties(soup);
 

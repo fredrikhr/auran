@@ -4,9 +4,10 @@ include "ScenarioBehavior.gs"
 include "DriverScheduleCommand.gs"
 
 include "PermitManagerShared.gs"
-include "PermitManagerAcquireCustomCommand.gs"
+include "PermitAcquireCustomCommand.gs"
+include "PermitReleaseCustomCommand.gs"
 
-class PermitManagerScheduleCommand isclass DriverScheduleCommand
+class PermitScheduleCommand isclass DriverScheduleCommand
 {
 	string opcode;
 	ScenarioBehavior manager;
@@ -28,18 +29,18 @@ class PermitManagerScheduleCommand isclass DriverScheduleCommand
 		}
 
 		CustomCommand cmd;
-		if (opcode == PermitManagerConst.PermitManagerScheduleCommandOpCodeAcquire)
+		if (opcode == PermitManagerConst.PermitScheduleCommandOpCodeAcquire)
 		{
-			PermitManagerAcquireCustomCommand acquireCmd = new PermitManagerAcquireCustomCommand();
+			PermitAcquireCustomCommand acquireCmd = new PermitAcquireCustomCommand();
 			acquireCmd.manager = manager;
 			acquireCmd.typeSoup = typeSoup;
 			acquireCmd.objectSoup = objectSoup;
 
 			cmd = acquireCmd;
 		}
-		else if (opcode == PermitManagerConst.PermitManagerScheduleCommandOpCodeRelease)
+		else if (opcode == PermitManagerConst.PermitScheduleCommandOpCodeRelease)
 		{
-			PermitManagerReleaseCustomCommand releaseCmd = new PermitManagerReleaseCustomCommand();
+			PermitReleaseCustomCommand releaseCmd = new PermitReleaseCustomCommand();
 			releaseCmd.manager = manager;
 			releaseCmd.typeSoup = typeSoup;
 			releaseCmd.objectSoup = objectSoup;
@@ -56,7 +57,7 @@ class PermitManagerScheduleCommand isclass DriverScheduleCommand
 
 	public object GetIcon(void)
 	{
-		return GetDriverCommand();
+		return cast<object>(GetDriverCommand());
 	}
 
 	public Soup GetProperties(void)
@@ -65,7 +66,7 @@ class PermitManagerScheduleCommand isclass DriverScheduleCommand
 		if (!soup)
 			soup = Constructors.NewSoup();
 
-		soup.SetNamedTag(PermitManagerConst.PermitManagerScheduleCommandOpCodeSoupTag, opcode);
+		soup.SetNamedTag(PermitManagerConst.PermitScheduleCommandOpCodeSoupTag, opcode);
 		if (manager)
 			soup.SetNamedTag(PermitManagerConst.PermitManagerRuleSoupTag, manager.GetId());
 		soup.SetNamedSoup(PermitManagerConst.PermitTypeSoupTag, typeSoup);
@@ -74,13 +75,13 @@ class PermitManagerScheduleCommand isclass DriverScheduleCommand
 		return soup;
 	}
 
-	public Soup SetProperties(Soup soup)
+	public void SetProperties(Soup soup)
 	{
 		inherited(soup);
 		if (!soup)
 			return;
 
-		opcode = soup.GetNamedTag(PermitManagerConst.PermitManagerScheduleCommandOpCodeSoupTag);
+		opcode = soup.GetNamedTag(PermitManagerConst.PermitScheduleCommandOpCodeSoupTag);
 		int managerId = soup.GetNamedTagAsInt(PermitManagerConst.PermitManagerRuleSoupTag);
 		manager = cast<ScenarioBehavior>(Router.GetGameObject(managerId));
 		typeSoup = soup.GetNamedSoup(PermitManagerConst.PermitTypeSoupTag);

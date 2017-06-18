@@ -6,26 +6,31 @@ static class PermitManagerConst
 {
 	define public string PermitManagerRuleSoupTag = "manager";
 	define public string PermitManagerRuleKuidEntryName = "PermitManagerRule";
+
 	define public string PermitTypeSoupTag = "type";
 	define public string PermitTypesSoupTag = "types";
 	define public string PermitTypeNameSoupTag = "name";
+	define public string PermitTypeSharedSoupTag = "shared";
+
 	define public string PermitObjectSoupTag = "object";
 	define public string PermitObjectsSoupTag = "objects";
 	define public string PermitObjectNameSoupTag = "name";
+	define public string PermitObjectStateSoupTag = "state";
 
 	define public string PermitManagerAcquireCommandMenuItemEntry = "AcquireCommandMenuItem";
 	define public string PermitManagerReleaseCommandMenuItemEntry = "ReleaseCommandMenuItem";
 
 	define public string PermitManagerMessageMajor = "PermitManager";
-	define public string PermitManagerScheduleCommandOpCodeSoupTag = "opcode";
-	define public string PermitManagerScheduleCommandOpCodeAcquire = "Acquire";
-	define public string PermitManagerScheduleCommandOpCodeRelease = "Release";
-	define public string PermitManagerScheduleCommandOpCodeGranted = "Granted";
+	define public string PermitScheduleCommandOpCodeSoupTag = "opcode";
+	define public string PermitScheduleCommandOpCodeAcquire = "Acquire";
+	define public string PermitScheduleCommandOpCodeRelease = "Release";
+	define public string PermitScheduleCommandOpCodeGranted = "Granted";
 };
 
-class PermitManagerPermitType
+class PermitType
 {
 	public string name;
+	public bool isShared;
 
 	public void SetProperties(Soup soup)
 	{
@@ -35,6 +40,8 @@ class PermitManagerPermitType
 		string soupName = soup.GetNamedTag(PermitManagerConst.PermitTypeNameSoupTag);
 		if (soupName)
 			me.name = soupName;
+		if (soup.GetIndexForNamedTag(PermitManagerConst.PermitTypeSharedSoupTag) >= 0)
+			me.isShared = soup.GetNamedTagAsBool(PermitManagerConst.PermitTypeSharedSoupTag);
 	}
 
 	public Soup GetProperties()
@@ -42,14 +49,16 @@ class PermitManagerPermitType
 		Soup soup = Constructors.NewSoup();
 
 		soup.SetNamedTag(PermitManagerConst.PermitTypeNameSoupTag, me.name);
+		soup.SetNamedTag(PermitManagerConst.PermitTypeSharedSoupTag, me.isShared);
 
 		return soup;
 	}
 };
 
-class PermitManagerPermitObject
+class PermitObject
 {
 	public string name;
+	public PermitType state;
 
 	public void SetProperties(Soup soup)
 	{
@@ -59,6 +68,12 @@ class PermitManagerPermitObject
 		string soupName = soup.GetNamedTag(PermitManagerConst.PermitObjectNameSoupTag);
 		if (soupName)
 			me.name = soupName;
+		Soup stateSoup = soup.GetNamedSoup(PermitManagerConst.PermitObjectStateSoupTag);
+		if (stateSoup)
+		{
+			state = new PermitType();
+			state.SetProperties(stateSoup);
+		}
 	}
 
 	public Soup GetProperties()
@@ -66,17 +81,19 @@ class PermitManagerPermitObject
 		Soup soup = Constructors.NewSoup();
 
 		soup.SetNamedTag(PermitManagerConst.PermitObjectNameSoupTag, me.name);
+		if (state)
+			soup.SetNamedSoup(PermitManagerConst.PermitObjectStateSoupTag, state.GetProperties());
 
 		return soup;
 	}
 };
 
-static class PermitManagerConverter
+static class PermitConverter
 {
-	public PermitManagerPermitType[] GetPermitTypesFromSoup(Soup permitTypesSoup)
+	public PermitType[] GetPermitTypesFromSoup(Soup permitTypesSoup)
 	{
 		int i;
-		PermitManagerPermitType[] result = new PermitManagerPermitType[0];
+		PermitType[] result = new PermitType[0];
 		if (!permitTypesSoup)
 			return result;
 		for (i = 0; i < permitTypesSoup.CountTags(); i++)
@@ -85,17 +102,17 @@ static class PermitManagerConverter
 			Soup soup = permitTypesSoup.GetNamedSoup(soupTag);
 			if (!soup)
 				continue;
-			PermitManagerPermitType newPermitType = new PermitManagerPermitType();
+			PermitType newPermitType = new PermitType();
 			newPermitType.SetProperties(soup);
 			result[result.size()] = newPermitType;
 		}
 		return result;
 	}
 
-	public PermitManagerPermitObject[] GetPermitObjectsFromSoup(Soup permitsSoup)
+	public PermitObject[] GetPermitObjectsFromSoup(Soup permitsSoup)
 	{
 		int i;
-		PermitManagerPermitObject[] result = new PermitManagerPermitObject[0];
+		PermitObject[] result = new PermitObject[0];
 		if (!permitsSoup)
 			return result;
 		for (i = 0; i < permitsSoup.CountTags(); i++)
@@ -104,14 +121,14 @@ static class PermitManagerConverter
 			Soup soup = permitsSoup.GetNamedSoup(soupTag);
 			if (!soup)
 				continue;
-			PermitManagerPermitObject newPermitObj = new PermitManagerPermitObject();
+			PermitObject newPermitObj = new PermitObject();
 			newPermitObj.SetProperties(soup);
 			result[result.size()] = newPermitObj;
 		}
 		return result;
 	}
 
-	public Soup GetSoupFromPermitTypes(PermitManagerPermitType[] permitTypes)
+	public Soup GetSoupFromPermitTypes(PermitType[] permitTypes)
 	{
 		int i;
 		Soup result = Constructors.NewSoup();
@@ -124,7 +141,7 @@ static class PermitManagerConverter
 		return result;
 	}
 
-	public Soup GetSoupFromPermitObjects(PermitManagerPermitObject[] permitObjs)
+	public Soup GetSoupFromPermitObjects(PermitObject[] permitObjs)
 	{
 		int i;
 		Soup result = Constructors.NewSoup();
@@ -137,19 +154,19 @@ static class PermitManagerConverter
 		return result;
 	}
 
-	public void AddPermitTypesToSoup(PermitManagerPermitType[] permitTypes, Soup soup)
+	public void AddPermitTypesToSoup(PermitType[] permitTypes, Soup soup)
 	{
 		soup.SetNamedSoup(PermitManagerConst.PermitTypesSoupTag,
 			GetSoupFromPermitTypes(permitTypes));
 	}
 
-	public void AddPermitObjectsToSoup(PermitManagerPermitObject[] permitObjs, Soup soup)
+	public void AddPermitObjectsToSoup(PermitObject[] permitObjs, Soup soup)
 	{
 		soup.SetNamedSoup(PermitManagerConst.PermitObjectsSoupTag,
 			GetSoupFromPermitObjects(permitObjs));
 	}
 
-	public PermitManagerPermitType GetPermitTypeByName(ScenarioBehavior permitManager, string name)
+	public PermitType GetPermitTypeByName(ScenarioBehavior permitManager, string name)
 	{
 		if (!permitManager)
 			return null;
@@ -171,7 +188,7 @@ static class PermitManagerConverter
 			string typeName = typeSoup.GetNamedTag(PermitManagerConst.PermitTypeNameSoupTag);
 			if (typeName == name)
 			{
-				PermitManagerPermitType result = new PermitManagerPermitType();
+				PermitType result = new PermitType();
 				result.SetProperties(typeSoup);
 				return result;
 			}
@@ -180,7 +197,7 @@ static class PermitManagerConverter
 		return null;
 	}
 
-	public PermitManagerPermitObject GetPermitObjectByName(ScenarioBehavior permitManager, string name)
+	public PermitObject GetPermitObjectByName(ScenarioBehavior permitManager, string name)
 	{
 		if (!permitManager)
 			return null;
@@ -202,7 +219,7 @@ static class PermitManagerConverter
 			string objName = objSoup.GetNamedTag(PermitManagerConst.PermitObjectNameSoupTag);
 			if (objName == name)
 			{
-				PermitManagerPermitObject result = new PermitManagerPermitObject();
+				PermitObject result = new PermitObject();
 				result.SetProperties(objSoup);
 				return result;
 			}

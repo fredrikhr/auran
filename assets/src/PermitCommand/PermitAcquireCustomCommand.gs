@@ -6,7 +6,7 @@ include "Schedule.gs"
 
 include "PermitManagerShared.gs"
 
-class PermitManagerAcquireCustomCommand isclass CustomCommand
+class PermitAcquireCustomCommand isclass CustomCommand
 {
 	public GameObject manager;
 	public Soup typeSoup;
@@ -24,7 +24,7 @@ class PermitManagerAcquireCustomCommand isclass CustomCommand
 		train.Sniff(train, PermitManagerConst.PermitManagerMessageMajor, null, true);
 		train.SendMessage(manager,
 			PermitManagerConst.PermitManagerMessageMajor,
-			PermitManagerConst.PermitManagerScheduleCommandOpCodeAcquire,
+			PermitManagerConst.PermitScheduleCommandOpCodeAcquire,
 			soup
 			);
 
@@ -33,7 +33,7 @@ class PermitManagerAcquireCustomCommand isclass CustomCommand
 		wait()
 		{
 			// Define Constants syntactically not allowed, inlining string literals
-			//on PermitManagerConst.PermitManagerMessageMajor, PermitManagerConst.PermitManagerScheduleCommandOpCodeGranted, msg:
+			//on PermitManagerConst.PermitManagerMessageMajor, PermitManagerConst.PermitScheduleCommandOpCodeGranted, msg:
 			on "PermitManager", "Granted", msg:
 			{
 				msgSoup = cast<Soup>(msg.paramSoup);

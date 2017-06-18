@@ -6,7 +6,7 @@ include "Schedule.gs"
 
 include "PermitManagerShared.gs"
 
-class PermitManagerReleaseCustomCommand isclass CustomCommand
+class PermitReleaseCustomCommand isclass CustomCommand
 {
 	public GameObject manager;
 	public Soup typeSoup;
@@ -23,7 +23,7 @@ class PermitManagerReleaseCustomCommand isclass CustomCommand
 
 		train.SendMessage(manager,
 			PermitManagerConst.PermitManagerMessageMajor,
-			PermitManagerConst.PermitManagerScheduleCommandOpCodeRelease,
+			PermitManagerConst.PermitScheduleCommandOpCodeRelease,
 			soup
 			);
 
