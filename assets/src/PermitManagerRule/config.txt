@@ -10,6 +10,25 @@ kuid-table
 }
 string-table
 {
+	PermitTypeHeading				"Permit Types"
+	PermitTypeDescription			"Permit Types have a unique name (within the same Rule) and can either provide shared or exclusive permissions.<br>An exclusive permission type will ensure that only ONE driver has permission for a Permit object. For shared permission types multiple Drivers can be granted permission for the same type at the same time."
+	PermitTypeAddName				"Add Permit Type"
+	PermitTypeAddDescription		"Adds a new Permit Type with a specified unique name."
+	PermitTypeRemoveName			"Remove Permit Type"
+	PermitTypeRemoveDescription		"Removes the Permit Type from the Rule"
+	PermitTypeNameName				"Set Permit Type Name"
+	PermitTypeNameDescription		"Sets the name for the Permit Type. Names must be unique within a Rule."
+	PermitTypeSharedName			"Is shared?"
+	PermitTypeSharedDescription		"Indicates whether the Permit Type is a shared or an exclusive Permit Type."
+
+	PermitObjectHeading				"Permit Objects"
+	PermitObjectDescription			"Permit Objects are custom permit objects for which Permissions are granted. Permissions that are granted have a Permit Type and they can be either shared or exclusive."
+	PermitObjectAddName				"Add Permit Object"
+	PermitObjectAddDescription		"Adds a new Permit Object with a specified unique name."
+	PermitObjectRemoveName			"Remove Permit Object"
+	PermitObjectRemoveDescription	"Removes the Permit Object from the Rule"
+	PermitObjectNameName			"Set Permit Object Name"
+	PermitObjectNameDescription		"Sets the name for the Permit Object. Names must be unique within a Rule."
 }
 thumbnails
 {

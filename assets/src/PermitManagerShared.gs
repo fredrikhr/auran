@@ -7,15 +7,49 @@ static class PermitManagerConst
 	define public string PermitManagerRuleSoupTag = "manager";
 	define public string PermitManagerRuleKuidEntryName = "PermitManagerRule";
 
+	define public string PermitManagerAddItemPropertyId = "add";
+
 	define public string PermitTypeSoupTag = "type";
 	define public string PermitTypesSoupTag = "types";
 	define public string PermitTypeNameSoupTag = "name";
 	define public string PermitTypeSharedSoupTag = "shared";
+	define public string PermitTypePropertyId = "type";
+	define public string PermitTypeRemovePropertyId = "remove";
+	define public string PermitTypeNamePropertyId = "name";
+	define public string PermitTypeSharedPropertyId = "shared";
+	define public string PermitTypeHeadingStringTable = "PermitTypeHeading";
+	define public string PermitTypeDescriptionStringTable = "PermitTypeDescription";
+	define public string PermitTypeAddNameStringTable = "PermitTypeAddName";
+	define public string PermitTypeAddDescriptionStringTable = "PermitTypeAddDescription";
+	define public string PermitTypeRemoveNameStringTable = "PermitTypeRemoveName";
+	define public string PermitTypeRemoveDescriptionStringTable = "PermitTypeRemoveDescription";
+	define public string PermitTypeNameNameStringTable = "PermitTypeNameName";
+	define public string PermitTypeNameDescriptionStringTable = "PermitTypeNameDescription";
+	define public string PermitTypeSharedNameStringTable = "PermitTypeSharedName";
+	define public string PermitTypeSharedDescriptionStringTable = "PermitTypeSharedDescription";
 
 	define public string PermitObjectSoupTag = "object";
 	define public string PermitObjectsSoupTag = "objects";
 	define public string PermitObjectNameSoupTag = "name";
 	define public string PermitObjectStateSoupTag = "state";
+	define public string PermitObjectPropertyId = "object";
+	define public string PermitObjectRemovePropertyId = "remove";
+	define public string PermitObjectNamePropertyId = "name";
+	define public string PermitObjectHeadingStringTable = "PermitObjectHeading";
+	define public string PermitObjectDescriptionStringTable = "PermitObjectDescription";
+	define public string PermitObjectAddNameStringTable = "PermitObjectAddName";
+	define public string PermitObjectAddDescriptionStringTable = "PermitObjectAddDescription";
+	define public string PermitObjectRemoveNameStringTable = "PermitObjectRemoveName";
+	define public string PermitObjectRemoveDescriptionStringTable = "PermitObjectRemoveDescription";
+	define public string PermitObjectNameNameStringTable = "PermitObjectNameName";
+	define public string PermitObjectNameDescriptionStringTable = "PermitObjectNameDescription";
+
+	define public string PermitStateTypeSoupTag = "type";
+	define public string PermitStateGrantsSoupTag = "grants";
+	define public string PermitStateQueueSoupTag = "queue";
+
+	define public string PermitQueueItemTypeSoupTag = "queue";
+	define public string PermitQueueItemSourceSoupTag = "src";
 
 	define public string PermitManagerAcquireCommandMenuItemEntry = "AcquireCommandMenuItem";
 	define public string PermitManagerReleaseCommandMenuItemEntry = "ReleaseCommandMenuItem";
@@ -24,7 +58,10 @@ static class PermitManagerConst
 	define public string PermitScheduleCommandOpCodeSoupTag = "opcode";
 	define public string PermitScheduleCommandOpCodeAcquire = "Acquire";
 	define public string PermitScheduleCommandOpCodeRelease = "Release";
+	define public string PermitScheduleCommandOpCodeEnqueued = "Enqueued";
 	define public string PermitScheduleCommandOpCodeGranted = "Granted";
+	define public string PermitScheduleCommandOpCodeReleased = "Released";
+	define public string PermitScheduleCommandOpCodeRemoved = "Removed";
 };
 
 class PermitType
