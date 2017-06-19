@@ -15,13 +15,16 @@ class PermitReleaseCustomCommand isclass CustomCommand
 	public bool Execute(Train train, int px, int py, int pz)
 	{
 		if (!train)
-	    	return false;
+			return false;
+		GameObject go = train.GetActiveDriver();
+		if (go == null)
+			go = train;
 
 		Soup soup = Constructors.NewSoup();
 		soup.SetNamedSoup(PermitManagerConst.PermitTypeSoupTag, typeSoup);
 		soup.SetNamedSoup(PermitManagerConst.PermitObjectSoupTag, objectSoup);
 
-		train.SendMessage(manager,
+		go.SendMessage(manager,
 			PermitManagerConst.PermitManagerMessageMajor,
 			PermitManagerConst.PermitScheduleCommandOpCodeRelease,
 			soup

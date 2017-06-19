@@ -16,13 +16,16 @@ class PermitAcquireCustomCommand isclass CustomCommand
 	{
 		if (!train)
 			return false;
+		GameObject go = train.GetActiveDriver();
+		if (go == null)
+			go = train;
 
 		Soup soup = Constructors.NewSoup();
 		soup.SetNamedSoup(PermitManagerConst.PermitTypeSoupTag, typeSoup);
 		soup.SetNamedSoup(PermitManagerConst.PermitObjectSoupTag, objectSoup);
 
-		train.Sniff(train, PermitManagerConst.PermitManagerMessageMajor, null, true);
-		train.SendMessage(manager,
+		go.Sniff(go, PermitManagerConst.PermitManagerMessageMajor, null, true);
+		go.SendMessage(manager,
 			PermitManagerConst.PermitManagerMessageMajor,
 			PermitManagerConst.PermitScheduleCommandOpCodeAcquire,
 			soup
@@ -40,7 +43,7 @@ class PermitAcquireCustomCommand isclass CustomCommand
 				break;
 			}
 		}
-		train.Sniff(train, PermitManagerConst.PermitManagerMessageMajor, null, false);
+		go.Sniff(go, PermitManagerConst.PermitManagerMessageMajor, null, false);
 		return true;
 	}
 };
