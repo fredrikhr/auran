@@ -55,12 +55,105 @@ class PermitType
 	}
 };
 
+class PermitQueueItem
+{
+	public PermitType type;
+	public GameObject src;
+};
+
+class PermitState
+{
+	public PermitType type;
+	public GameObject[] grants;
+	public PermitQueueItem[] queue;
+};
+
 class PermitObject
 {
 	public string name;
-	public PermitType state;
+	public PermitState state;
 
-	public void SetProperties(Soup soup)
+	public bool AcquirePermit(GameObject src, PermitType type, bool enqueue)
+	{
+		if (!type)
+			return false;
+
+		if (!state)
+		{
+			state = new PermitState();
+			state.type = type;
+			GameObject[] grants = new GameObject[1];
+			grants[0] = src;
+			state.grants = grants;
+			state.queue = new PermitQueueItem[0];
+			return true;
+		}
+
+		if (state.type)
+		{
+			if (!state.grants or state.grants.size() == 0)
+			{
+				state.type = null;
+				return AcquirePermit(src, type, enqueue);
+			}
+
+			if (state.type == type and state.type.isShared and (!state.queue or state.queue.size() == 0))
+			{
+				state.grants[state.grants.size()] = src;
+				return true;
+			}
+
+			if (enqueue)
+			{
+				PermitQueueItem qi = new PermitQueueItem();
+				qi.src = src;
+				qi.type = type;
+				if (!state.queue)
+					state.queue = new PermitQueueItem[0];
+				state.queue[state.queue.size()] = qi;
+			}
+			return false;
+		}
+
+		state.type = type;
+		if (!state.grants)
+			state.grants = new GameObject[0];
+		state.grants[state.grants.size()] = src;
+		return true;
+	}
+
+	public bool ReleasePermit(GameObject src, PermitType type)
+	{
+		if (!state)
+			return false;
+		else if (!state.type or state.type != type)
+			return false;
+		else if (!state.grants)
+			return false;
+		int i;
+		for (i = 0; i < state.grants.size(); i++)
+		{
+			if (state.grants[i] == src)
+			{
+				// Replace current item with the last item
+				if (i < (state.grants.size() - 1))
+					state.grants[i] = state.grants[state.grants.size() - 1];
+				// Shrink the grants array at the end
+				state.grants[state.grants.size() - 1,] = null;
+				return true;
+			}
+		}
+		if (src)
+			return ReleasePermit(null, type);
+		return false;
+	}
+
+	public bool DequeuePermitRequest(GameObject src, PermitType type)
+	{
+		return false;
+	}
+
+	public void SetProperties(Soup soup, PermitType[] types)
 	{
 		if (!soup)
 			return;
@@ -68,21 +161,18 @@ class PermitObject
 		string soupName = soup.GetNamedTag(PermitManagerConst.PermitObjectNameSoupTag);
 		if (soupName)
 			me.name = soupName;
-		Soup stateSoup = soup.GetNamedSoup(PermitManagerConst.PermitObjectStateSoupTag);
-		if (stateSoup)
-		{
-			state = new PermitType();
-			state.SetProperties(stateSoup);
-		}
+
 	}
+
+	public void SetProperties(Soup soup)
+	{ SetProperties(soup, cast<PermitType[]>(null)); }
 
 	public Soup GetProperties()
 	{
 		Soup soup = Constructors.NewSoup();
 
 		soup.SetNamedTag(PermitManagerConst.PermitObjectNameSoupTag, me.name);
-		if (state)
-			soup.SetNamedSoup(PermitManagerConst.PermitObjectStateSoupTag, state.GetProperties());
+
 
 		return soup;
 	}
@@ -93,9 +183,9 @@ static class PermitConverter
 	public PermitType[] GetPermitTypesFromSoup(Soup permitTypesSoup)
 	{
 		int i;
-		PermitType[] result = new PermitType[0];
 		if (!permitTypesSoup)
-			return result;
+			return cast<PermitType[]>(null);
+		PermitType[] result = new PermitType[0];
 		for (i = 0; i < permitTypesSoup.CountTags(); i++)
 		{
 			string soupTag = permitTypesSoup.GetIndexedTagName(i);
@@ -109,12 +199,12 @@ static class PermitConverter
 		return result;
 	}
 
-	public PermitObject[] GetPermitObjectsFromSoup(Soup permitsSoup)
+	public PermitObject[] GetPermitObjectsFromSoup(Soup permitsSoup, PermitType[] permitTypes)
 	{
 		int i;
-		PermitObject[] result = new PermitObject[0];
 		if (!permitsSoup)
-			return result;
+			return cast<PermitObject[]>(null);
+		PermitObject[] result = new PermitObject[0];
 		for (i = 0; i < permitsSoup.CountTags(); i++)
 		{
 			string soupTag = permitsSoup.GetIndexedTagName(i);
@@ -122,18 +212,21 @@ static class PermitConverter
 			if (!soup)
 				continue;
 			PermitObject newPermitObj = new PermitObject();
-			newPermitObj.SetProperties(soup);
+			newPermitObj.SetProperties(soup, permitTypes);
 			result[result.size()] = newPermitObj;
 		}
 		return result;
 	}
 
+	public PermitObject[] GetPermitObjectsFromSoup(Soup permitsSoup)
+	{ return GetPermitObjectsFromSoup(permitsSoup, cast<PermitType[]>(null)); }
+
 	public Soup GetSoupFromPermitTypes(PermitType[] permitTypes)
 	{
 		int i;
-		Soup result = Constructors.NewSoup();
 		if (!permitTypes)
-			return result;
+			return cast<Soup>(null);
+		Soup result = Constructors.NewSoup();
 		for (i = 0; i < permitTypes.size(); i++)
 		{
 			result.AddUniqueNamedSoup(permitTypes[i].GetProperties());
@@ -144,9 +237,9 @@ static class PermitConverter
 	public Soup GetSoupFromPermitObjects(PermitObject[] permitObjs)
 	{
 		int i;
-		Soup result = Constructors.NewSoup();
 		if (!permitObjs)
-			return result;
+			return cast<Soup>(null);
+		Soup result = Constructors.NewSoup();
 		for (i = 0; i < permitObjs.size(); i++)
 		{
 			result.AddUniqueNamedSoup(permitObjs[i].GetProperties());

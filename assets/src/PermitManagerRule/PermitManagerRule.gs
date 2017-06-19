@@ -5,20 +5,13 @@ include "StringTable.gs"
 include "ScenarioBehavior.gs"
 include "PropertyObject.gs"
 
+include "PermitManagerShared.gs"
+
 class PermitManagerRule isclass ScenarioBehavior
 {
-	private StringTable stringTable;
-
-	public void Init(Asset asset)
-	{
-		inherited(asset);
-
-		stringTable = asset.GetStringTable();
-
-		SetPropertyHandler(null);
-
-		MessageLoop();
-	}
+	StringTable stringTable;
+	PermitType[] types;
+	PermitObject[] objects;
 
 	public string GetPropertyName(string propertyID)
 	{
@@ -69,14 +62,20 @@ class PermitManagerRule isclass ScenarioBehavior
 	{
 		inherited(soup);
 
-
+		if (!soup)
+			return;
+		types = PermitConverter.GetPermitTypesFromSoup(soup.GetNamedSoup(PermitManagerConst.PermitTypesSoupTag));
+		objects = PermitConverter.GetPermitObjectsFromSoup(soup.GetNamedSoup(PermitManagerConst.PermitObjectsSoupTag), types);
 	}
 
 	public Soup GetProperties(void)
 	{
 		Soup soup = inherited();
 
-
+		if (types)
+			soup.SetNamedSoup(PermitManagerConst.PermitTypesSoupTag, PermitConverter.GetSoupFromPermitTypes(types));
+		if (objects)
+			soup.SetNamedSoup(PermitManagerConst.PermitObjectsSoupTag, PermitConverter.GetSoupFromPermitObjects(objects));
 
 		return soup;
 	}
@@ -104,5 +103,16 @@ class PermitManagerRule isclass ScenarioBehavior
 				}
 			}
 		}
+	}
+
+	public void Init(Asset asset)
+	{
+		inherited(asset);
+
+		stringTable = asset.GetStringTable();
+
+		SetPropertyHandler(null);
+
+		MessageLoop();
 	}
 };
