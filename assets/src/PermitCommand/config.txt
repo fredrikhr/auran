@@ -1,10 +1,11 @@
-kind			"drivercommand"
-kuid			<KUID2:520252:100102:0>
-trainz-build	3.5
-script			"PermitCommand"
-class			"PermitCommand"
-username		"PermitCommand"
-description		""
+kind							"drivercommand"
+supports-null-driver-character	1
+kuid							<KUID2:520252:100102:0>
+trainz-build					3.5
+script							"PermitCommand"
+class							"PermitCommand"
+username						"PermitCommand"
+description						""
 kuid-table
 {
 	PermitManagerRule	<KUID:520252:100101>
