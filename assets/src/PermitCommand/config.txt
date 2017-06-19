@@ -17,4 +17,4 @@ string-table
 thumbnails
 {
 }
-category-class	"YR"
+category-class	"YD"
