@@ -134,7 +134,7 @@ class PermitCommand isclass DriverCommand
 		Soup soup = Constructors.NewSoup();
 		soup.SetNamedTag(PermitManagerConst.PermitScheduleCommandOpCodeSoupTag, opcode);
 		if (tuple.permitManager)
-			soup.SetNamedTag(PermitManagerConst.PermitManagerRuleSoupTag, tuple.permitManager.GetId());
+			soup.SetNamedTag(PermitManagerConst.PermitManagerRuleSoupTag, tuple.permitManager.GetGameObjectID().SerialiseToString());
 		if (tuple.permitType)
 			soup.SetNamedSoup(PermitManagerConst.PermitTypeSoupTag, tuple.permitType.GetProperties());
 		if (tuple.permitObject)

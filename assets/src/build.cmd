@@ -23,7 +23,7 @@ FOR /D %%A IN (*) DO (
 
     PUSHD "..\..\bin\%%~A"
     FOR /R . %%G IN (*.gs) DO (
-        TrainzUtil compile -i"..\..\..\ref\TS12\scripts" -o"%%~dpnG" "%%~G"
+        TrainzUtil compile -i"..\..\..\ref\TANE\scripts" -o"%%~dpnG" "%%~G"
     )
     POPD
 

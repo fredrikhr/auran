@@ -339,10 +339,10 @@ class PermitManagerRule isclass ScenarioBehavior
 		string html = "";
 		html = html
 			+ HTMLWindow.MakeFontSizeLarge(
-				HTMLWindow.MakeBold(GetName())
+				HTMLWindow.MakeBold(GetAsset().GetName())
 				)
 			+ "<br>"
-			+ HTMLWindow.MakeItalic(GetDescription())
+			+ HTMLWindow.MakeItalic(GetAsset().GetLocalisedDescription())
 			;
 		string spacer = "";
 		for (i = 0; i < 50; i++)

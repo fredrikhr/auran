@@ -137,8 +137,8 @@ class PermitQueueItem
 				}
 			}
 		}
-		int goId = soup.GetNamedTagAsInt(PermitManagerConst.PermitQueueItemSourceSoupTag);
-		GameObject goRef = Router.GetGameObject(goId);
+		string goId = soup.GetNamedTag(PermitManagerConst.PermitQueueItemSourceSoupTag);
+		GameObject goRef = Router.GetGameObject(Router.SerialiseGameObjectIDFromString(goId));
 		if (goRef)
 			me.src = goRef;
 	}
@@ -153,7 +153,7 @@ class PermitQueueItem
 		if (type)
 			soup.SetNamedTag(PermitManagerConst.PermitQueueItemTypeSoupTag, type.name);
 		if (src)
-			soup.SetNamedTag(PermitManagerConst.PermitQueueItemSourceSoupTag, src.GetId());
+			soup.SetNamedTag(PermitManagerConst.PermitQueueItemSourceSoupTag, src.GetGameObjectID().SerialiseToString());
 
 		return soup;
 	}
@@ -195,8 +195,8 @@ class PermitState
 			for (i = 0; i < n; i++)
 			{
 				string tagName = grantsSoup.GetIndexedTagName(i);
-				int goId = grantsSoup.GetNamedTagAsInt(tagName);
-				GameObject goRef = Router.GetGameObject(goId);
+				string goId = grantsSoup.GetNamedTag(tagName);
+				GameObject goRef = Router.GetGameObject(Router.SerialiseGameObjectIDFromString(goId));
 				if (goRef)
 					grants[grants.size()] = goRef;
 			}
@@ -239,7 +239,7 @@ class PermitState
 			for (i = 0; i < grants.size(); i++)
 			{
 				if (grants[i])
-					grantsSoup.SetNamedTag(i, grants[i].GetId());
+					grantsSoup.SetNamedTag(i, grants[i].GetGameObjectID());
 			}
 			soup.SetNamedSoup(PermitManagerConst.PermitStateGrantsSoupTag, grantsSoup);
 		}

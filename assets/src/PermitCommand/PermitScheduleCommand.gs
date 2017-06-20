@@ -90,7 +90,7 @@ class PermitScheduleCommand isclass DriverScheduleCommand, PermitScheduleCommand
 
 		soup.SetNamedTag(PermitManagerConst.PermitScheduleCommandOpCodeSoupTag, opcode);
 		if (manager)
-			soup.SetNamedTag(PermitManagerConst.PermitManagerRuleSoupTag, manager.GetId());
+			soup.SetNamedTag(PermitManagerConst.PermitManagerRuleSoupTag, manager.GetGameObjectID().SerialiseToString());
 		soup.SetNamedSoup(PermitManagerConst.PermitTypeSoupTag, typeSoup);
 		soup.SetNamedSoup(PermitManagerConst.PermitObjectSoupTag, objectSoup);
 
@@ -104,8 +104,8 @@ class PermitScheduleCommand isclass DriverScheduleCommand, PermitScheduleCommand
 			return;
 
 		opcode = soup.GetNamedTag(PermitManagerConst.PermitScheduleCommandOpCodeSoupTag);
-		int managerId = soup.GetNamedTagAsInt(PermitManagerConst.PermitManagerRuleSoupTag);
-		manager = cast<ScenarioBehavior>(Router.GetGameObject(managerId));
+		string managerId = soup.GetNamedTag(PermitManagerConst.PermitManagerRuleSoupTag);
+		manager = cast<ScenarioBehavior>(Router.GetGameObject(Router.SerialiseGameObjectIDFromString(managerId)));
 		typeSoup = soup.GetNamedSoup(PermitManagerConst.PermitTypeSoupTag);
 		objectSoup = soup.GetNamedSoup(PermitManagerConst.PermitObjectSoupTag);
 	}
