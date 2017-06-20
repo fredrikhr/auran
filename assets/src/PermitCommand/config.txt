@@ -14,6 +14,14 @@ string-table
 {
 	AcquireCommandMenuItem	"Wait for Permit"
 	ReleaseCommandMenuItem	"Release Permit"
+
+	PermitCommandAcquireRequestTooltip	"Requesting to acquire permit"
+	PermitCommandAcquireEnqueuedTooltip	"Permit request enqueued. Waiting to gain permit grant"
+	PermitCommandAcquireGrantedTooltip	"Permit granted"
+
+	PermitCommandReleaseRequestTooltip	"Requesting to release permit"
+	PermitCommandReleaseRemovedTooltip	"Pending permit request removed from queue"
+	PermitCommandReleaseReleasedTooltip	"Permit released"
 }
 thumbnails
 {

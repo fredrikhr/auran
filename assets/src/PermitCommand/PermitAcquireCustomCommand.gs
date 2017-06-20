@@ -11,6 +11,7 @@ class PermitAcquireCustomCommand isclass CustomCommand
 	public GameObject manager;
 	public Soup typeSoup;
 	public Soup objectSoup;
+	public PermitScheduleCommandTooltipInterface tooltipInterface;
 
 	public bool Execute(Train train, int px, int py, int pz)
 	{
@@ -25,6 +26,13 @@ class PermitAcquireCustomCommand isclass CustomCommand
 		soup.SetNamedSoup(PermitManagerConst.PermitObjectSoupTag, objectSoup);
 
 		go.Sniff(go, PermitManagerConst.PermitManagerMessageMajor, null, true);
+		StringTable stringTable;
+		if (tooltipInterface)
+		{
+			stringTable = tooltipInterface.GetStringTable();
+			if (stringTable)
+				tooltipInterface.SetTooltip(stringTable.GetString(PermitManagerConst.PermitCommandAcquireRequestTooltipStringTable));
+		}
 		go.SendMessage(manager,
 			PermitManagerConst.PermitManagerMessageMajor,
 			PermitManagerConst.PermitScheduleCommandOpCodeAcquire,
@@ -33,14 +41,27 @@ class PermitAcquireCustomCommand isclass CustomCommand
 
 		Message msg;
 		Soup msgSoup;
-		wait()
+		while (true)
 		{
-			// Define Constants syntactically not allowed, inlining string literals
-			//on PermitManagerConst.PermitManagerMessageMajor, PermitManagerConst.PermitScheduleCommandOpCodeGranted, msg:
-			on "PermitManager", "Granted", msg:
+			wait()
 			{
-				msgSoup = cast<Soup>(msg.paramSoup);
-				break;
+				//on PermitManagerConst.PermitManagerMessageMajor, PermitManagerConst.PermitScheduleCommandOpCodeEnqueued, msg:
+				on "PermitManager", "Enqueued", msg:
+				{
+					if (tooltipInterface and stringTable)
+						tooltipInterface.SetTooltip(stringTable.GetString(PermitManagerConst.PermitCommandAcquireEnqueuedTooltipStringTable));
+					continue;
+				}
+
+				// Define Constants syntactically not allowed, inlining string literals
+				//on PermitManagerConst.PermitManagerMessageMajor, PermitManagerConst.PermitScheduleCommandOpCodeGranted, msg:
+				on "PermitManager", "Granted", msg:
+				{
+					msgSoup = cast<Soup>(msg.paramSoup);
+					if (tooltipInterface and stringTable)
+						tooltipInterface.SetTooltip(stringTable.GetString(PermitManagerConst.PermitCommandAcquireGrantedTooltipStringTable));
+					break;
+				}
 			}
 		}
 		go.Sniff(go, PermitManagerConst.PermitManagerMessageMajor, null, false);

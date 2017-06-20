@@ -7,16 +7,36 @@ include "PermitManagerShared.gs"
 include "PermitAcquireCustomCommand.gs"
 include "PermitReleaseCustomCommand.gs"
 
-class PermitScheduleCommand isclass DriverScheduleCommand
+class PermitScheduleCommand isclass DriverScheduleCommand, PermitScheduleCommandTooltipInterface
 {
+	StringTable stringTable;
 	string opcode;
 	ScenarioBehavior manager;
 	Soup typeSoup;
 	Soup objectSoup;
+	string tooltip;
 
 	public void Init(DriverCharacter driver, DriverCommand parent)
 	{
 		inherited(driver, parent);
+
+		if (parent)
+			stringTable = parent.GetAsset().GetStringTable();
+	}
+
+	public StringTable GetStringTable(void) { return stringTable; }
+
+	public void SetTooltip(string tooltip)
+	{
+		if (tooltip)
+			me.tooltip = tooltip;
+	}
+
+	public string GetTooltip(void)
+	{
+		if (tooltip)
+			return tooltip;
+		return inherited();
 	}
 
 	public bool BeginExecute(DriverCharacter driver)
@@ -35,6 +55,7 @@ class PermitScheduleCommand isclass DriverScheduleCommand
 			acquireCmd.manager = manager;
 			acquireCmd.typeSoup = typeSoup;
 			acquireCmd.objectSoup = objectSoup;
+			acquireCmd.tooltipInterface = me;
 
 			cmd = acquireCmd;
 		}
@@ -44,6 +65,7 @@ class PermitScheduleCommand isclass DriverScheduleCommand
 			releaseCmd.manager = manager;
 			releaseCmd.typeSoup = typeSoup;
 			releaseCmd.objectSoup = objectSoup;
+			releaseCmd.tooltipInterface = me;
 
 			cmd = releaseCmd;
 		}

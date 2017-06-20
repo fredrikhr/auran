@@ -62,6 +62,14 @@ static class PermitManagerConst
 	define public string PermitScheduleCommandOpCodeGranted = "Granted";
 	define public string PermitScheduleCommandOpCodeReleased = "Released";
 	define public string PermitScheduleCommandOpCodeRemoved = "Removed";
+
+	define public string PermitCommandAcquireRequestTooltipStringTable = "PermitCommandAcquireRequestTooltip";
+	define public string PermitCommandAcquireEnqueuedTooltipStringTable = "PermitCommandAcquireEnqueuedTooltip";
+	define public string PermitCommandAcquireGrantedTooltipStringTable = "PermitCommandAcquireGrantedTooltip";
+
+	define public string PermitCommandReleaseRequestTooltipStringTable = "PermitCommandReleaseRequestTooltip";
+	define public string PermitCommandReleaseRemovedTooltipStringTable = "PermitCommandReleaseRemovedTooltip";
+	define public string PermitCommandReleaseReleasedTooltipStringTable = "PermitCommandReleaseReleasedTooltip";
 };
 
 class PermitType
@@ -435,4 +443,10 @@ static class PermitConverter
 
 		return null;
 	}
+};
+
+class PermitScheduleCommandTooltipInterface
+{
+	public StringTable GetStringTable(void) { return null; }
+	public void SetTooltip(string tooltip) { }
 };
