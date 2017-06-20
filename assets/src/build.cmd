@@ -12,11 +12,14 @@ PUSHD "%~dp0"
 FOR /D %%A IN (*) DO (
     PUSHD "%%~A"
     ECHO.excludefiles.txt > excludefiles.txt
+    ECHO.additionalfiles.txt >> excludefiles.txt
     ECHO.%~nx0 >> excludefiles.txt
 
     MD "..\..\bin\%%~A"
     XCOPY "." "..\..\bin\%%~A" /E /C /H /Y /EXCLUDE:excludefiles.txt
-    COPY /Y "..\PermitManagerShared.gs" "..\..\bin\%%~A"
+    IF EXIST additionalfiles.txt (
+        FOR /F %%F IN (additionalfiles.txt) DO COPY /Y "%%~F" "..\..\bin\%%~A"
+    )
 
     PUSHD "..\..\bin\%%~A"
     FOR /R . %%G IN (*.gs) DO (
