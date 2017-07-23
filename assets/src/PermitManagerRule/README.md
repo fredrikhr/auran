@@ -5,12 +5,13 @@
 Custom Permission Scenario Behaviour Rule that manages Custom Permissions for
 AI Driver Characters.
 
-Asset Details|&nbsp;
--|-|-
-**Base KUID**|`<KUID:520252:100101>`
-**Revision**|0
-**Full KUID**|`<KUID2:520252:100101:0>`
-**Trainz Version**|T:ANE SP2 (`Build: 88364`)
+## Asset Details
+<table>
+<tr><th>Base KUID</th><td><code>&lt;KUID:520252:100101&gt;</code></td></tr>
+<tr><th>Revision</th><td><code>0</code></td></tr>
+<tr><th>Full KUID</th><td><code>&lt;KUID2:520252:100101:0&gt;</code></td></tr>
+<tr><th>Trainz Version</th><td title="Trainz: A New Era (Service Pack 2)">T:ANE SP2 (<code>Build: 88364</code>)</td></tr>
+</table>
 
 The Permit Manager Rule allows you to define custom Permission that can be requested by AI Driver Characters. This works very much like the [WaitForJunctionPermit](https://www.auran.com/DLS/DLS_viewasset.php?AssetID=57630) command, but does not require a specific Track or Junction object in the map.  
 This is useful when creating Scenarios for Routes that are owned by someone else. It also negates the need to create ghost rails and junctions on the map that are not used or not part of the rail network.
