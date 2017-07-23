@@ -1,0 +1,33 @@
+kind							"drivercommand"
+supports-null-driver-character	1
+kuid							<KUID2:520252:100132:0>
+trainz-build					3.5
+script							"NamedScheduleLabelInsertCommand"
+class							"NamedScheduleLabelInsertCommand"
+username						"NamedScheduleLabelInsertCommand"
+description						""
+kuid-table
+{
+	NamedScheduleLabelRule	<KUID:520252:100131>
+}
+string-table
+{
+	description			"Inserts a named schedule label"
+	InsertLabelMenuItem	"Insert Label"
+}
+thumbnails
+{
+	0
+	{
+		width	240
+		height	180
+		image	"thumbnail.jpg"
+	}
+	1
+	{
+		width	64
+		height	64
+		image	"icon.texture"
+	}
+}
+category-class	"YD"

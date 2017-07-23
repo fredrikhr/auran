@@ -1,0 +1,36 @@
+kind			"behavior"
+kuid			<KUID2:520252:100131:0>
+trainz-build	3.5
+script			"NamedScheduleLabelRule"
+class			"NamedScheduleLabelRule"
+username		"NamedScheduleLabelRule"
+description		"A Rule / Scenario Behaviour that lets you add named labels that can be used in the a Driver Command Schedule to mark positions in the Command Sequence.
+Having named labels in the Command Sequence can help managment of long Driver Schedules. It can also help when using advanced Driver Commands that make use of conditional logic in your command schedule.
+This is heavily inspired by the InsertLabelCommand (<kuid:160293:101002>) by trev999. While this named Label system provides the same functionality as trev999's labels, this systems has no dependencies on the original the original only allows for hard-coded labels with values from 0-20."
+
+kuid-table
+{
+}
+string-table
+{
+	AssetHeadingText	"Named Schedule Labels"
+
+	AddLabelText		"Add Label"
+	AddLabelTooltip		"Adds a new Label to the list"
+
+	SetLabelText		"Set Label"
+	SetLabelTooltip		"Sets the Label text for this label"
+
+	RemoveLabelText		"Remove"
+	RemoveLabelTooltip	"Remove this label from the list"
+}
+thumbnails
+{
+	0
+	{
+		width	240
+		height	180
+		image	"thumbnail.jpg"
+	}
+}
+category-class	"YR"
