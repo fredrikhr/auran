@@ -1,0 +1,42 @@
+﻿
+kind                                    "drivercommand"
+supports-null-driver-character          1
+kuid                                    <kuid:520252:100134>
+trainz-build                            3.5
+script                                  "NamedScheduleLabelJumpIfPermitAcquireImmediateCommand"
+class                                   "NamedScheduleLabelJumpIfPermitAcquireImmediateCommand"
+username                                "NamedScheduleLabelJumpIfPermitAcquireImmediateCommand"
+description                             
+
+string-table
+{
+  description                           "Attempts to acquire an immediate Permit and skips ahead to Label if successful"
+  rootmenuitem                          "If immediate Permit"
+  jumplabelmenuitem                     "Skip to: $0"
+  jumplabeltooltip                      "If Permit $0 for $1 acquired immediately, skip to: $2"
+}
+
+thumbnails
+{
+  0
+  {
+    width                               240
+    height                              180
+    image                               "thumbnail.jpg"
+  }
+  
+  1
+  {
+    width                               64
+    height                              64
+    image                               "icon.texture"
+  }
+}
+category-class                          "YD"
+
+kuid-table
+{
+  permitmanagerrule                     <kuid:520252:100101>
+  namedschedulelabelrule                <kuid:520252:100131>
+  namedschedulelabelinsertcommand       <kuid:520252:100132>
+}
