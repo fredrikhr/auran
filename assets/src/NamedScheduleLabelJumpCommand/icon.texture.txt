@@ -1,0 +1,3 @@
+Primary=icon.tga
+Alpha=icon.tga
+Tile=none

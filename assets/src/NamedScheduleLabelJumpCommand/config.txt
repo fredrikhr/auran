@@ -1,0 +1,35 @@
+kind							"drivercommand"
+supports-null-driver-character	1
+kuid							<KUID2:520252:100133:0>
+trainz-build					3.5
+script							"NamedScheduleLabelJumpCommand"
+class							"NamedScheduleLabelJumpCommand"
+username						"NamedScheduleLabelJumpCommand"
+description						""
+kuid-table
+{
+	NamedScheduleLabelRule			<KUID:520252:100131>
+	NamedScheduleLabelInsertCommand	<KUID:520252:100132>
+}
+string-table
+{
+	description			"Unconditionally skips ahead to a named schedule label"
+	JumpLabelMenuItem	"Skip to"
+	JumpLabelTooltip	"Skip to: $1"
+}
+thumbnails
+{
+	0
+	{
+		width	240
+		height	180
+		image	"thumbnail.jpg"
+	}
+	1
+	{
+		width	64
+		height	64
+		image	"icon.texture"
+	}
+}
+category-class	"YD"
