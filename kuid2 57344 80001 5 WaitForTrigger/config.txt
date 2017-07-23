@@ -1,0 +1,175 @@
+﻿
+username                                "WaitForTrigger"
+kind                                    "drivercommand"
+kuid                                    <kuid2:57344:80001:5>
+script                                  "WaitForTriggerCommand"
+class                                   "WaitForTriggerCommand"
+trainz-build                            2.5
+category-class                          "YD"
+supports-null-driver-character          1
+description                             "Tell a driver to wait until a trigger you select is touched by a train you
+select (or any train)
+The trains you can select are identified by their locomotive.
+Give the locomotives in your session names, so you can recognise them.
+The triggers in the layout must be named by the user before the command recognises them.
+Don't give two triggers the same name, it could result in unexpected behaviour.
+(For more info look into the readme.txt)"
+author                                  "Marinus (David Hamann)"
+contact-email                           "trainz@marinus.org"
+category-region                         "00"
+category-era                            "1800s;1810s;1820s;1830s;1840s;1850s;1860s;1870s;1880s;1890s;1900s;1910s;1920s;1930s;1940s;1950s;1960s;1970s;1980s;1990s;2000s;2010s"
+
+thumbnails
+{
+  0
+  {
+    image                               "waitfortrigger.tga"
+    width                               64
+    height                              64
+  }
+}
+
+string-table
+{
+  description                           "Tell a driver to wait until a trigger you select is touched by a train you
+select (or any train)"
+  menu_command_name                     "Wait For Trigger Command"
+  driver_tooltip                        "Waiting for Trigger '$0' to be triggered by "
+}
+username-fr                             "AttenteDéclencheur"
+description-fr                          "Indique au conducteur d’attendre que le déclencheur choisi soit touché par un train
+de votre choix (n’importe lequel)
+Les trains pouvant être sélectionnés sont identifiés en fonction de leur locomotive.
+Donnez des noms aux locos de vos sessions pour pouvoir ensuite les reconnaître.
+Vous devez baptiser les déclencheurs avant qu’un ordre conducteur puisse les reconnaître.
+N’utilisez pas le même nom pour deux déclencheurs, cela pourrait avoir des résultats inattendus.
+(pour de plus amples informations, reportez-vous au fichier LisezMoi.txt"
+
+string-table-fr
+{
+  description                           "Dire à un conducteur d'attendre qu'un déclencheur prédéfini soit touché par un train que vous
+choisissez (ou par n'importe quel train)"
+  menu_command_name                     "Attente déclencheur"
+  driver_tooltip                        "Attente activation du déclencheur « $0 » par "
+}
+username-nl                             "Wachten op trigger"
+description-nl                          "Geeft de opdracht te wachten totdat een trigger wordt geactiveerd door een door u geselecteerde trein (of een willekeurige andere trein).
+De treinen die je kunt selecteren, worden geïdentificeerd aan de hand van hun locomotief.
+Geef de locomotieven in je sessie namen, zodat je ze eenvoudiger van elkaar kunt onderscheiden.
+Je moet de triggers in de lay-out een naam geven opdat de opdracht ze zou herkennen.
+Geef elke trigger een unieke naam om problemen te voorkomen.
+(Lees het Leesmij-bestand voor meer informatie.)"
+
+string-table-nl
+{
+  description                           "Geeft de opdracht te wachten totdat een trigger wordt geactiveerd door een door u geselecteerde trein (of een willekeurige andere trein)."
+  menu_command_name                     "Wachten op trigger"
+}
+username-es                             "Esperar Activador"
+description-es                          "Le indica al conductor que espere hasta que un tren seleccionado por ti (o cualquier tren) toque
+un activador seleccionado por ti.
+Los trenes que puedes seleccionar se identifican por su locomotora.
+Pon un nombre a las locomotoras de la sesión para poder reconocerlas.
+El usuario debe poner un nombre a los activadores del trazado para que la orden los reconozca.
+No pongas el mismo nombre a dos activadores, ya que podría dar lugar a resultados inesperados
+(encontrarás más información en el archivo léeme.txt)."
+
+string-table-es
+{
+  description                           "Le indica al conductor que espere hasta que un tren seleccionado por ti (o cualquier tren) toque
+un activador seleccionado por ti."
+  menu_command_name                     "Esperar Activador"
+  driver_tooltip                        "Esperando disparador '$0' para ser disparado por "
+}
+username-it                             "Attendere attivatore"
+description-it                          "Dire ad un macchinista di attendere fino a quando un attivatore che avete selezionato selezionato non viene raggiunto da un treno da voi selezionato (o da un qualsiasi treno). I treni che potete selezionare sono identificati dalla loro locomotiva. Date nomi riconoscibili alle locomotive.
+Gli attivatori del tracciato devono aver ricevuto un nome prima di poter essere riconosciuto dall'ordine. Non attribuite lo stesso nome a due attivatori, potrebbero esserci avvenimenti inattesi.
+(Consultate il file readme.txt)"
+
+string-table-it
+{
+  description                           "Dire a un macchinista di attendere che un attivatore selezionato venga
+ raggiunto da un treno selezionato"
+  menu_command_name                     "Attendi comando attivatore"
+}
+username-cz                             "Počkat na aktivátor"
+username-pl                             "CzekajNaZnacznik"
+description-pl                          "Nakazuje maszyniście oczekiwanie, aż wybrany przez ciebie (lub dowolny) pociąg dotknie wybranego przez ciebie znacznika.
+Wybrane pociągi rozpoznasz po ich lokomotywach.
+Nazwij lokomotywy w danej sesji, aby łatwiej je rozpoznawać.
+Aby polecenie mogło rozpoznać znaczniki, muszą one zostać nazwane przez danego użytkownika.
+Nadanie tej samej nazwy dwóm różnym znacznikom może prowadzić do nietypowych zachowań polecenia.
+Więcej informacji na ten temat znajdziesz w pliku readme.txt."
+
+string-table-pl
+{
+  description                           "Nakazuje maszyniście oczekiwanie, aż wybrany przez ciebie (lub dowolny) pociąg dotknie wybranego przez ciebie znacznika."
+  menu_command_name                     "Zaczekaj na wyzwalacz"
+  driver_tooltip                        "Oczekiwanie, aż wyzwalacz „$0” zostanie uruchomiony przez "
+}
+username-hu                             "Várakozási jelfogó"
+description-hu                          "Megparancsolja a vezetőnek, hogy várjon addig, amíg az általad kiválasztott jelfogót 
+eléri az általad kiválasztott (vagy bármelyik másik) vonat.
+Az kiválasztható vonatokat a mozdony alapján lehet azonosítani.
+Adj a mozdonyaidnak neveket a viszonylataidban, így könnyen felismered őket.
+A jelfogókat el kell neveznie a felhasználónak, mert a parancs csak így ismeri fel őket.
+Ne add ugyanazt a nevet két azonos jelfogónak - váratlan következményekkel járhat.
+További információkért nézd meg a readme.txt-t."
+
+string-table-hu
+{
+  description                           "Megparancsolja a vezetőnek, hogy várjon addig, amíg az általad kiválasztott jelfogót 
+eléri az általad kiválasztott (vagy bármelyik másik) vonat."
+  menu_command_name                     "Várakozási jelfogó"
+}
+
+string-table-ru
+{
+  description                           "Приказывает машинисту ждать до тех пор, пока через выбранный триггер не проедет поезд (любой)"
+  menu_command_name                     "Подождать команду на включение"
+  driver_tooltip                        "Ожидание триггера  '$0', который переключается посредством "
+}
+description-ru                          "Приказывает машинисту ждать до тех пор, пока через данный триггер не пройдет выбранный вами поезд (или любой другой)
+Поезд выбирается по локомотиву.
+Дайте уникальные имена локомотивам в этой сессии, чтобы их можно было различить.
+Триггеры должны иметь названия, чтобы программа могла их распознать.
+Не давайте одно и то же название двум триггерам, так как это может привести к ошибкам в работе программы (см. файл readme.txt)"
+description-cz                          "'Přikáže strojvůdci počkat, než se zvolený (či libovolný) vlak dotkne vybraného aktivátoru.
+Vlaky se volí označením lokomotivy.
+Pojmenuj jednotlivé lokomotivy ve své hře, ať je pak můžeš rozpoznat.
+Aktivátor je třeba pojmenovat ještě předtím, než se použije tento příkaz.
+Nedávej dvěma různým aktivátorům stejné jméno - věci by nemusely fungovat správně.
+(více informací viz soubor readme.txt)'"
+
+string-table-cz
+{
+  menu_command_name                     "Čekat na aktivátor"
+  description                           "Přikáže strojvůdci počkat, než se zvolený (či libovolný) vlak dotkne vybraného aktivátoru."
+  driver_tooltip                        "Čeká, než bude aktivován spínač '$0' "
+}
+
+string-table-ja
+{
+  driver_tooltip                        "トリガー'$0'が以下により発生するのを待っています "
+}
+username-jp                             "トリガーを待つ"
+
+string-table-jp
+{
+  description                           "選んだ列車（もしくは任意の列車）が、選んだトリガーに触れるまで待つよう、
+運転士に伝えてください。"
+  menu_command_name                     "トリガーの指示を待つ"
+  driver_tooltip                        "トリガー「$0」が以下により発生するのを待っています "
+}
+username-de                             "WaitForTrigger"
+
+string-table-de
+{
+  description                           "Bitte einen Fahrer zu warten, bis ein von dir ausgewählter Auslöser von einem von dir ausgewählten Zug (oder einem anderen Zug) ausgelöst wird."
+  menu_command_name                     "Warte auf Auslöserbefehl"
+  driver_tooltip                        "Warte darauf, dass der Auslöser '$0' von ... ausgelöst wird"
+}
+
+kuid-table
+{
+}
