@@ -29,8 +29,16 @@ string-table
 	PermitObjectRemoveDescription	"Removes the Permit Object from the Rule"
 	PermitObjectNameName			"Set Permit Object Name"
 	PermitObjectNameDescription		"Sets the name for the Permit Object. Names must be unique within a Rule."
+
+	DefaultPermitTypeName			"exclusive"
 }
 thumbnails
 {
+	0
+	{
+		width	240
+		height	180
+		image	"thumbnail.jpg"
+	}
 }
 category-class	"YR"

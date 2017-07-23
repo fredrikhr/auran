@@ -1,0 +1,7 @@
+..\permitbasiccommand.gs
+..\permitbasicschedulecommand.gs
+..\permitmanagerclient.gs
+..\defaultdrivercommand.gs
+..\drivercommandshared.gs
+..\soupshared.gs
+..\defaultdriverschedulecommand.gs

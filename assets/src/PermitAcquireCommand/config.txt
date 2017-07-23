@@ -1,0 +1,35 @@
+kind							"drivercommand"
+supports-null-driver-character	1
+kuid							<KUID2:520252:100102:0>
+trainz-build					3.5
+script							"PermitAcquireCommand"
+class							"PermitAcquireCommand"
+username						"PermitAcquireCommand"
+username-en						"Permit Acquire Command"
+description						""
+kuid-table
+{
+	PermitManagerRule	<KUID:520252:100101>
+}
+string-table
+{
+	description				"Requests a permit and waits until it is granted."
+	PermitAcquireMenuItem	"Wait for permit"
+	PermitAcquireTooltip	"Waiting for permit $0 for $1"
+}
+thumbnails
+{
+	0
+	{
+		width	240
+		height	180
+		image	"thumbnail.jpg"
+	}
+	1
+	{
+		width	64
+		height	64
+		image	"icon.texture"
+	}
+}
+category-class	"YD"

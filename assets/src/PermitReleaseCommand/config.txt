@@ -1,0 +1,35 @@
+kind							"drivercommand"
+supports-null-driver-character	1
+kuid							<KUID2:520252:100103:0>
+trainz-build					3.5
+script							"PermitReleaseCommand"
+class							"PermitReleaseCommand"
+username						"PermitReleaseCommand"
+username-en						"Permit Release Command"
+description						""
+kuid-table
+{
+	PermitManagerRule	<KUID:520252:100101>
+}
+string-table
+{
+	description				"Releases a previously acquired permit"
+	PermitReleaseMenuItem	"Release permit"
+	PermitReleaseTooltip	"Releasing permit $0 for $1"
+}
+thumbnails
+{
+	0
+	{
+		width	240
+		height	180
+		image	"thumbnail.jpg"
+	}
+	1
+	{
+		width	64
+		height	64
+		image	"icon.texture"
+	}
+}
+category-class	"YD"
