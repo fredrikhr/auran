@@ -1,0 +1,99 @@
+﻿
+username                                "Navigate Via Trackmark"
+kind                                    "drivercommand"
+kuid                                    <kuid:-3:10209>
+script                                  "NavigateViaTrackmarkCommand"
+class                                   "NavigateViaTrackmarkCommand"
+icon-texture                            "navigateviatrackmark.texture"
+supports-null-driver-character          1
+
+string-table
+{
+  description                           "Driver command that allows a driver character to take a train through a specific trackmark for its journey. Will attempt to route around trains to get there."
+  driver_command_trackmark              "Navigate Via Trackmark >"
+  tt_navigate_to                        "Navigate Via $0"
+}
+
+string-table-fr
+{
+  driver_command_trackmark              "Se rendre via le Marqueur >"
+  tt_navigate_to                        "Se rendre via $0"
+  description                           "Ordre Conducteur permetant à un conducteur d'acheminer un train vers sa destination via un marqueur spécifique sur la carte. Il essaiera d'éviter les autres trains pour y arriver."
+}
+
+string-table-it
+{
+  description                           "Ordine al Macchinista che permette a un macchinista di condurre un treno attraverso uno specifico indicatore durante il percorso, cercando di passare intorno agli altri treni per giungere a destinazione."
+  driver_command_trackmark              "Naviga via Indicatore >"
+  tt_navigate_to                        "Naviga via $0"
+}
+username-fr                             "Se rendre via le Marqueur"
+username-nl                             "Navigeren via baken"
+
+string-table-nl
+{
+  description                           "Met deze bestuurdersopdracht kunt u een treinbestuurder via een specifiek baken laten rijden. De trein probeert andere treinen autom. te ontwijken om zijn bestemming te bereiken."
+  driver_command_trackmark              "Navigeren via baken >"
+  tt_navigate_to                        "Navigeren via $0"
+}
+username-de                             "Navigiere über Trackmark"
+
+string-table-de
+{
+  description                           "Lokführerbefehl, um über eine bestimmte Gleismarkierung zu fahren. Es wird versucht, andere Züge oder Wagen auf dem Weg dorthin zu umfahren."
+  driver_command_trackmark              "Navigiere über Gleismarkierung >"
+  tt_navigate_to                        "Navigiere über $0"
+}
+username-pl                             "Nawiguj przez torpunkt"
+username-cz                             "Projeď přes traťovou značku"
+username-hu                             "Irányítás navigációs ponton át"
+
+string-table-pl
+{
+  driver_command_trackmark              "Nawiguj przez torpunkt >"
+  description                           "Komenda dla maszynisty, która pozwala mu na poprowadzenie pociągu przez określony torpunkt w trakcie podróży. Podejmie próbę ominięcia innych pociągów po drodze."
+  tt_navigate_to                        "Nawiguj przez $0"
+}
+
+string-table-hu
+{
+  driver_command_trackmark              "Irányítás navigációs ponton át >"
+  description                           "A vezetői parancsban a mozdonyvezető a térkép egy meghatározott navigációs pontján át vezeti a vonatot. Kikerüli a környező vonatokat. Új navigációs parancs."
+  tt_navigate_to                        "Irányítás ezen át: $0"
+}
+
+string-table-ru
+{
+  description                           "Команда машинисту, которая позволяет ему провести поезд через определенную метку на пути. При движении машинист будет пытаться объезжать другие поезда."
+  driver_command_trackmark              "Проехать через указатель >"
+  tt_navigate_to                        "Проехать через $0"
+}
+username-es                             "Conducir mediante marcas viarias"
+
+string-table-es
+{
+  description                           "Órdenes del maquinista que permiten a un personaje maquinista coger un tren a través de una marca viaria específica para su viaje. Intentará enrutar trenes para llegar allí."
+  driver_command_trackmark              "Conducir mediante marcas viarias >"
+  tt_navigate_to                        "Conducir mediante $0"
+}
+username-it                             "Naviga via Indicatore >"
+
+string-table-cz
+{
+  driver_command_trackmark              "Projet přes traťovou značku >"
+  tt_navigate_to                        "Projet přes $0"
+  description                           "Příkaz strojvůdci, aby v cestě pokračoval přes určitou traťovou značku. Cestou se pokusí vyhýbat ostatním vlakům."
+}
+
+string-table-jp
+{
+  description                           "運転士に特定のトラックマークを通過させます。途中で列車のルート迂回を試みます。"
+  driver_command_trackmark              "トラックマーク経由で移動する >"
+  tt_navigate_to                        "トラックマーク経由$0"
+}
+asset-filename                          "Navigate Via Trackmark"
+
+kuid-table
+{
+  command-sounds                        <kuid:-3:10219>
+}

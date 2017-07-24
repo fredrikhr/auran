@@ -1,0 +1,95 @@
+﻿
+username                                "Navigate To"
+kind                                    "drivercommand"
+kuid                                    <kuid:-3:10058>
+script                                  "NavigateToCommand"
+class                                   "NavigateToCommand"
+icon-texture                            "navigateto.texture"
+supports-null-driver-character          1
+username-fr                             "Se rendre à"
+username-nl                             "Navigeren naar"
+username-de                             "Navigiere nach"
+username-pl                             "Nawiguj do"
+username-hu                             "Irányítás ide"
+username-ru                             "Ехать к"
+username-es                             "Navegar a"
+username-it                             "Naviga verso"
+username-cz                             "Dostaň se do"
+
+string-table
+{
+  description                           "Allows a driver character to take a train either to a destination industry or a specific track in a destination industry. Will attempt to route around trains to get there."
+  menu_building_please_wait             "Caching menu options, please wait..."
+  menu_none_found                       "No items found"
+  driver_command_navigate_to            "Navigate To $0"
+}
+
+string-table-fr
+{
+  description                           "Permet au conducteur de diriger dont la destination est une industrie soit sur une voie spécifique à cette industrie. Il essaiera d'acheminer les trains pour y arriver."
+  driver_command_navigate_to            "Se rendre à $0"
+}
+
+string-table-it
+{
+  description                           "Permette a un macchinista di condurre il treno a un'industria di destinazione o a un binario specifico di un'industria di destinazione, cercando di passare intorno agli altri treni per giungere a destinazione."
+  driver_command_navigate_to            "Naviga verso $0"
+}
+
+string-table-nl
+{
+  description                           "Met deze opdracht kunt u een treinbestuurder naar een specifieke industrie of een welbepaald spoor in een industrieel gebied laten rijden. De trein probeert andere treinen autom. te ontwijken om zijn bestemming te bereiken."
+  driver_command_navigate_to            "Navigeren naar $0"
+}
+
+string-table-de
+{
+  description                           "Lokführerbefehl, um zu einer Industrie oder einem bestimmten Gleis der Industrie zu fahren. Es wird versucht, andere Züge oder Wagen auf dem Weg dorthin zu umfahren."
+  driver_command_navigate_to            "Navigiere zu $0"
+  menu_building_please_wait             "Lade Menüoptionen, bitte warten..."
+  menu_none_found                       "Keine Objekte gefunden"
+}
+
+string-table-cz
+{
+  description                           "Umožňuje strojvůdci odvézt vlak buď k určité průmyslové budově nebo na konkrétní kolej u průmyslové budovy. Cestou se pokusí vyhýbat jiným vlakům."
+  driver_command_navigate_to            "Dostaň se do $0"
+}
+
+string-table-pl
+{
+  description                           "Pozwala maszyniście na udanie się pociągiem do wyznaczonego obiektu przemysłowego lub na konkretny tor. Podejmie próbę ominięcia innych pociągów po drodze."
+  driver_command_navigate_to            "Nawiguj do $0"
+  menu_building_please_wait             "Caching menu options, please wait..."
+  menu_none_found                       "No items found"
+}
+
+string-table-hu
+{
+  description                           "A vonatot vezető karakter számára engedélyezetté válik, hogy a vonat eljusson egy ipari területre, vagy egy speciális vágányra a megadott ipari területen. Megkerüli a környező vonatokat."
+  driver_command_navigate_to            "Irányítás ide: $0"
+}
+
+string-table-es
+{
+  driver_command_navigate_to            "Navegar a $0"
+  description                           "Permite a un personaje conductor que tome un tren a una industria de destino o a una vía específica de una industria de destino. Intentará trazar rutas por los trenes para llegar allí."
+}
+
+string-table-ru
+{
+  driver_command_navigate_to            "Ехать к $0"
+  description                           "Позволяет машинисту отвести поезд либо к указанному промышленному объекту, либо по указанному промышленному пути. Машинист будет пытаться объехать поезда на пути следования."
+}
+
+string-table-jp
+{
+  description                           "運転士が列車を、目的地の産業施設か、目的地の産業施設がある特定の線路まで移動させます。途中で列車のルート迂回を試みます。"
+  driver_command_navigate_to            "移動先$0"
+}
+asset-filename                          "Navigate To"
+
+kuid-table
+{
+  command-sounds                        <kuid:-3:10219>
+}
