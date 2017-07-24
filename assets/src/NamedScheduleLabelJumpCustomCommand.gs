@@ -65,6 +65,8 @@ class NamedScheduleLabelJumpCustomCommand isclass CustomCommand
 		}
 		driver.GetDriverCommands().SetDriverScheduleRepeat(dsRepeat);
 		driver.DriverIssueSchedule();
+		if (train)
+			train.SetAutopilotMode(Train.CONTROL_AUTOPILOT);
 
 		return true;
 	}

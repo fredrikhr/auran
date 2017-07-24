@@ -21,13 +21,11 @@ class PermitAcquireCustomCommand isclass CustomCommand, PermitManagerClient
 		sender.Sniff(permitManagerRule, "PermitManager", null, true);
 		SendMessage(sender, "Acquire");
 
-		Soup soup;
 		Message msg;
 		wait()
 		{
 			on "PermitManager", "Granted", msg:
 			{
-				Interface.Print("PermitAcquireCustomCommand.Execute> Received Permit Granted message");
 				if (ValidatePermitManagerMessage(msg))
 					break;
 				ResendMessage(msg);
@@ -36,8 +34,7 @@ class PermitAcquireCustomCommand isclass CustomCommand, PermitManagerClient
 
 			on "Schedule", "Abort":
 			{
-				Interface.Print("PermitAcquireCustomCommand.Execute> Received Schedule Abort message");
-				sender.SendMessage(permitManagerRule, "PermitManager", "Release", soup);
+				SendMessage(sender, "Release");
 				break;
 			}
 		}

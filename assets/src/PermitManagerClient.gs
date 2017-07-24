@@ -69,6 +69,6 @@ class PermitManagerClient
 		Soup soup = Constructors.NewSoup();
 		soup.SetNamedTag("type", permitType);
 		soup.SetNamedTag("object", permitObject);
-		sender.SendMessage(permitManagerRule, "PermitManager", "Acquire", soup);
+		sender.SendMessage(permitManagerRule, "PermitManager", msgMinor, soup);
 	}
 };

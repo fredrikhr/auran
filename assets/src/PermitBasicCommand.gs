@@ -4,13 +4,13 @@ include "soupshared.gs"
 
 class PermitBasicCommand isclass DefaultDriverCommand
 {
-	define string KUID_RULE_ENTRY = "PermitManagerRule";
-	define string MSG_MAJOR = "PermitBasicCommandMenuItem";
-	define int SEGMENT_RULE_GAMEID = 0;
-	define int SEGMENT_TYPENAME = 1;
-	define int SEGMENT_OBJECTNAME = 2;
-	define int SEGMENT_COUNT = 3;
-	KUID permitManagerRuleKuid;
+	public define string KUID_RULE_ENTRY = "PermitManagerRule";
+	public define string MSG_MAJOR = "PermitBasicCommandMenuItem";
+	public define int SEGMENT_RULE_GAMEID = 0;
+	public define int SEGMENT_TYPENAME = 1;
+	public define int SEGMENT_OBJECTNAME = 2;
+	public define int SEGMENT_COUNT = 3;
+	public KUID permitManagerRuleKuid;
 
 	public string GetMenuItemMessageMajor(void) { return MSG_MAJOR; }
 	public string GetMenuItemRootString() { return "Permit Basic"; }
@@ -22,7 +22,7 @@ class PermitBasicCommand isclass DefaultDriverCommand
 		permitManagerRuleKuid = DriverCommandShared.GetDepdendantKUID(me, KUID_RULE_ENTRY);
 	}
 
-	public Soup CreateScheduleComamndProperties(Message menuItemMessage)
+	public Soup CreateScheduleCommandProperties(Message menuItemMessage)
 	{
 		string[] msgSegments = DriverCommandShared.UnpackString(menuItemMessage.minor, SEGMENT_COUNT);
 		Soup soup = Constructors.NewSoup();
@@ -31,6 +31,8 @@ class PermitBasicCommand isclass DefaultDriverCommand
 		soup.SetNamedTag("object", msgSegments[SEGMENT_OBJECTNAME]);
 		return soup;
 	}
+
+	public Menu AddPermitSubCommandItem(string[] msgSegments) { return cast<Menu>(null); }
 
 	void AddCommandMenuSubItems(Menu subMenuRoot, ScenarioBehavior permitManagerRule, string[] permitTypes, string[] permitObjects)
 	{
@@ -47,11 +49,21 @@ class PermitBasicCommand isclass DefaultDriverCommand
 			{
 				string permitObject = permitObjects[j];
 				msgSegments[SEGMENT_OBJECTNAME] = permitObject;
-				string msgMinor = DriverCommandShared.PackToString(msgSegments);
-				permitTypeSubMenu.AddItem(permitObject, me, MSG_MAJOR, msgMinor);
+				Menu permitSubMenu = AddPermitSubCommandItem(msgSegments);
+				if (permitSubMenu)
+				{
+					if (permitSubMenu.CountItems() > 0)
+						permitTypeSubMenu.AddSubmenu(permitObject + " >", permitSubMenu);
+				}
+				else
+				{
+					string msgMinor = DriverCommandShared.PackToString(msgSegments);
+					permitTypeSubMenu.AddItem(permitObject, me, MSG_MAJOR, msgMinor);
+				}
 			}
 			permitTypeSubMenu.SubdivideItems(true);
-			subMenuRoot.AddSubmenu(permitType + " >", permitTypeSubMenu);
+			if (permitTypeSubMenu.CountItems() > 0)
+				subMenuRoot.AddSubmenu(permitType + " >", permitTypeSubMenu);
 		}
 		subMenuRoot.SubdivideItems(true);
 	}

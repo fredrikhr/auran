@@ -241,7 +241,6 @@ class PermitManagerRule isclass ScenarioBehavior
 
 	void SendTypeAndObjectResponseMessage(string minor, GameObject dst, PermitType typeInst, PermitObject objectInst)
 	{
-		Interface.Print("PermitManagerRule.SendTypeAndObjectResponseMessage> minor: \"" + minor + "\", dst: " + dst.GetDebugName() + ", type: \"" + typeInst.name + "\", object: \"" + objectInst.name + "\"");
 		Soup soup = Constructors.NewSoup();
 		soup.SetNamedTag("type", typeInst.name);
 		soup.SetNamedTag("object", objectInst.name);
@@ -249,33 +248,37 @@ class PermitManagerRule isclass ScenarioBehavior
 	}
 
 	void SendGrantedMessage(GameObject dst, PermitType typeInst, PermitObject objectInst) { SendTypeAndObjectResponseMessage("Granted", dst, typeInst, objectInst); }
+	void SendDeniedMessage(GameObject dst, PermitType typeInst, PermitObject objectInst) { SendTypeAndObjectResponseMessage("Denied", dst, typeInst, objectInst); }
 	void SendReleasedMessage(GameObject dst, PermitType typeInst, PermitObject objectInst) { SendTypeAndObjectResponseMessage("Released", dst, typeInst, objectInst); }
 	void SendRemovedMessage(GameObject dst, PermitType typeInst, PermitObject objectInst) { SendTypeAndObjectResponseMessage("Removed", dst, typeInst, objectInst); }
 
-	void OnAcquireRequest(GameObject src, PermitType typeInst, PermitObject objectInst)
+	void OnAcquireRequest(GameObject src, PermitType typeInst, PermitObject objectInst, bool enqueue)
 	{
 		PermitState stateInst = objectInst.state;
 		if (!stateInst.type)
 		{
-			Interface.Print("PermitManagerRule.OnAcquireRequest> No outstanding permits for PermitObject");
 			stateInst.type = typeInst;
 			stateInst.grants[stateInst.grants.size()] = src;
 			SendGrantedMessage(src, typeInst, objectInst);
 		}
 		else if (stateInst.type == typeInst and typeInst.isShared and stateInst.queue.size() == 0)
 		{
-			Interface.Print("PermitManagerRule.OnAcquireRequest> Sharing with current state");
 			stateInst.grants[stateInst.grants.size()] = src;
 			SendGrantedMessage(src, typeInst, objectInst);
 		}
-		else
+		else if (enqueue)
 		{
-			Interface.Print("PermitManagerRule.OnAcquireRequest> Adding Request to pending queue");
 			PermitQueueItem qi = new PermitQueueItem();
 			qi.Init(src, typeInst);
 			stateInst.queue[stateInst.queue.size()] = qi;
 		}
+		else
+		{
+			SendDeniedMessage(src, typeInst, objectInst);
+		}
 	}
+
+	void OnAcquireRequest(GameObject src, PermitType typeInst, PermitObject objectInst) { OnAcquireRequest(src, typeInst, objectInst, true); }
 
 	void OnReleaseRequest(GameObject src, PermitType typeInst, PermitObject objectInst)
 	{
@@ -287,7 +290,6 @@ class PermitManagerRule isclass ScenarioBehavior
 			{
 				if (stateInst.grants[i] != src)
 					continue;
-				Interface.Print("PermitManagerRule.OnReleaseRequest> Releasing previously granted Permit");
 				int lastIdx = stateInst.grants.size() - 1;
 				if (i < lastIdx)
 					stateInst.grants[i] = stateInst.grants[lastIdx]; // Puts the last grant into current grant slot, order does not matter
@@ -302,13 +304,12 @@ class PermitManagerRule isclass ScenarioBehavior
 			PermitQueueItem qi = stateInst.queue[i];
 			if (qi.type != typeInst or qi.src != src)
 				continue;
-			Interface.Print("PermitManagerRule.OnReleaseRequest> Removing Pending Permit Request from queue");
 			stateInst.queue[i, i + 1] = null; // Remove item from queue
 			SendRemovedMessage(src, typeInst, objectInst);
 			return;
 		}
 
-		Interface.Print("PermitManagerRule.OnReleaseRequest> Could not find Permit Request or Permit Grant: src: " + src.GetDebugName() + ", type: \"" + typeInst.name + "\", object: \"" + objectInst.name + "\"");
+		Interface.Log("PermitManagerRule.OnReleaseRequest> Could not find Permit Request or Permit Grant: src: " + src.GetDebugName() + ", type: \"" + typeInst.name + "\", object: \"" + objectInst.name + "\"");
 		SendReleasedMessage(src, typeInst, objectInst);
 	}
 
@@ -345,9 +346,6 @@ class PermitManagerRule isclass ScenarioBehavior
 			Exception("PermitManagerRule.OnTypeAndObjectRequestMessage> message source is not a GameObject instance");
 			return;
 		}
-		Interface.Print("PermitManagerRule.OnTypeAndObjectRequestMessage> src: " + src.GetDebugName());
-
-		Interface.Print("PermitManagerRule.OnTypeAndObjectRequestMessage> major: \"" + msg.major + "\", minor: \"" + msg.minor + "\"");
 
 		Soup soup = cast<Soup>(msg.paramSoup);
 		if (!soup)
@@ -357,7 +355,6 @@ class PermitManagerRule isclass ScenarioBehavior
 		}
 
 		string typeName = soup.GetNamedTag("type");
-		Interface.Print("PermitManagerRule.OnTypeAndObjectRequestMessage> typeName: \"" + typeName + "\"");
 		if (!typeName)
 		{
 			Exception("PermitManagerRule.OnTypeAndObjectRequestMessage> message carries no named PermitType");
@@ -373,14 +370,13 @@ class PermitManagerRule isclass ScenarioBehavior
 		}
 		if (!typeInst)
 		{
-			Interface.Print("PermitManagerRule.OnTypeAndObjectRequestMessage> Creating unknown PermitType with name \"" + typeName + "\"");
+			Interface.Log("PermitManagerRule.OnTypeAndObjectRequestMessage> Creating unknown PermitType with name \"" + typeName + "\"");
 			typeInst = new PermitType();
 			typeInst.Init(typeName);
 			types[types.size()] = typeInst;
 		}
 
 		string objectName = soup.GetNamedTag("object");
-		Interface.Print("PermitManagerRule.OnTypeAndObjectRequestMessage> objectName: \"" + objectName + "\"");
 		if (!objectName)
 		{
 			Exception("PermitManagerRule.OnTypeAndObjectRequestMessage> message carries no named PermitObject");
@@ -396,7 +392,7 @@ class PermitManagerRule isclass ScenarioBehavior
 		}
 		if (!objectInst)
 		{
-			Interface.Print("PermitManagerRule.OnTypeAndObjectRequestMessage> Creating unknown PermitObject with name \"" + objectName + "\"");
+			Interface.Log("PermitManagerRule.OnTypeAndObjectRequestMessage> Creating unknown PermitObject with name \"" + objectName + "\"");
 			objectInst = new PermitObject();
 			objectInst.Init(objectName);
 			objects[objects.size()] = objectInst;
@@ -405,6 +401,10 @@ class PermitManagerRule isclass ScenarioBehavior
 		if (msg.minor == "Acquire")
 		{
 			OnAcquireRequest(src, typeInst, objectInst);
+		}
+		else if (msg.minor == "AcquireImmediate")
+		{
+			OnAcquireRequest(src, typeInst, objectInst, false);
 		}
 		else if (msg.minor == "Release")
 		{
@@ -426,6 +426,12 @@ class PermitManagerRule isclass ScenarioBehavior
 		wait()
 		{
 			on "PermitManager", "Acquire", msg:
+			{
+				OnTypeAndObjectRequestMessage(msg);
+				continue;
+			}
+
+			on "PermitManager", "AcquireImmediate", msg:
 			{
 				OnTypeAndObjectRequestMessage(msg);
 				continue;
@@ -701,7 +707,9 @@ class PermitManagerRule isclass ScenarioBehavior
 			}
 			else if (remainTokens[1] == PermitTypeNamePropertyId)
 			{
-				if (opcode == PROPERTY_ID)
+				if (opcode == PROPERTY_VALUE)
+					return types[i].name;
+				else if (opcode == PROPERTY_ID)
 					return PermitTypePropertyId + "/" + i + "/" + PermitTypeNamePropertyId;
 				else if (opcode == PROPERTY_TYPE)
 					return "string";
@@ -722,7 +730,9 @@ class PermitManagerRule isclass ScenarioBehavior
 			}
 			else if (remainTokens[1] == PermitTypeSharedPropertyId)
 			{
-				if (opcode == PROPERTY_ID)
+				if (opcode == PROPERTY_VALUE)
+					return (string)(types[i].isShared);
+				else if (opcode == PROPERTY_ID)
 					return PermitTypePropertyId + "/" + i + "/" + PermitTypeSharedPropertyId;
 				else if (opcode == PROPERTY_TYPE)
 					return "link";
@@ -748,7 +758,7 @@ class PermitManagerRule isclass ScenarioBehavior
 		if (!remainTokens or remainTokens.size() < 1)
 			return (string)null;
 		int i = Str.UnpackInt(remainTokens[0]);
-		if (i >= 0 and types and i < types.size() and remainTokens.size() > 1)
+		if (i >= 0 and objects and i < objects.size() and remainTokens.size() > 1)
 		{
 			if (remainTokens[1] == PermitObjectRemovePropertyId)
 			{
@@ -762,7 +772,7 @@ class PermitManagerRule isclass ScenarioBehavior
 					return stringTable.GetString(PermitObjectNameDescriptionStringTable);
 				else if (opcode == PROPERTY_LINK)
 				{
-					types[i, i + 1] = null;
+					objects[i, i + 1] = null;
 					return "PermitObject with index '" + i + "' removed.";
 				}
 				else
@@ -770,7 +780,9 @@ class PermitManagerRule isclass ScenarioBehavior
 			}
 			else if (remainTokens[1] == PermitObjectNamePropertyId)
 			{
-				if (opcode == PROPERTY_ID)
+				if (opcode == PROPERTY_VALUE)
+					return objects[i].name;
+				else if (opcode == PROPERTY_ID)
 					return PermitObjectPropertyId + "/" + i + "/" + PermitObjectNamePropertyId;
 				else if (opcode == PROPERTY_TYPE)
 					return "string";
@@ -780,7 +792,7 @@ class PermitManagerRule isclass ScenarioBehavior
 					return stringTable.GetString(PermitObjectNameDescriptionStringTable);
 				else if (opcode == PROPERTY_SET_STRING)
 				{
-					types[i].name = value;
+					objects[i].name = value;
 					if (value)
 						return value;
 					else
@@ -807,6 +819,8 @@ class PermitManagerRule isclass ScenarioBehavior
 					return OperateAddProperty(propertyID, tokens[1,], opcode, value, idx);
 				else if (tokens[0] == PermitTypePropertyId)
 					return OperateTypeProperty(propertyID, tokens[1,], opcode, value, idx);
+				else if (tokens[0] == PermitObjectPropertyId)
+					return OperateObjectProperty(propertyID, tokens[1,], opcode, value, idx);
 			}
 		}
 

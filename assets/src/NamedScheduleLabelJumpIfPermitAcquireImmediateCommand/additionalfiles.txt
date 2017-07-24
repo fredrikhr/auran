@@ -1,1 +1,8 @@
 ..\defaultdrivercommand.gs
+..\defaultdriverschedulecommand.gs
+..\drivercommandshared.gs
+..\soupshared.gs
+..\NamedScheduleLabelJumpCustomCommand.gs
+..\PermitManagerClient.gs
+..\PermitBasicCommand.gs
+..\PermitBasicScheduleCommand.gs

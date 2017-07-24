@@ -11,7 +11,7 @@ class NamedScheduleLabelInsertCommand isclass DefaultDriverCommand
 
 	public string GetMenuItemMessageMajor(void) { return "InsertLabelCommandMenuItem"; }
 
-	public Soup CreateScheduleComamndProperties(Message menuItemMessage)
+	public Soup CreateScheduleCommandProperties(Message menuItemMessage)
 	{
 		Soup soup = Constructors.NewSoup();
 		soup.SetNamedTag("label", menuItemMessage.minor);

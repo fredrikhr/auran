@@ -4,7 +4,7 @@ class DefaultDriverCommand isclass DriverCommand
 {
 	public string GetMenuItemMessageMajor(void) { return (string)null; }
 	public string GetMenuItemMessageMinor(void) { return (string)null; }
-	public Soup CreateScheduleComamndProperties(Message menuItemMessage);
+	public Soup CreateScheduleCommandProperties(Message menuItemMessage);
 	public DriverScheduleCommand CreateScheduleComamndInstance(void);
 
 	public mandatory void Init(Asset asset)
@@ -14,9 +14,9 @@ class DefaultDriverCommand isclass DriverCommand
 		AddHandler(me, GetMenuItemMessageMajor(), GetMenuItemMessageMinor(), "OnMenuItemMessage");
 	}
 
-	public Soup CreateScheduleComamndProperties(Message menuItemMessage)
+	public Soup CreateScheduleCommandProperties(Message menuItemMessage)
 	{
-		Exception("DefaultDriverCommand.CreateScheduleComamndProperties> Not overridden.");
+		Exception("DefaultDriverCommand.CreateScheduleCommandProperties> Not overridden.");
 		return cast<Soup>(null);
 	}
 
@@ -34,7 +34,7 @@ class DefaultDriverCommand isclass DriverCommand
 			return;
 		}
 
-		Soup soup = CreateScheduleComamndProperties(msg);
+		Soup soup = CreateScheduleCommandProperties(msg);
 
 		DriverScheduleCommand cmd = CreateScheduleCommand(driver, soup);
 		commands.AddDriverScheduleCommand(cmd);

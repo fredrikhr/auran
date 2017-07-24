@@ -5,6 +5,17 @@ class NamedScheduleLabelRule isclass ScenarioBehavior
 	StringTable stringTable;
 	string[] labels;
 
+	public void FillDefaultLabels(void)
+	{
+		int i;
+		int max = 20;
+		int max_size = ((string)max).size();
+		for (i = 1; i <= max; i++)
+		{
+			labels[labels.size()] = HTMLWindow.PadZerosOnFront((string)i, max_size);
+		}
+	}
+
 	public void Init(Asset asset)
 	{
 		inherited(asset);
@@ -14,6 +25,7 @@ class NamedScheduleLabelRule isclass ScenarioBehavior
 		SetPropertyHandler(null);
 
 		labels = new string[0];
+		FillDefaultLabels();
 	}
 
 	public void SetProperties(Soup soup)

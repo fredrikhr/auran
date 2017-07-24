@@ -15,7 +15,7 @@ string-table
 {
 	description			"Unconditionally skips ahead to a named schedule label"
 	JumpLabelMenuItem	"Skip to"
-	JumpLabelTooltip	"Skip to: $1"
+	JumpLabelTooltip	"Skip to: $0"
 }
 thumbnails
 {
