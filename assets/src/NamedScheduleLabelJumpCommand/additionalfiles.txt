@@ -1,5 +1,5 @@
 ..\defaultdrivercommand.gs
 ..\defaultdriverschedulecommand.gs
 ..\drivercommandshared.gs
-..\namedschedulelabeljumpcustomcommand.gs
+..\NamedScheduleLabelJumpScheduleCommand.gs
 ..\soupshared.gs

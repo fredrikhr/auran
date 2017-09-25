@@ -13,9 +13,13 @@ kuid-table
 }
 string-table
 {
-	description			"Unconditionally skips ahead to a named schedule label"
-	JumpLabelMenuItem	"Skip to"
-	JumpLabelTooltip	"Skip to: $0"
+	description					"Unconditionally skips ahead to a named schedule label"
+	JumpLabelMenuItem			"Skip to"
+	JumpLabelTooltip			"Skip to: $0"
+	JumpLabelTooltipStarted		"Will skip to: $0"
+	JumpLabelTooltipCheck		"Deciding whether to skip to: $0"
+	JumpLabelTooltipRebuild		"Skipping to: $0"
+	JumpLabelTooltipComplete	"Skipped to: $0"
 }
 thumbnails
 {

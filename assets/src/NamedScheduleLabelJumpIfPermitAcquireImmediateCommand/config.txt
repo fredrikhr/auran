@@ -6,7 +6,7 @@ trainz-build                            3.5
 script                                  "NamedScheduleLabelJumpIfPermitAcquireImmediateCommand"
 class                                   "NamedScheduleLabelJumpIfPermitAcquireImmediateCommand"
 username                                "NamedScheduleLabelJumpIfPermitAcquireImmediateCommand"
-description                             
+description
 
 string-table
 {
@@ -14,6 +14,10 @@ string-table
   rootmenuitem                          "If immediate Permit"
   jumplabelmenuitem                     "Skip to: $0"
   jumplabeltooltip                      "If Permit $0 for $1 acquired immediately, skip to: $2"
+  JumpLabelTooltipStarted               "Will skip to: $0"
+  JumpLabelTooltipCheck                 "Deciding whether to skip to: $0"
+  JumpLabelTooltipRebuild               "Skipping to: $0"
+  JumpLabelTooltipComplete              "Skipped to: $0"
 }
 
 thumbnails
@@ -24,7 +28,7 @@ thumbnails
     height                              180
     image                               "thumbnail.jpg"
   }
-  
+
   1
   {
     width                               64

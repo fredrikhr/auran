@@ -1,48 +1,84 @@
 include "drivercommandshared.gs"
-include "permitbasicschedulecommand.gs"
-include "namedschedulelabeljumpifpermitacquireimmediatecustomcommand.gs"
+include "NamedScheduleLabelJumpScheduleCommand.gs"
 
-class NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand isclass PermitBasicScheduleCommand
+include "PermitBasicScheduleState.gs"
+include "PermitManagerClient.gs"
+
+class NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand isclass NamedScheduleLabelJumpScheduleCommand, PermitManagerClient
 {
-	define string KUID_LABEL_COMMAND_ENTRY = "NamedScheduleLabelInsertCommand";
-
-	public KUID labelKuid;
-	public string labelName;
+	PermitBasicScheduleState state;
 
 	public void Init(DriverCharacter driver, DriverCommand parent)
 	{
 		inherited(driver, parent);
 
-		labelKuid = DriverCommandShared.GetDepdendantKUID(GetDriverCommand(), KUID_LABEL_COMMAND_ENTRY);
+		state = new PermitBasicScheduleState();
 	}
 
-	public CustomCommand CreateCustomCommand(DriverCharacter driver)
+	public bool ShouldExecuteJump(DriverCharacter driver)
 	{
-		NamedScheduleLabelJumpIfPermitAcquireImmediateCustomCommand cmd = new NamedScheduleLabelJumpIfPermitAcquireImmediateCustomCommand();
-		cmd.Init(driver, labelKuid, labelName, permitManagerRule, permitType, permitObject);
-		return cast<CustomCommand>(cmd);
-	}
+		GameObject sender = driver.GetTrain();
+		sender.Sniff(state.permitManagerRule, "PermitManager", null, true);
+		SendMessage(sender, "AcquireImmediate");
 
-	public Soup GetProperties(void)
-	{
-		Soup soup = inherited();
+		bool result = false;
+		Message msg;
+		wait()
+		{
+			on "PermitManager", "Granted", msg:
+			{
+				if (ValidatePermitManagerMessage(msg))
+				{
+					result = true;
+					break;
+				}
+				ResendMessage(msg);
+				continue;
+			}
 
-		soup.SetNamedTag("label", labelName);
+			on "PermitManager", "Denied", msg:
+			{
+				if (ValidatePermitManagerMessage(msg))
+				{
+					result = false;
+					break;
+				}
+				ResendMessage(msg);
+				continue;
+			}
 
-		return soup;
+			on "Schedule", "Abort":
+			{
+				SendMessage(sender, "Release");
+				break;
+			}
+		}
+		sender.Sniff(state.permitManagerRule, "PermitManager", null, false);
+
+		return result;
 	}
 
 	public void SetProperties(Soup soup)
 	{
 		inherited(soup);
-		if (!soup)
-			return;
+		state.SetProperties(soup);
+	}
 
-		labelName = soup.GetNamedTag("label");
+	public Soup GetProperties(void)
+	{
+		Soup soup = inherited();
+		state.PopulateProperties(soup);
+		return soup;
 	}
 
 	public string GetTooltip(void)
 	{
-		return GetAsset().GetStringTable().GetString3("jumplabeltooltip", permitType, permitObject, labelName);
+		return GetStringTable()
+			.GetString3(
+				GetTooltipStringTableEntry(),
+				state.permitType,
+				state.permitObject,
+				labelName
+				);
 	}
 };
