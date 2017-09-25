@@ -1,14 +1,14 @@
-include "defaultdriverschedulecommand.gs"
+include "Constructors.gs"
+include "Soup.gs"
 
-class PermitBasicScheduleCommand isclass DefaultDriverScheduleCommand
+class PermitBasicScheduleState
 {
 	public GameObject permitManagerRule;
 	public string permitType;
 	public string permitObject;
 
-	public mandatory void SetProperties(Soup soup)
+	public void SetProperties(Soup soup)
 	{
-		inherited(soup);
 		if (!soup)
 			return;
 
@@ -25,17 +25,22 @@ class PermitBasicScheduleCommand isclass DefaultDriverScheduleCommand
 			me.permitObject = permitObject;
 	}
 
-	public mandatory Soup GetProperties(void)
+	public void PopulateProperties(Soup soup)
 	{
-		Soup soup = inherited();
-
+		if (!soup)
+			return;
 		string sgid = "";
 		if (permitManagerRule)
 			sgid = permitManagerRule.GetGameObjectID().SerialiseToString();
 		soup.SetNamedTag("rule", sgid);
 		soup.SetNamedTag("type", permitType);
 		soup.SetNamedTag("object", permitObject);
+	}
 
+	public Soup GetProperties(void)
+	{
+		Soup soup = Constructors.NewSoup();
+		PopulateProperties(soup);
 		return soup;
 	}
 };

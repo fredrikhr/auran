@@ -18,7 +18,7 @@ class PermitAcquireCustomCommand isclass CustomCommand, PermitManagerClient
 			sender = driver;
 		}
 
-		sender.Sniff(permitManagerRule, "PermitManager", null, true);
+		sender.Sniff(state.permitManagerRule, "PermitManager", null, true);
 		SendMessage(sender, "Acquire");
 
 		Message msg;
@@ -38,7 +38,7 @@ class PermitAcquireCustomCommand isclass CustomCommand, PermitManagerClient
 				break;
 			}
 		}
-		sender.Sniff(permitManagerRule, "PermitManager", null, false);
+		sender.Sniff(state.permitManagerRule, "PermitManager", null, false);
 
 		return true;
 	}

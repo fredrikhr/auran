@@ -17,7 +17,7 @@ class PermitReleaseCustomCommand isclass CustomCommand, PermitManagerClient
 			sender = driver;
 		}
 
-		sender.Sniff(permitManagerRule, "PermitManager", null, true);
+		sender.Sniff(state.permitManagerRule, "PermitManager", null, true);
 		SendMessage(sender, "Release");
 
 		Message msg;
@@ -39,7 +39,7 @@ class PermitReleaseCustomCommand isclass CustomCommand, PermitManagerClient
 			}
 			on "Schedule", "Abort": { break; }
 		}
-		sender.Sniff(permitManagerRule, "PermitManager", null, false);
+		sender.Sniff(state.permitManagerRule, "PermitManager", null, false);
 
 		return true;
 	}

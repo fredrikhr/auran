@@ -1,5 +1,5 @@
 ..\permitbasiccommand.gs
-..\permitbasicschedulecommand.gs
+..\permitbasicschedulestate.gs
 ..\permitmanagerclient.gs
 ..\defaultdrivercommand.gs
 ..\drivercommandshared.gs

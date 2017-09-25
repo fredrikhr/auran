@@ -1,21 +1,19 @@
 include "gs.gs"
 include "interface.gs"
+include "PermitBasicScheduleState.gs"
 
 class PermitManagerClient
 {
 	public DriverCharacter driver;
-	public GameObject permitManagerRule;
-	public string permitType, permitObject;
+	public PermitBasicScheduleState state;
 
 	public bool ValidatePermitManagerMessage(Message msg);
 	public void ResendMessage(Message msg);
 
-	public mandatory void Init(DriverCharacter driver, GameObject permitManagerRule, string permitType, string permitObject)
+	public mandatory void Init(DriverCharacter driver, PermitBasicScheduleState state)
 	{
 		me.driver = driver;
-		me.permitManagerRule = permitManagerRule;
-		me.permitType = permitType;
-		me.permitObject = permitObject;
+		me.state = state;
 	}
 
 	public bool ValidatePermitManagerMessage(Message msg)
@@ -37,14 +35,14 @@ class PermitManagerClient
 			Interface.Log("PermitManagerCustomCommand.ValidatePermitManagerMessage> message carries no soup");
 			return false;
 		}
-		if (permitType != soup.GetNamedTag("type"))
+		if (state.permitType != soup.GetNamedTag("type"))
 		{
-			Interface.Log("PermitManagerCustomCommand.ValidatePermitManagerMessage> message permit type: \"" + soup.GetNamedTag("type") + "\", expected: \"" + permitType + "\"");
+			Interface.Log("PermitManagerCustomCommand.ValidatePermitManagerMessage> message permit type: \"" + soup.GetNamedTag("type") + "\", expected: \"" + state.permitType + "\"");
 			return false;
 		}
-		if (permitObject != soup.GetNamedTag("object"))
+		if (state.permitObject != soup.GetNamedTag("object"))
 		{
-			Interface.Log("PermitManagerCustomCommand.ValidatePermitManagerMessage> message permit type: \"" + soup.GetNamedTag("object") + "\", expected: \"" + permitObject + "\"");
+			Interface.Log("PermitManagerCustomCommand.ValidatePermitManagerMessage> message permit type: \"" + soup.GetNamedTag("object") + "\", expected: \"" + state.permitObject + "\"");
 			return false;
 		}
 		return true;
@@ -54,7 +52,7 @@ class PermitManagerClient
 	{
 		GameObject sender = cast<GameObject>(msg.src);
 		if (!sender)
-			sender = permitManagerRule;
+			sender = state.permitManagerRule;
 		sender.PostMessage(cast<GameObject>(msg.dst), msg.major, msg.minor, cast<GSObject>(msg.paramSoup), 0.1);
 	}
 
@@ -67,8 +65,8 @@ class PermitManagerClient
 		}
 
 		Soup soup = Constructors.NewSoup();
-		soup.SetNamedTag("type", permitType);
-		soup.SetNamedTag("object", permitObject);
-		sender.SendMessage(permitManagerRule, "PermitManager", msgMinor, soup);
+		soup.SetNamedTag("type", state.permitType);
+		soup.SetNamedTag("object", state.permitObject);
+		sender.SendMessage(state.permitManagerRule, "PermitManager", msgMinor, soup);
 	}
 };

@@ -5,4 +5,4 @@
 ..\NamedScheduleLabelJumpCustomCommand.gs
 ..\PermitManagerClient.gs
 ..\PermitBasicCommand.gs
-..\PermitBasicScheduleCommand.gs
+..\PermitBasicScheduleState.gs
