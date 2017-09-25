@@ -53,4 +53,6 @@ class DefaultDriverCommand isclass DriverCommand
 		cmd.SetProperties(properties);
 		return cmd;
 	}
+
+	public StringTable GetStringTable(void) { return GetAsset().GetStringTable(); }
 };

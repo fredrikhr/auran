@@ -32,4 +32,5 @@ class DefaultDriverScheduleCommand isclass DriverScheduleCommand
 
 	public object GetIcon(void) { return cast<object>(GetDriverCommand()); }
 	public void Exception(string reason) { GetDriverCommand().Exception(reason); }
+	public StringTable GetStringTable(void) { return GetAsset().GetStringTable(); }
 };
