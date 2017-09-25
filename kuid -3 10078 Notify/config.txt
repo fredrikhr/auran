@@ -1,0 +1,92 @@
+﻿
+username                                "Notify"
+kind                                    "drivercommand"
+kuid                                    <kuid:-3:10078>
+script                                  "NotifyCommand"
+class                                   "NotifyCommand"
+icon-texture                            "notify.texture"
+supports-null-driver-character          1
+asset-filename                          "NotifyCommand"
+
+string-table
+{
+  description                           "Notifies the player of schedule progress/completion."
+  driver_command_notify                 "Notify"
+  handle_command_interface_msg          ": All previous tasks are complete."
+}
+
+string-table-fr
+{
+  handle_command_interface_msg          ": Toutes les taches précédentes sont terminées."
+  driver_command_notify                 "Informer"
+}
+username-es                             "Notificar"
+
+string-table-es
+{
+  driver_command_notify                 "Notificar"
+  handle_command_interface_msg          ": Todas la tareas anteriores estan completas."
+}
+
+string-table-it
+{
+  driver_command_notify                 "Notificare"
+  handle_command_interface_msg          ": Tutti i precedenti compiti sono stati completati."
+}
+username-nl                             "Waarschuwen"
+
+string-table-nl
+{
+  driver_command_notify                 "Waarschuwen"
+  handle_command_interface_msg          ": De vorige taken zijn allemaal voltooid."
+}
+username-pl                             "Powiadom"
+
+string-table-pl
+{
+  driver_command_notify                 "Powiadom"
+  handle_command_interface_msg          ": Wszystkie poprzednie zadania zostały wykonane."
+  description                           "Notifies the player of schedule progress/completion."
+}
+username-de                             "Benachrichtigen"
+
+string-table-de
+{
+  driver_command_notify                 "Benachrichtigen"
+  handle_command_interface_msg          ": Alle vorangegangenen Aufgaben wurden ausgeführt."
+  description                           "Benachrichtigt den Spieler über den Fahrplan-Fortschritt"
+}
+username-cz                             "Upozorni"
+
+string-table-cz
+{
+  driver_command_notify                 "Upozorni"
+  handle_command_interface_msg          ": všechny předchozí příkazy jsou splněny."
+}
+username-hu                             "Értesítés"
+
+string-table-hu
+{
+  driver_command_notify                 "Értesítés"
+  handle_command_interface_msg          ": Minden előző feladat végrehajtva."
+}
+
+string-table-ru
+{
+  driver_command_notify                 "Уведомить"
+  handle_command_interface_msg          ": Все распоряжения выполнены."
+}
+username-it                             "Notificare"
+username-fr                             "Informer"
+
+string-table-jp
+{
+  driver_command_notify                 "通知"
+  handle_command_interface_msg          "：以前のタスクはすべて完了しています。"
+}
+username-jp                             "''"
+
+kuid-table
+{
+  command-sounds                        <kuid:-3:10219>
+}
