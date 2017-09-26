@@ -5,21 +5,8 @@ class PermitAcquireCustomCommand isclass CustomCommand, PermitManagerClient
 {
 	public bool Execute(Train train, int px, int py, int pz)
 	{
-		GameObject sender;
-		if (train)
-		{
-			sender = train;
-			train.SetAutopilotMode(Train.CONTROL_SCRIPT);
-			train.SetDCCThrottle(0.0);
-		}
-		else
-		{
-			Interface.Log("PermitAcquireCustomCommand.Execute> train argument is null");
-			sender = driver;
-		}
-
-		sender.Sniff(state.permitManagerRule, "PermitManager", null, true);
-		SendMessage(sender, "Acquire");
+		train.Sniff(state.permitManagerRule, "PermitManager", null, true);
+		SendMessage(train, "Acquire");
 
 		Message msg;
 		wait()
@@ -34,11 +21,11 @@ class PermitAcquireCustomCommand isclass CustomCommand, PermitManagerClient
 
 			on "Schedule", "Abort":
 			{
-				SendMessage(sender, "Release");
+				SendMessage(train, "Release");
 				break;
 			}
 		}
-		sender.Sniff(state.permitManagerRule, "PermitManager", null, false);
+		train.Sniff(state.permitManagerRule, "PermitManager", null, false);
 
 		return true;
 	}

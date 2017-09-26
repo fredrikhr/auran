@@ -4,15 +4,13 @@ include "PermitBasicScheduleState.gs"
 
 class PermitManagerClient
 {
-	public DriverCharacter driver;
 	public PermitBasicScheduleState state;
 
 	public bool ValidatePermitManagerMessage(Message msg);
 	public void ResendMessage(Message msg);
 
-	public mandatory void Init(DriverCharacter driver, PermitBasicScheduleState state)
+	public void Init(PermitBasicScheduleState state)
 	{
-		me.driver = driver;
 		me.state = state;
 	}
 
@@ -58,12 +56,6 @@ class PermitManagerClient
 
 	public void SendMessage(GameObject sender, string msgMinor)
 	{
-		if (!sender)
-		{
-			Interface.Log("PermitManagerCustomCommand.SendMessage> sender argument is null");
-			sender = driver;
-		}
-
 		Soup soup = Constructors.NewSoup();
 		soup.SetNamedTag("type", state.permitType);
 		soup.SetNamedTag("object", state.permitObject);

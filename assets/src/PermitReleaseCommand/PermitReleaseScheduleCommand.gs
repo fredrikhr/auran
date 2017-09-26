@@ -16,7 +16,7 @@ class PermitReleaseScheduleCommand isclass DefaultDriverScheduleCommand
 	public CustomCommand CreateCustomCommand(DriverCharacter driver)
 	{
 		PermitReleaseCustomCommand cmd = new PermitReleaseCustomCommand();
-		cmd.Init(driver, state);
+		cmd.Init(state);
 		return cast<CustomCommand>(cmd);
 	}
 

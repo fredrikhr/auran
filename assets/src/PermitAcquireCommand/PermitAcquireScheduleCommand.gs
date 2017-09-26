@@ -17,7 +17,7 @@ class PermitAcquireScheduleCommand isclass DefaultDriverScheduleCommand
 	public CustomCommand CreateCustomCommand(DriverCharacter driver)
 	{
 		PermitAcquireCustomCommand cmd = new PermitAcquireCustomCommand();
-		cmd.Init(driver, state);
+		cmd.Init(state);
 		return cast<CustomCommand>(cmd);
 	}
 

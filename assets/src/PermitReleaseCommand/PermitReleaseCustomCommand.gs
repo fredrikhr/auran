@@ -5,20 +5,8 @@ class PermitReleaseCustomCommand isclass CustomCommand, PermitManagerClient
 {
 	public bool Execute(Train train, int px, int py, int pz)
 	{
-		GameObject sender;
-		if (train)
-		{
-			sender = train;
-			train.SetAutopilotMode(Train.CONTROL_AUTOPILOT);
-		}
-		else
-		{
-			Interface.Log("PermitReleaseCustomCommand.Execute> train argument is invalid");
-			sender = driver;
-		}
-
-		sender.Sniff(state.permitManagerRule, "PermitManager", null, true);
-		SendMessage(sender, "Release");
+		train.Sniff(state.permitManagerRule, "PermitManager", null, true);
+		SendMessage(train, "Release");
 
 		Message msg;
 		wait()
@@ -39,8 +27,10 @@ class PermitReleaseCustomCommand isclass CustomCommand, PermitManagerClient
 			}
 			on "Schedule", "Abort": { break; }
 		}
-		sender.Sniff(state.permitManagerRule, "PermitManager", null, false);
+		train.Sniff(state.permitManagerRule, "PermitManager", null, false);
 
 		return true;
 	}
+
+	public bool ShouldStopTrainOnCompletion() { return false; }
 };
