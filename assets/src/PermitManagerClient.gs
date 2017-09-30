@@ -51,14 +51,32 @@ class PermitManagerClient
 		GameObject sender = cast<GameObject>(msg.src);
 		if (!sender)
 			sender = state.permitManagerRule;
-		sender.PostMessage(cast<GameObject>(msg.dst), msg.major, msg.minor, cast<GSObject>(msg.paramSoup), 0.1);
+		sender.PostMessage(cast<GameObject>(msg.dst), msg.major, msg.minor, cast<GSObject>(msg.paramSoup), 0.001);
 	}
 
-	public void SendMessage(GameObject sender, string msgMinor)
+	public void SendMessage(GameObject sender, string msgMinor, Soup soup)
 	{
-		Soup soup = Constructors.NewSoup();
 		soup.SetNamedTag("type", state.permitType);
 		soup.SetNamedTag("object", state.permitObject);
 		sender.SendMessage(state.permitManagerRule, "PermitManager", msgMinor, soup);
 	}
+
+	public void SendMessage(GameObject sender, string msgMinor)
+	{ SendMessage(sender, msgMinor, Constructors.NewSoup()); }
+
+	public void PostMessage(GameObject sender, string msgMinor, float seconds, Soup soup)
+	{
+		soup.SetNamedTag("type", state.permitType);
+		soup.SetNamedTag("object", state.permitObject);
+		sender.PostMessage(state.permitManagerRule, "PermitManager", msgMinor, soup, seconds);
+	}
+
+	public void PostMessage(GameObject sender, string msgMinor, float seconds)
+	{ PostMessage(sender, msgMinor, seconds, Constructors.NewSoup()); }
+
+	public void PostMessageImmediate(GameObject sender, string msgMinor, Soup soup)
+	{ PostMessage(sender, msgMinor, 0.001, soup); }
+
+	public void PostMessageImmediate(GameObject sender, string msgMinor)
+	{ PostMessageImmediate(sender, msgMinor, Constructors.NewSoup()); }
 };

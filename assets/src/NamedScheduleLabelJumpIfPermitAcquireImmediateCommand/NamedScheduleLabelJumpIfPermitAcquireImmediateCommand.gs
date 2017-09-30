@@ -28,7 +28,8 @@ class NamedScheduleLabelJumpIfPermitAcquireImmediateCommand isclass PermitBasicC
 
 	public DriverScheduleCommand CreateScheduleComamndInstance(void)
 	{
-		return cast<DriverScheduleCommand>(new NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand());
+		NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand cmd = new NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand();
+		return cast<DriverScheduleCommand>(cmd);
 	}
 
 	public Menu AddPermitSubCommandItem(string[] msgSegments)

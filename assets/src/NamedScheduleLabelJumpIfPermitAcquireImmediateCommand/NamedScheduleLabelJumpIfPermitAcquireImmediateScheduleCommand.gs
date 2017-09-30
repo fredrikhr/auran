@@ -6,13 +6,10 @@ include "PermitManagerClient.gs"
 
 class NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand isclass NamedScheduleLabelJumpScheduleCommand, PermitManagerClient
 {
-	PermitBasicScheduleState state;
-
 	public void Init(DriverCharacter driver, DriverCommand parent)
 	{
 		inherited(driver, parent);
-
-		state = new PermitBasicScheduleState();
+		Init(new PermitBasicScheduleState());
 	}
 
 	public bool ShouldExecuteJump(DriverCharacter driver)

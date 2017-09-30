@@ -10,6 +10,8 @@ class NamedScheduleLabelJumpScheduleCommand isclass DefaultDriverScheduleCommand
 	define int JUMP_REBUILD_SCHEDULE = 3;
 	define int JUMP_COMPLETE = 4;
 
+	define float continueDrivingThreshhold = 0.8; // 0.8 m/s -> ~3 kph
+
 	int jumpState;
 
 	public string GetJumpStateString(void)

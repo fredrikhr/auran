@@ -19,7 +19,10 @@ class NamedScheduleLabelJumpCommand isclass DefaultDriverCommand
 	}
 
 	public DriverScheduleCommand CreateScheduleComamndInstance(void)
-	{ return cast<DriverScheduleCommand>(new NamedScheduleLabelJumpScheduleCommand()); }
+	{
+		NamedScheduleLabelJumpScheduleCommand cmd = new NamedScheduleLabelJumpScheduleCommand();
+		return cast<DriverScheduleCommand>(cmd);
+	}
 
 	public mandatory void Init(Asset asset)
 	{

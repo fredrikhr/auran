@@ -1,4 +1,10 @@
 include "drivercommand.gs"
+include "schedule.gs"
+
+class NullCustomCommand isclass CustomCommand
+{
+	public bool Execute(Train train, int px, int py, int pz) { return true; }
+};
 
 static class DriverCommandShared
 {

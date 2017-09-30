@@ -339,25 +339,26 @@ class PermitManagerRule isclass ScenarioBehavior
 
 	void OnTypeAndObjectRequestMessage(Message msg)
 	{
+		string __func__ = "PermitManagerRule.OnTypeAndObjectRequestMessage";
 		int i;
 		GameObject src = cast<GameObject>(msg.src);
 		if (!src)
 		{
-			Exception("PermitManagerRule.OnTypeAndObjectRequestMessage> message source is not a GameObject instance");
+			Exception(__func__ + "> message source is not a GameObject instance");
 			return;
 		}
 
 		Soup soup = cast<Soup>(msg.paramSoup);
 		if (!soup)
 		{
-			Exception("PermitManagerRule.OnTypeAndObjectRequestMessage> message carries no soup");
+			Exception(__func__ + "> message carries no soup");
 			return;
 		}
 
 		string typeName = soup.GetNamedTag("type");
 		if (!typeName)
 		{
-			Exception("PermitManagerRule.OnTypeAndObjectRequestMessage> message carries no named PermitType");
+			Exception(__func__ + "> message carries no named PermitType");
 			return;
 		}
 		PermitType typeInst;
@@ -370,7 +371,7 @@ class PermitManagerRule isclass ScenarioBehavior
 		}
 		if (!typeInst)
 		{
-			Interface.Log("PermitManagerRule.OnTypeAndObjectRequestMessage> Creating unknown PermitType with name \"" + typeName + "\"");
+			Interface.Log(__func__ + "> Creating unknown PermitType with name \"" + typeName + "\"");
 			typeInst = new PermitType();
 			typeInst.Init(typeName);
 			types[types.size()] = typeInst;
@@ -379,7 +380,7 @@ class PermitManagerRule isclass ScenarioBehavior
 		string objectName = soup.GetNamedTag("object");
 		if (!objectName)
 		{
-			Exception("PermitManagerRule.OnTypeAndObjectRequestMessage> message carries no named PermitObject");
+			Exception(__func__ + "> message carries no named PermitObject");
 			return;
 		}
 		PermitObject objectInst;
@@ -392,7 +393,7 @@ class PermitManagerRule isclass ScenarioBehavior
 		}
 		if (!objectInst)
 		{
-			Interface.Log("PermitManagerRule.OnTypeAndObjectRequestMessage> Creating unknown PermitObject with name \"" + objectName + "\"");
+			Interface.Log(__func__ + "> Creating unknown PermitObject with name \"" + objectName + "\"");
 			objectInst = new PermitObject();
 			objectInst.Init(objectName);
 			objects[objects.size()] = objectInst;
@@ -413,7 +414,7 @@ class PermitManagerRule isclass ScenarioBehavior
 		}
 		else
 		{
-			Exception("PermitManagerRule.OnTypeAndObjectRequestMessage> Unrecognized Message Minor string: " + msg.minor);
+			Exception(__func__ + "> Unrecognized Message Minor string: " + msg.minor);
 		}
 	}
 
@@ -425,19 +426,7 @@ class PermitManagerRule isclass ScenarioBehavior
 		Message msg;
 		wait()
 		{
-			on "PermitManager", "Acquire", msg:
-			{
-				OnTypeAndObjectRequestMessage(msg);
-				continue;
-			}
-
-			on "PermitManager", "AcquireImmediate", msg:
-			{
-				OnTypeAndObjectRequestMessage(msg);
-				continue;
-			}
-
-			on "PermitManager", "Release", msg:
+			on "PermitManager", "", msg:
 			{
 				OnTypeAndObjectRequestMessage(msg);
 				continue;

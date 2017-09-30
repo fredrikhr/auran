@@ -12,12 +12,12 @@ string-table
 {
   description                           "Attempts to acquire an immediate Permit and skips ahead to Label if successful"
   rootmenuitem                          "If immediate Permit"
-  jumplabelmenuitem                     "Skip to: $0"
+  jumplabelmenuitem                     "$0 < Skip to"
   jumplabeltooltip                      "If Permit $0 for $1 acquired immediately, skip to: $2"
-  JumpLabelTooltipStarted               "Will skip to: $0"
-  JumpLabelTooltipCheck                 "Deciding whether to skip to: $0"
-  JumpLabelTooltipRebuild               "Skipping to: $0"
-  JumpLabelTooltipComplete              "Skipped to: $0"
+  JumpLabelTooltipStarted               "If Permit $0 for $1 acquired immediately, skip to: $2"
+  JumpLabelTooltipCheck                 "Requesting immediate Permit $0 for $1, then skipping to: $2"
+  JumpLabelTooltipRebuild               "Immediate Permit $0 for $1 acquired, skipping to: $2"
+  JumpLabelTooltipComplete              "Immediate Permit $0 for $1 acquired, skipped to: $2"
 }
 
 thumbnails
