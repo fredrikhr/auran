@@ -1,47 +1,53 @@
 include "defaultdriverschedulecommand.gs"
 include "drivercommandshared.gs"
 
-class NamedScheduleLabelJumpScheduleCommand isclass DefaultDriverScheduleCommand
+class NamedScheduleLabelJumpStateContainer
 {
-	define string KUID_LABEL_COMMAND_ENTRY = "NamedScheduleLabelInsertCommand";
-	define int JUMP_NOT_STARTED = 0;
-	define int JUMP_STARTED = 1;
-	define int JUMP_CONDITION_CHECK = 2;
-	define int JUMP_REBUILD_SCHEDULE = 3;
-	define int JUMP_COMPLETE = 4;
-
-	define float continueDrivingThreshhold = 0.8; // 0.8 m/s -> ~3 kph
+	public define int JUMP_NOT_STARTED = 0;
+	public define int JUMP_STARTED = 1;
+	public define int JUMP_CONDITION_CHECK = 2;
+	public define int JUMP_REBUILD_SCHEDULE = 3;
+	public define int JUMP_COMPLETE = 4;
 
 	int jumpState;
 
-	public string GetJumpStateString(void)
+	public void SetJumpState(int jumpState)
+	{ me.jumpState = jumpState; }
+
+	public int GetJumpState(void) { return jumpState; }
+
+	public string GetJumpStateString(StringTable stringTable)
 	{
-		StringTable stringTable = GetStringTable();
 		string result;
 		switch (jumpState)
 		{
 			case JUMP_NOT_STARTED:
-				result = stringTable.GetString("JUMP_NOT_STARTED");
+				if (stringTable)
+					result = stringTable.GetString("JUMP_NOT_STARTED");
 				if (!result)
 					result = "JUMP_NOT_STARTED";
 				break;
 			case JUMP_STARTED:
-				result = stringTable.GetString("JUMP_STARTED");
+				if (stringTable)
+					result = stringTable.GetString("JUMP_STARTED");
 				if (!result)
 					result = "JUMP_STARTED";
 				break;
 			case JUMP_CONDITION_CHECK:
-				result = stringTable.GetString("JUMP_CONDITION_CHECK");
+				if (stringTable)
+					result = stringTable.GetString("JUMP_CONDITION_CHECK");
 				if (!result)
 					result = "JUMP_CONDITION_CHECK";
 				break;
 			case JUMP_REBUILD_SCHEDULE:
-				result = stringTable.GetString("JUMP_REBUILD_SCHEDULE");
+				if (stringTable)
+					result = stringTable.GetString("JUMP_REBUILD_SCHEDULE");
 				if (!result)
 					result = "JUMP_REBUILD_SCHEDULE";
 				break;
 			case JUMP_COMPLETE:
-				result = stringTable.GetString("JUMP_COMPLETE");
+				if (stringTable)
+					result = stringTable.GetString("JUMP_COMPLETE");
 				if (!result)
 					result = "JUMP_COMPLETE";
 				break;
@@ -51,15 +57,19 @@ class NamedScheduleLabelJumpScheduleCommand isclass DefaultDriverScheduleCommand
 		}
 		return result;
 	}
+};
 
+class NamedScheduleLabelJumper
+{
+	NamedScheduleLabelJumpStateContainer jumpStateContainer;
 	string labelName;
 	KUID labelKuid;
 
-	public void Init(DriverCharacter driver, DriverCommand parent)
+	public void Init(NamedScheduleLabelJumpStateContainer jumpStateContainer, string labelName, KUID labelKuid)
 	{
-		inherited(driver, parent);
-
-		labelKuid = DriverCommandShared.GetDepdendantKUID(GetDriverCommand(), KUID_LABEL_COMMAND_ENTRY);
+		me.jumpStateContainer = jumpStateContainer;
+		me.labelName = labelName;
+		me.labelKuid = labelKuid;
 	}
 
 	bool MatchesBaseKuid(KUID testKuid)
@@ -69,14 +79,20 @@ class NamedScheduleLabelJumpScheduleCommand isclass DefaultDriverScheduleCommand
 		return labelKuidBase == testKuidBase;
 	}
 
+	public void SetJumpState(int jumpState)
+	{
+		if (jumpStateContainer)
+			jumpStateContainer.SetJumpState(jumpState);
+	}
+
 	public bool ShouldExecuteJump(DriverCharacter driver) { return true; }
 
-	thread void PerformJumpOperation(DriverCharacter driver)
+	public void PerformJumpOperation(DriverCharacter driver)
 	{
-		jumpState = JUMP_CONDITION_CHECK;
+		SetJumpState(NamedScheduleLabelJumpStateContainer.JUMP_CONDITION_CHECK);
 		if (ShouldExecuteJump(driver))
 		{
-			jumpState = JUMP_REBUILD_SCHEDULE;
+			SetJumpState(NamedScheduleLabelJumpStateContainer.JUMP_REBUILD_SCHEDULE);
 
 			DriverCommands cmds = driver.GetDriverCommands();
 			bool dsRepeat = cmds.GetDriverScheduleRepeat();
@@ -114,48 +130,67 @@ class NamedScheduleLabelJumpScheduleCommand isclass DefaultDriverScheduleCommand
 			cmds.SetDriverScheduleRepeat(dsRepeat);
 		}
 
-		jumpState = JUMP_COMPLETE;
+		SetJumpState(NamedScheduleLabelJumpStateContainer.JUMP_COMPLETE);
+	}
+};
+
+class NamedScheduleLabelJumpCustomCommand isclass CustomCommand, NamedScheduleLabelJumper
+{
+	public define float continueDrivingThreshhold = 0.8; // 0.8 m/s -> ~3 kph
+
+	DriverCharacter driver;
+
+	public void Init(DriverCharacter driver, NamedScheduleLabelJumpStateContainer jumpStateContainer, string labelName, KUID labelKuid)
+	{
+		me.driver = driver;
+		Init(jumpStateContainer, labelName, labelKuid);
+	}
+
+	public bool Execute(Train train, int px, int py, int pz)
+	{
+		if (train.GetTrainVelocity() > continueDrivingThreshhold)
+			train.SetAutopilotMode(Train.CONTROL_AUTOPILOT);
+
+		PerformJumpOperation(driver);
+
+		train.SetAutopilotMode(Train.CONTROL_SCRIPT);
+		return true;
+	}
+
+	public bool ShouldStopTrainOnCompletion() { return false; }
+};
+
+class NamedScheduleLabelJumpScheduleCommand isclass DefaultDriverScheduleCommand, NamedScheduleLabelJumpStateContainer
+{
+	define string KUID_LABEL_COMMAND_ENTRY = "NamedScheduleLabelInsertCommand";
+
+	string labelName;
+	KUID labelKuid;
+
+	public void Init(DriverCharacter driver, DriverCommand parent)
+	{
+		inherited(driver, parent);
+
+		labelKuid = DriverCommandShared.GetDepdendantKUID(GetDriverCommand(), KUID_LABEL_COMMAND_ENTRY);
+	}
+
+	public CustomCommand CreateCustomCommand(DriverCharacter driver)
+	{
+		NamedScheduleLabelJumpCustomCommand cmd = new NamedScheduleLabelJumpCustomCommand();
+		cmd.Init(driver, me, labelName, labelKuid);
+		return cast<CustomCommand>(cmd);
 	}
 
 	public bool BeginExecute(DriverCharacter driver)
 	{
-		if (!driver)
-		{
-			Exception("NamedScheduleLabelJumpScheduleCommand.BeginExecute> Driver argument is null.");
-			return false;
-		}
-		else if (jumpState != JUMP_NOT_STARTED)
-		{
-			Exception("NamedScheduleLabelJumpScheduleCommand.BeginExecute> Unable to start, already a jump operation in progress: " + GetJumpStateString() + ".");
-			return false;
-		}
-
-		jumpState = JUMP_STARTED;
-		PerformJumpOperation(driver);
-
-		return true;
-	}
-
-	public bool UpdateExecute(DriverCharacter driver)
-	{
-		switch (jumpState)
-		{
-			case JUMP_STARTED:
-			case JUMP_CONDITION_CHECK:
-			case JUMP_REBUILD_SCHEDULE:
-				return true;
-			case JUMP_COMPLETE: return false;
-			default:
-				Exception("NamedScheduleLabelJumpScheduleCommand.UpdateExecute> Illegal jump operation status: " + GetJumpStateString());
-				return false;
-		}
+		SetJumpState(JUMP_STARTED);
 
 		return inherited(driver);
 	}
 
 	public bool EndExecute(DriverCharacter driver)
 	{
-		jumpState = JUMP_NOT_STARTED;
+		SetJumpState(JUMP_NOT_STARTED);
 
 		return inherited(driver);
 	}
@@ -180,7 +215,7 @@ class NamedScheduleLabelJumpScheduleCommand isclass DefaultDriverScheduleCommand
 
 	public string GetTooltipStringTableEntry(void)
 	{
-		switch (jumpState)
+		switch (GetJumpState())
 		{
 			default: return "JumpLabelTooltip";
 			case JUMP_STARTED: return "JumpLabelTooltipStarted";

@@ -4,14 +4,8 @@ include "NamedScheduleLabelJumpScheduleCommand.gs"
 include "PermitBasicScheduleState.gs"
 include "PermitManagerClient.gs"
 
-class NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand isclass NamedScheduleLabelJumpScheduleCommand, PermitManagerClient
+class NamedScheduleLabelJumpIfPermitAcquireImmediateCustomCommand isclass NamedScheduleLabelJumpCustomCommand, PermitManagerClient
 {
-	public void Init(DriverCharacter driver, DriverCommand parent)
-	{
-		inherited(driver, parent);
-		Init(new PermitBasicScheduleState());
-	}
-
 	public bool ShouldExecuteJump(DriverCharacter driver)
 	{
 		GameObject sender = driver.GetTrain();
@@ -22,22 +16,16 @@ class NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand isclass Name
 		Message msg;
 		wait()
 		{
-			on "PermitManager", "Granted", msg:
+			on "PermitManager", "", msg:
 			{
 				if (ValidatePermitManagerMessage(msg))
 				{
-					result = true;
-					break;
-				}
-				ResendMessage(msg);
-				continue;
-			}
-
-			on "PermitManager", "Denied", msg:
-			{
-				if (ValidatePermitManagerMessage(msg))
-				{
-					result = false;
+					if (msg.minor == "Granted")
+						result = true;
+					else if (msg.minor == "Denied")
+						result = false;
+					else
+						ResendMessage(msg);
 					break;
 				}
 				ResendMessage(msg);
@@ -53,6 +41,25 @@ class NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand isclass Name
 		sender.Sniff(state.permitManagerRule, "PermitManager", null, false);
 
 		return result;
+	}
+};
+
+class NamedScheduleLabelJumpIfPermitAcquireImmediateScheduleCommand isclass NamedScheduleLabelJumpScheduleCommand
+{
+	PermitBasicScheduleState state;
+
+	public void Init(DriverCharacter driver, DriverCommand parent)
+	{
+		inherited(driver, parent);
+		state = new PermitBasicScheduleState();
+	}
+
+	public CustomCommand CreateCustomCommand(DriverCharacter driver)
+	{
+		NamedScheduleLabelJumpIfPermitAcquireImmediateCustomCommand cmd = new NamedScheduleLabelJumpIfPermitAcquireImmediateCustomCommand();
+		cmd.Init(driver, me, labelName, labelKuid);
+		cmd.Init(state);
+		return cast<CustomCommand>(cmd);
 	}
 
 	public void SetProperties(Soup soup)
