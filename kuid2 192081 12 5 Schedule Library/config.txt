@@ -1,0 +1,208 @@
+﻿
+kind                                    "behavior"
+kuid                                    <kuid2:192081:12:5>
+script                                  "schedulelibrary"
+class                                   "schedulelibrary"
+category-region-0                       "all"
+category-era-0                          "all"
+category-class                          "YR"
+trainz-build                            2
+region                                  "all"
+icon-texture                            "icon.texture"
+
+string-table
+{
+  description                           "Driver schedule library for rule Copy Commands From - for detailed description visit http://www.js-home.org/trainz"
+  html_description                      "Driver schedule library for rule Copy Commands From"
+  html_description_not_named            "Library entry has no name!"
+  html_description_lib_remove           "remove"
+  html_description_add_lib              "add schedule"
+  html_description_add_group            "add group"
+  html_description_lib_copy             "copy"
+  html_description_lib_move             "move to group"
+  html_warning_1                        "<b>No entrys!</b>"
+  str_property_name1                    "Library entry name"
+  str_property_name2                    "Group name"
+  str_property_desc1                    "Name of entry"
+  str_property_desc2                    "Name of group"
+}
+
+string-table-de
+{
+  description                           "Fahrer-Auftrags-Sammlung für rule Copy Commands From - detallierte Beschreibung auf http://www.js-home.org/trainz"
+  html_description                      "Fahrer-Auftrags-Sammlung für rule Copy Commands From - detallierte Beschreibung auf http://www.js-home.org/trainz"
+  html_description_not_named            "Eintrag hat keinen Namen!"
+  html_description_lib_remove           "entfernen"
+  html_description_add_lib              "neue Schedule"
+  html_description_add_group            "neue Gruppe"
+  html_description_lib_copy             "kopieren"
+  html_description_lib_move             "verschiebe in Gruppe"
+  html_warning_1                        "<b>Keine Einträge!</b>"
+  str_property_name1                    "Eintragsname"
+  str_property_name2                    "Gruppenname"
+  str_property_desc1                    "Name des Eintrags"
+  str_property_desc2                    "Name der Gruppe"
+}
+asset-filename                          "ScheduleLibrary"
+username                                "Schedule Library"
+author                                  "J�rgen Schmitz"
+organisation                            "js-TRF"
+contact-email                           "js@js-home.org"
+contact-website                         "http://www.js-home.org/trainz"
+license                                 "http://www.js-home.org/trainz/license.php"
+username-pl                             "Rozkład biblioteki"
+
+string-table-pl
+{
+  description                           "Układanie zadań dla Kopiuj Komendy Z - szczegóły na http://www.js-home.org/trainz"
+  html_description                      "Układanie zadań dla Kopiuj Komendy Z"
+  html_description_not_named            "Wpis nie ma nazwy!"
+  html_description_lib_remove           "usuń"
+  html_description_add_lib              "Dodaj rozkład"
+  html_description_lib_copy             "kopia"
+  html_warning_1                        "<b>Brak wpisu</b>"
+  str_property_name1                    "Wpis"
+  str_property_desc1                    "Nazwa wpisu"
+  html_description_add_group            "dodaj grupę"
+  html_description_lib_move             "Przejdź do grupy"
+  str_property_name2                    "Nazwa grupy"
+  str_property_desc2                    "Nazwa grupy"
+}
+username-cz                             "Archiv jízdních příkazů"
+
+string-table-cz
+{
+  description                           "Archiv jízdních příkazů pro strojvůdce pro pravidlo „Kopíruj příkazy z …“ – Podrobný popis najdeš na http://www.js-home.org/trainz"
+  html_description                      "Archiv jízdních příkazů pro pravidlo „Kopíruj příkazy z …“"
+  html_description_not_named            "Záznam v archivu je bez názvu!"
+  html_description_lib_remove           "odstranit"
+  html_description_add_lib              "přidat rozpis"
+  html_description_add_group            "přidat skupinu"
+  html_description_lib_copy             "kopírovat"
+  html_description_lib_move             "přesunout do skupiny"
+  html_warning_1                        "<b>Žádné záznamy!</b>"
+  str_property_name1                    "Název záznamu v archivu"
+  str_property_name2                    "Název skupiny"
+  str_property_desc1                    "Název položky"
+  str_property_desc2                    "Název skupiny"
+}
+username-es                             "Librería horarios"
+
+string-table-es
+{
+  description                           "Librería de horarios de maquinistas para la regla 'Copiar órdenes de'. Si quieres una descripción detallada, visita http://www.js-home.org/trainz."
+  html_description                      "Librería de horarios de maquinistas para la regla 'Copiar órdenes de'."
+  html_description_not_named            "¡La entrada de la librería no tiene nombre!"
+  html_description_lib_remove           "quitar"
+  html_description_add_lib              "Añadir horario"
+  html_description_add_group            "Añadir grupo"
+  html_description_lib_copy             "copiar"
+  html_description_lib_move             "Mover a grupo"
+  html_warning_1                        "<b>¡Sin entradas!</b>"
+  str_property_name1                    "Nombre de la entrada de la librería"
+  str_property_name2                    "Nombre del grupo"
+  str_property_desc1                    "Nombre de la entrada"
+  str_property_desc2                    "Nombre del grupo"
+}
+
+string-table-ja
+{
+  html_warning_1                        "<b>エントリーがありません！</b>"
+  html_description_add_group            "グループの追加"
+  html_description_add_lib              "スケジュールの追加"
+  html_description_lib_copy             "コピー"
+  html_description                      "「以下からのコマンドをコピー」のルールに対するドライバースケジュールライブラリ"
+  description                           "「以下からのコマンドをコピー」のルールに対するドライバースケジュールライブラリ  - 詳しい説明は以下のURLをご参照ください http://www.js-home.org/trainz"
+  str_property_name2                    "グループ名"
+  html_description_not_named            "ライブラリのエントリー名がありません！"
+  str_property_name1                    "ライブラリのエントリー名"
+  html_description_lib_move             "グループに移動"
+  str_property_desc1                    "エントリー名"
+  str_property_desc2                    "グループ名"
+  html_description_lib_remove           "削除"
+}
+
+string-table-nl
+{
+  description                           "Bestuurders tijdschema library voor regel Kopieer Opdracht Van - voor gedetailleerde beschrijving kijk op http://www.js-home.org/trainz"
+  html_description                      "Bestuurders tijdschema library voor regel Kopieer Opdracht Van"
+  html_description_not_named            "Library invoer heeft geen naam!"
+  html_description_lib_remove           "verwijder"
+  html_description_add_lib              "voeg schema toe"
+  html_description_add_group            "voeg groep toe"
+  html_description_lib_copy             "kopieer"
+  html_description_lib_move             "verplaats naar groep"
+  str_property_name1                    "Library invoer naam"
+  str_property_name2                    "Groepsnaam"
+  str_property_desc1                    "Naam van de invoer"
+  str_property_desc2                    "Naam van de groep"
+}
+username-fr                             "Bibliothèque des horaires"
+
+string-table-fr
+{
+  description                           "http://www.js-home.org/trainz"
+  html_description                      "Bibliothèque d'horaires des conducteurs pour la règle Copier les commandes de"
+  html_description_not_named            "L'entrée de la bibliothèque n'a pas de nom !"
+  html_description_lib_remove           "supprimer"
+  html_description_add_lib              "ajouter un horaire"
+  html_description_add_group            "ajouter un groupe"
+  html_description_lib_copy             "copier"
+  html_description_lib_move             "déplacer dans le groupe"
+  html_warning_1                        "<b>Aucune entrée !</b>"
+  str_property_name1                    "Nom de l'entrée de la bibliothèque"
+  str_property_name2                    "Nom du groupe"
+  str_property_desc1                    "Nom de l'entrée"
+  str_property_desc2                    "Nom du groupe"
+}
+username-jp                             "スケジュールライブラリ"
+
+string-table-jp
+{
+  description                           "「以下からのコマンドをコピー」のルールに対する運転士スケジュールライブラリ  - 詳しい説明は以下のURLをご参照ください。http://www.js-home.org/trainz"
+  html_description                      "「以下からのコマンドをコピー」のルールに対する運転士スケジュールライブラリ"
+  html_description_not_named            "ライブラリのエントリー名がありません！"
+  html_description_lib_remove           "消去"
+  html_description_add_lib              "スケジュールの追加"
+  html_description_add_group            "グループの追加"
+  html_description_lib_copy             "コピー"
+  html_description_lib_move             "グループに移動"
+  html_warning_1                        "<b>エントリーがありません！</b>"
+  str_property_name1                    "ライブラリのエントリー名"
+  str_property_name2                    "グループ名"
+  str_property_desc1                    "エントリー名"
+  str_property_desc2                    "グループ名"
+}
+username-it                             "Libreria programmi"
+
+string-table-it
+{
+  html_warning_1                        "<b>Nessuna voce</b>"
+  html_description_add_group            "aggiungi gruppo"
+  html_description_add_lib              "aggiungi programma"
+  html_description_lib_copy             "copia"
+  html_description                      "Libreria programma macchinisti per regola 'copia comandi da'"
+  description                           "Libreria programma macchinisti per regola 'copia comandi da' - per una descrizione dettagliata visita http://www.js-home.org/trainz"
+  str_property_name2                    "Nome gruppo"
+  html_description_not_named            "Questa voce della libreria non ha nome!"
+  str_property_name1                    "Nome voce libreria"
+  html_description_lib_move             "sposta in gruppo"
+  str_property_desc1                    "Nome della voce"
+  str_property_desc2                    "Nome del gruppo"
+  html_description_lib_remove           "rimuovi"
+}
+
+thumbnails
+{
+  dls_thumbnail
+  {
+    width                               240
+    height                              180
+    image                               "dls_thumbnail.jpg"
+  }
+}
+
+kuid-table
+{
+  copycommands                          <kuid:192081:1>
+}

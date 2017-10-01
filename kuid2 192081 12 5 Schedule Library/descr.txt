@@ -1,0 +1,8 @@
+ScheduleLibrary:
+Create your library of driver command schedules and use them with the CopyCommandFrom rule. This allows modular command design.
+
+CopyCommandsFrom:
+Append or insert the driver commands from another driver or (much better) from the ScheduleLibrary rule.
+
+EnableRepeat:
+Enables the driver command repeat option and is best used together with the CopyCommandsFrom rule and required in the ScheduleLibrary rule.

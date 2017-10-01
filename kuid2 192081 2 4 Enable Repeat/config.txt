@@ -1,0 +1,81 @@
+﻿
+kind                                    "drivercommand"
+kuid                                    <kuid2:192081:2:4>
+script                                  "EnableRepeatCommand"
+class                                   "EnableRepeatCommand"
+category-region-0                       "all"
+category-era-0                          "all"
+category-class                          "YD"
+trainz-build                            2
+region                                  "all"
+icon-texture                            "icon.texture"
+supports-null-driver-character          1
+
+string-table
+{
+  description                           "Enable repeat - for detailed description visit http://www.js-home.org/trainz"
+}
+
+string-table-de
+{
+  description                           "Wiederholung einschalten - genaue Beschreibung auf http://www.js-home.org/trainz"
+}
+username-pl                             "Powtórz"
+
+string-table-pl
+{
+  description                           "Powtórz – szczegóły na http://www.js-home.org/trainz"
+}
+asset-filename                          "enablerepeat"
+username                                "Enable Repeat"
+author                                  "J�rgen Schmitz"
+organisation                            "js-TRF"
+contact-email                           "js@js-home.org"
+contact-website                         "http://www.js-home.org/trainz"
+license                                 "http://www.js-home.org/trainz/license.php"
+
+string-table-ja
+{
+  description                           "リピートを可能にする――詳細な説明はこちらでご覧ください。http://www.js-home.org/trainz"
+}
+username-cz                             "Zapnout opakování"
+
+string-table-cz
+{
+  description                           "Zapnout opakování – bližší popis této funkce nalezneš na adrese http://www.js-home.org/trainz"
+}
+username-fr                             "Activer la répétition"
+
+string-table-fr
+{
+  description                           "http://www.js-home.org/trainz"
+}
+username-ru                             "Разрешить повторение"
+
+string-table-ru
+{
+  description                           "Разрешить повторение - подробное описание вы найдете на сайте http://www.js-home.org/trainz"
+}
+username-jp                             "リピート可能"
+
+string-table-jp
+{
+  description                           "リピートを可能にする。詳細な説明はこちらでご覧ください。http://www.js-home.org/trainz"
+}
+username-es                             "Activar repetir"
+
+string-table-es
+{
+  description                           "Activar repetir- para una descripción más detallada, visite http://www.js-home.org/trainz"
+}
+username-it                             "Attiva ripetizione"
+
+string-table-it
+{
+  description                           "Attiva ripetizione - per una descrizione dettagliata visita http://www.js-home.org/trainz "
+}
+username-de                             "Enable Repeat"
+
+kuid-table
+{
+}
