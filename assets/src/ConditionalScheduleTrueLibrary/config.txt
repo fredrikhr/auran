@@ -1,0 +1,25 @@
+kind			"library"
+kuid			<KUID2:520252:100162:0>
+trainz-build	3.5
+script			"ConditionalScheduleTrueLibrary"
+class			"ConditionalScheduleTrueLibrary"
+username		"ConditionalScheduleTrueLibrary"
+description		""
+kuid-table
+{
+	ConditionalScheduleRule		<kuid:520252:100161>
+}
+string-table
+{
+}
+thumbnails
+{
+	0
+	{
+		width	240
+		height	180
+		image	"thumbnail.jpg"
+	}
+}
+
+category-class	"YL"

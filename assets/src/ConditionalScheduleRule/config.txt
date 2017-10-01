@@ -1,0 +1,46 @@
+kind			"behavior"
+kuid			<KUID2:520252:100161:0>
+trainz-build	3.5
+script			"ConditionalScheduleRule"
+class			"ConditionalScheduleRule"
+username		"ConditionalScheduleRule"
+description		""
+kuid-table
+{
+}
+string-table
+{
+	KuidParseErrorText						"Unable to parse '$0' as a KUID value."
+	KuidParseErrorDescription				""
+
+	EvaluatorLibraryLoadErrorText			"Unable to load library asset with KUID $0."
+	EvaluatorLibraryLoadErrorDescription	"The system was unable to create an instance of type Library for the Asset with the specified KUID.
+The Asset is not installed, or the Asset is not an Asset with category-class YL (Library)."
+
+	EvaluatorHeading						"Conditional Evaluators"
+	EvaluatorFailuresHeading				"Evaluator load errors"
+	EvaluatorAddProperyName					"Add Evaluator"
+	EvaluatorAddProperyDescription			"Add Condiational Evaluator library"
+	EvaluatorRemoveProperyName				"Remove"
+	EvaluatorRemoveProperyDescription		"Remove Conditional Evaluator from list of loaded Evaluator libraries."
+
+	EvaluatorRetryAddText					"Retry"
+	EvaluatorRetryAddTooltip				"Retry adding Evaluator library"
+}
+thumbnails
+{
+	0
+	{
+		width	240
+		height	180
+		image	"thumbnail.jpg"
+	}
+	1
+	{
+		width	64
+		height	64
+		image	"icon.texture"
+	}
+}
+
+category-class	"YR"
