@@ -1,0 +1,583 @@
+﻿
+username                                "Portal Basic"
+kind                                    "industry"
+trainz-build                            3.7
+light                                   1
+kuid                                    <kuid2:30501:22006:3>
+height-range                            -10,20
+script                                  "PortalTunnel"
+class                                   "PortalTunnel"
+icon-texture                            "icon_portal.texture"
+category-region                         "US"
+category-era                            "1960s;2000s"
+category-class                          "BIN"
+
+thumbnails
+{
+  0
+  {
+    image                               "thumbnail.jpg"
+    width                               240
+    height                              180
+  }
+  
+  1
+  {
+    image                               "icon_portal.texture"
+    width                               64
+    height                              64
+  }
+}
+
+mesh-table
+{
+  default
+  {
+    mesh                                "portal_invisible.im"
+    auto-create                         1
+    
+    effects
+    {
+      portalentry
+      {
+        kind                            "attachment"
+        att                             "a.track0g"
+        default-mesh                    <kuid:-3:10239>
+        surveyor-only                   1
+      }
+      
+      portalend
+      {
+        kind                            "attachment"
+        att                             "a.track0a"
+        default-mesh                    <kuid:-3:10238>
+        surveyor-only                   1
+      }
+    }
+  }
+}
+
+string-table
+{
+  html_portal_header                    "<b>Portal Options</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "One way only?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Direction: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Default direction: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Capture incoming trains: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Random Settings</b><br>"
+  html_portal_random_min                "Minimum: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Maximum: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Train Consist Pool</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>remove</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Add a new consist</a><br>"
+  html_portal_produce_new_trains        "Produce new trains"
+  html_portal_produce_trains_every      "Produce trains every "
+  html_portal_produce_trains_real_mins  " real minutes"
+  html_portal_produce_random_consist    "One of the following consists is chosen for production, at random:"
+  html_portal_produce_consume_trains    "Consume trains"
+  html_portal_produce_return_after      "Train returns after "
+  html_portal_produce_return_delay      " real minutes</a> delay."
+  html_portal_produce_load_none         "Train is not loaded or unloaded."
+  html_portal_produce_load_load_only    "Train is loaded only."
+  html_portal_produce_load_unload_only  "Train is unloaded only."
+  html_portal_produce_load_both         "Empty trains are loaded, other trains are unloaded."
+  html_portal_produce_portals_return    "Train returns through alternate portal '"
+  html_viewdetails_wait_both            "Portal is currently waiting to produce or consume a train."
+  html_viewdetails_wait_produce         "Portal is currently waiting to produce a train."
+  html_viewdetails_wait_consume         "Portal is currently waiting to consume a train."
+  html_viewdetails_wait_inactive        "Portal is inactive."
+  html_viewdetails_producing            "Portal is currently producing a train."
+  html_viewdetails_consuming            "Portal is currently consuming a train."
+  html_viewdetails_unknown              "This portal tunnel is in an unknown state."
+  propname-produce-time                 "Production frequency"
+  propname-regurgitate-time             "Return delay"
+  propname-reg-alternate-name           "Alternate Portal"
+  propname-help                         "Portal Help"
+  propdesc-produce-time                 "Portal produces a new train every:"
+  propdesc-regurgitate-time             "Train returns to play after:"
+  propdesc-reg-alternate-name           "Train returns through portal:"
+  propdesc-help                         "Portal Help"
+}
+
+attached-track
+{
+  out_track0
+  {
+    track                               <kuid:-1:15>
+    
+    vertices
+    {
+      0                                 "a.track0a"
+      1                                 "a.track0b"
+      2                                 "a.track0c"
+      3                                 "a.track0d"
+      4                                 "a.track0e"
+      5                                 "a.track0f"
+      6                                 "a.track0g"
+    }
+  }
+}
+
+attached-trigger
+{
+  trig_end
+  {
+    att                                 "a.track0d"
+    radius                              20
+  }
+  
+  trig_entry
+  {
+    att                                 "a.track0f"
+    radius                              10
+  }
+}
+username-fr                             "Portal Basic"
+
+string-table-fr
+{
+  html_portal_header                    "<b>Options de portique</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "A sens unique ? : <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Direction : <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Direction par défaut : <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Retenir les trains entrant : <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Réglages aléatoires</b><br>"
+  html_portal_random_min                "Minimum : <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Maximum : <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Réserve de convois ferroviaires</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>retirer</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Ajouter un nouveau convoi</a><br>"
+  html_portal_produce_new_trains        "Produit de nouveaux trains"
+  html_portal_produce_trains_every      "Produire des trains tous les"
+  html_portal_produce_trains_real_mins  " minutes réelles"
+  html_portal_produce_random_consist    "L'un des convois de marchandises suivants est sélectionné au hasard :"
+  html_portal_produce_consume_trains    "Accepte un train"
+  html_portal_produce_return_after      "Le train revient après"
+  html_portal_produce_return_delay      " minutes réelles</a> retard."
+  html_portal_produce_load_none         "Train n'est pas chargé ou déchargé."
+  html_portal_produce_load_load_only    "Le train est chargé uniquement."
+  html_portal_produce_load_unload_only  "Le train est déchargé seulement."
+  html_portal_produce_load_both         "Trains vides sont chargés, d'autres trains sont déchargés"
+  html_portal_produce_portals_return    "Le train revient par un autre portail «"
+  html_viewdetails_wait_both            "Le portique attend un convoi entrant ou sortant."
+  html_viewdetails_wait_produce         "Le portique attend de pouvoir produire un train."
+  html_viewdetails_wait_consume         " Le portique attend de pouvoir accueillir un train."
+  html_viewdetails_wait_inactive        "Le portique est inactif."
+  html_viewdetails_producing            "Le portique est en train de produire un train."
+  html_viewdetails_consuming            "Le portique est en train d'accueillir un train."
+  html_viewdetails_unknown              "L'état actuel de ce portique est inconnu."
+  propname-produce-time                 "Fréquence de production"
+  propname-regurgitate-time             "Délai de retour"
+  propname-reg-alternate-name           "Portique alternatif"
+  propname-help                         "Aide pour portique"
+  propdesc-produce-time                 "Le portique émet un nouveau train toutes les :"
+  propdesc-regurgitate-time             "Le train réintègre la partie après :"
+  propdesc-reg-alternate-name           "Le train réapparaît via le portique :"
+  propdesc-help                         "Aide pour portique"
+}
+username-nl                             "Portal Basic"
+
+string-table-nl
+{
+  html_portal_header                    "<b>Portal Options</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "One way only?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Direction: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Default direction: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Capture incoming trains: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Random Settings</b><br>"
+  html_portal_random_min                "Minimum: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Maximum: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Train Consist Pool</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>remove</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Add a new consist</a><br>"
+  html_portal_produce_new_trains        "Produce new trains"
+  html_portal_produce_trains_every      "Produce trains every "
+  html_portal_produce_trains_real_mins  " real minutes"
+  html_portal_produce_random_consist    "One of the following consists is chosen for production, at random:"
+  html_portal_produce_consume_trains    "Consume trains"
+  html_portal_produce_return_after      "Train returns after "
+  html_portal_produce_return_delay      " real minutes</a> delay."
+  html_portal_produce_load_none         "Train is not loaded or unloaded."
+  html_portal_produce_load_load_only    "Train is loaded only."
+  html_portal_produce_load_unload_only  "Train is unloaded only."
+  html_portal_produce_load_both         "Empty trains are loaded, other trains are unloaded."
+  html_portal_produce_portals_return    "Train returns through alternate portal '"
+  html_viewdetails_wait_both            "Portal is currently waiting to produce or consume a train."
+  html_viewdetails_wait_produce         "Portal is currently waiting to produce a train."
+  html_viewdetails_wait_consume         "Portal is currently waiting to consume a train."
+  html_viewdetails_wait_inactive        "Portal is inactive."
+  html_viewdetails_producing            "Portal is currently producing a train."
+  html_viewdetails_consuming            "Portal is currently consuming a train."
+  html_viewdetails_unknown              "This portal tunnel is in an unknown state."
+  propname-produce-time                 "Production frequency"
+  propname-regurgitate-time             "Return delay"
+  propname-reg-alternate-name           "Alternate Portal"
+  propname-help                         "Portal Help"
+  propdesc-produce-time                 "Portal produces a new train every:"
+  propdesc-regurgitate-time             "Train returns to play after:"
+  propdesc-reg-alternate-name           "Train returns through portal:"
+  propdesc-help                         "Portal Help"
+}
+username-es                             "Portal básico"
+
+string-table-es
+{
+  html_portal_header                    "<b>Opciones del portal</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "¿Un solo sentido?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Dirección: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Dirección predeterminada: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Capturar trenes entrantes: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Ajustes aleatorios</b><br>"
+  html_portal_random_min                "Mínimo: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Máximo: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Reserva de composiciones de trenes</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>eliminar</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Añadir una composición nueva</a><br>"
+  html_portal_produce_new_trains        "Produce nuevos trenes"
+  html_portal_produce_trains_every      "Produce trenes cada "
+  html_portal_produce_trains_real_mins  " minutos reales"
+  html_portal_produce_random_consist    "Se escogerá aleatoriamente la producción de una de las composiciones siguientes:"
+  html_portal_produce_consume_trains    "Consume trenes"
+  html_portal_produce_return_after      "El tren regresa tras "
+  html_portal_produce_return_delay      " minutos reales</a> un lapso."
+  html_portal_produce_load_none         "El tren no se carga o descarga."
+  html_portal_produce_load_load_only    "El tren sólo se carga."
+  html_portal_produce_load_unload_only  "El tren sólo se descarga."
+  html_portal_produce_load_both         "Los trenes vacíos se cargan y los demás se descargan."
+  html_portal_produce_portals_return    "El tren vuelve por el portal alterno '"
+  html_viewdetails_wait_both            "El portal está esperando a producir o consumir un tren."
+  html_viewdetails_wait_produce         "El portal está esperando a producir un tren."
+  html_viewdetails_wait_consume         "El portal está esperando a consumir un tren."
+  html_viewdetails_wait_inactive        "El portal está inactivo."
+  html_viewdetails_producing            "El portal está produciendo un tren."
+  html_viewdetails_consuming            "El portal está consumiendo un tren."
+  html_viewdetails_unknown              "Este portal se encuentra en un estado desconocido."
+  propname-produce-time                 "Frecuencia de producción"
+  propname-regurgitate-time             "Lapso de retorno"
+  propname-reg-alternate-name           "Alternar portal"
+  propname-help                         "Ayuda del portal"
+  propdesc-produce-time                 "El portal produce un nuevo tren cada:"
+  propdesc-regurgitate-time             "El tren regresa al juego después de:"
+  propdesc-reg-alternate-name           "El tren vuelve por el portal:"
+  propdesc-help                         "Ayuda del portal"
+}
+username-pl                             "Portal"
+username-it                             "Portale base"
+
+string-table-it
+{
+  html_portal_header                    "<b>Opzioni del portale</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "Senso unico?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Direzione: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Direzione predefinita: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Catturare treni in arrivo: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Impostazioni casuali</b><br>"
+  html_portal_random_min                "Minimo: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Massimo: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Disponibilità convogli</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>rimuovere</a><br>"
+  html_portal_produce_new_trains        "Produrre nuovi treni"
+  html_portal_produce_trains_every      "Produrre treni ogni "
+  html_portal_produce_trains_real_mins  " minuti reali"
+  html_portal_produce_random_consist    "Uno dei seguenti convogli è scelto per la produzione, a caso:"
+  html_portal_produce_return_after      "Treno torna dopo "
+  html_portal_produce_return_delay      " ritardo </a> minuti reali."
+  html_portal_produce_load_none         "Il treno non è caricato o scaricato."
+  html_portal_produce_load_load_only    "Il treno è solo caricato."
+  html_portal_produce_load_unload_only  "Il treno è solo scaricato."
+  html_portal_produce_load_both         "I treni vuoti vengono caricati, gli altri treni vengono scaricati."
+  html_viewdetails_wait_both            "Il portale sta aspettando di produrre o consumare un treno."
+  html_viewdetails_wait_produce         "Il portale sta aspettando di produrre un treno."
+  html_viewdetails_wait_consume         "Il portale sta aspettando di consumare un treno."
+  html_viewdetails_wait_inactive        "Il portale è inattivo."
+  html_viewdetails_producing            "Il portale sta adesso producendo un treno."
+  html_viewdetails_consuming            "Il portale sta adesso consumando un treno."
+  html_viewdetails_unknown              "Questo portale tunnel è in uno stato sconosciuto."
+  propname-produce-time                 "Frequenza di produzione"
+  propname-regurgitate-time             "Ritardo del ritorno"
+  propname-reg-alternate-name           "Portale alternativo"
+  propname-help                         "Aiuto portale"
+  propdesc-produce-time                 "Il portale produce un nuovo treno ogni:"
+  propdesc-regurgitate-time             "Il treno ritorna dopo:"
+  propdesc-help                         "Aiuto portale"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Aggiungi nuovo convoglio</a><br>"
+  html_portal_produce_consume_trains    "Consuma treni"
+  html_portal_produce_portals_return    "Il treno torna attraverso il portale alternativo"
+  propdesc-reg-alternate-name           "Il treno torna attraverso il portale:"
+}
+asset-filename                          "portal_basic"
+username-cz                             "Vjezd základní"
+username-hu                             "Portál alapok"
+
+string-table-pl
+{
+  html_portal_header                    "<b>Opcje Portalu</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "Tor jednokierunkowy?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Kierunek: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Domyślny kierunek: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Przechwytuj nadjeżdżające pociągi: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Losowe ustawienia</b><br>"
+  html_portal_random_min                "Minimum: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Maksimum: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Zbiór składów</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>usuń</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Dodaj nowy skład</a><br>"
+  html_portal_produce_new_trains        "Twórz nowe pociągi"
+  html_portal_produce_trains_every      "Twórz pociągi co "
+  html_portal_produce_trains_real_mins  " prawdz. min."
+  html_portal_produce_consume_trains    "Likwiduj pociągi"
+  html_portal_produce_return_after      "Pociąg powraca po "
+  html_portal_produce_return_delay      " prawdz. min. </a> opóźnienia."
+  html_portal_produce_load_none         "Pociąg nie jest załadowany ani rozładowany."
+  html_portal_produce_load_load_only    "Pociąg jest tylko załadowywany."
+  html_portal_produce_load_unload_only  "Pociąg jest tylko rozładowywany."
+  html_portal_produce_portals_return    "Pociąg powraca przez inny portal '"
+  html_viewdetails_wait_produce         "Portal oczekuje na produkcję pociągu."
+  html_viewdetails_wait_consume         "Portal oczekuje na likwidację pociągu."
+  html_viewdetails_wait_inactive        "Portal jest nieaktywny."
+  html_viewdetails_producing            "Portal tworzy skład."
+  html_viewdetails_consuming            "Portal likwiduje skład."
+  html_viewdetails_unknown              "Tunel portalu jest w nieznanym stanie."
+  propname-produce-time                 "Częstotliwość produkcji"
+  propname-regurgitate-time             "Opóźnienie powrotu"
+  propname-reg-alternate-name           "Zmień portal"
+  propname-help                         "Pomoc portalu"
+  propdesc-produce-time                 "Portal tworzy nowy pociąg co:"
+  propdesc-regurgitate-time             "Pociąg powraca do gry po:"
+  propdesc-reg-alternate-name           "Pociąg powraca przez portal:"
+  propdesc-help                         "Pomoc portalu"
+  html_portal_produce_random_consist    "Jeden z następujących składów zostanie losowo wybrany do produkcji:"
+  html_portal_produce_load_both         "Puste pociągi są załadowywane, inne pociągi są rozładowywane."
+  html_viewdetails_wait_both            "Portal oczekuje na produkcję lub likwidację pociągu."
+}
+
+string-table-hu
+{
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "Csak egyirányú?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Irány: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Általános irány: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Bejövő vonatok fogadása: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Véletlen beállítások</b><br>"
+  html_portal_random_min                "Minimális: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Maximális: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>A vonat készlete</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>eltávolít</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Új elem hozzáadása</a><br>"
+  html_portal_produce_trains_real_mins  " valódi percben"
+  html_portal_produce_random_consist    "Az alábbiak közül véletlenszerűen lesz kiválasztva az előkészítés:"
+  html_portal_produce_return_after      "A vonatok visszatérnek"
+  html_portal_produce_return_delay      " valódi perc</a> késéssel."
+  html_portal_produce_load_load_only    "A vonat csak megrakodva lett."
+  html_portal_produce_load_unload_only  "A vonat csak kirakodva lett."
+  propname-produce-time                 "Előkészítési gyakoriság"
+  propname-regurgitate-time             "Visszatérési idő"
+  propdesc-regurgitate-time             "A vonat visszatér a forgalomba miután:"
+  html_portal_header                    "<b>Portál opciók</b><br>"
+  html_portal_produce_new_trains        "Új vonatok létrehozása"
+  html_portal_produce_trains_every      "Vonatok létrehozása"
+  html_portal_produce_consume_trains    "Vonatok fogadása"
+  html_portal_produce_portals_return    "A vonat egy másik portált használjon: "
+  html_viewdetails_wait_both            "A portál várakozik a vonat előkészítésére vagy készleteinek kimerítésére."
+  html_viewdetails_wait_produce         "A portál várakozik a vonat előkészítésére."
+  html_viewdetails_wait_consume         "A portál várakozik a vonat készleteinek kimerítésére."
+  html_viewdetails_wait_inactive        "A portál nem aktív."
+  html_viewdetails_producing            "A portálban jelenleg a vonat előkészítése zajlik."
+  html_viewdetails_consuming            "A portálban jelenleg a vonat készleteinek kimerítése zajlik."
+  html_viewdetails_unknown              "Ez a portál jelenleg ismeretlen állapotú."
+  propname-reg-alternate-name           "Másik portál"
+  propname-help                         "Portál súgó"
+  propdesc-produce-time                 "A portál előkészíti az új vonatokat minden:"
+  propdesc-reg-alternate-name           "A vonat a portálon keresztül tér vissza:"
+  propdesc-help                         "Portál súgó"
+  html_portal_produce_load_none         "A vonat sem megrakodva, sem kirakodva nincs."
+  html_portal_produce_load_both         "Üres vonatok megrakodása, többi vonat kirakodása."
+}
+username-de                             "Portal einfach"
+
+string-table-de
+{
+  html_portal_header                    "<b>Portal-Optionen</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "Nur eine Richtung?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Richtung: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Standard-Richtung: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Einfahrende Züge einfangen: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Zufallseinstellungen</b><br>"
+  html_portal_random_min                "Minimum: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Maximum: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Zugzusammenstellungs-Pool</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>entfernen</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Eine neue Zugzusammenstellung hinzufügen</a><br>"
+  html_portal_produce_new_trains        "Neue Züge erzeugen"
+  html_portal_produce_trains_every      "Prouziere Züge alle "
+  html_portal_produce_trains_real_mins  " reale Minuten"
+  html_portal_produce_random_consist    "Eine der nachfolgenden Zugzusammenstellungen wird zufällig für Produktion gewählt:"
+  html_portal_produce_consume_trains    "Züge beseitigen"
+  html_portal_produce_return_after      "Zug kehrt zurück nach "
+  html_portal_produce_return_delay      " realen Minuten</a> Pause."
+  html_portal_produce_load_none         "Zug wird nicht be- oder entladen."
+  html_portal_produce_load_load_only    "Zug wird nur beladen."
+  html_portal_produce_load_unload_only  "Zug wird nur entladen."
+  html_portal_produce_load_both         "Leere Züge werden beladen, andere entladen."
+  html_portal_produce_portals_return    "Züge kehren zurück durch alternatives Portal '"
+  html_viewdetails_wait_both            "Portal wartet auf Erzeugung oder Beseitigung eines Zugs."
+  html_viewdetails_wait_produce         "Portal wartet auf Erzeugung eines Zugs."
+  html_viewdetails_wait_consume         "Portal wartet auf Beseitigung eines Zugs."
+  html_viewdetails_wait_inactive        "Portal ist inaktiv."
+  html_viewdetails_producing            "Portal stellt grade einen Zug her."
+  html_viewdetails_consuming            "Portal beseitigt grade einen Zug."
+  html_viewdetails_unknown              "Dieser Portal-Tunnel hat einen unbekannten Zustand."
+  propname-produce-time                 "Produktions-Frequenz"
+  propname-regurgitate-time             "Rückkehr-Verzögerung"
+  propname-reg-alternate-name           "Alternatives Portal"
+  propname-help                         "Portal-Hilfe"
+  propdesc-produce-time                 "Portal erzeugt neuen Zug alle:"
+  propdesc-regurgitate-time             "Zug kehrt ins Spiel zurück nach:"
+  propdesc-reg-alternate-name           "Zug kehrt zurück durch Portal:"
+  propdesc-help                         "Portal-Hilfe"
+}
+
+string-table-ru
+{
+  html_portal_header                    "<b>Настройки портала</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_direction_oneway   "Направление: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Исходное направление: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Захват прибывающих поездов: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Случайные настройки</b><br>"
+  html_portal_random_min                "Минимум: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Максимум: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Резерв составов</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>Удалить</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Добавить новый состав</a><br>"
+  html_portal_produce_new_trains        "Создавать новые поезда"
+  html_portal_produce_trains_every      "Создавать поезда каждые"
+  html_portal_produce_trains_real_mins  " минут(ы) реального времени"
+  html_portal_produce_consume_trains    "Принимать поезда"
+  html_portal_produce_return_after      "Поезд возвращается по прошествии"
+  html_portal_produce_return_delay      "-минутной задержки</a> в реальном времени."
+  html_portal_produce_load_load_only    "Поезд только загружается."
+  html_portal_produce_load_unload_only  "Поезд только разгружается."
+  html_portal_produce_load_both         "Пустые поезда загружаются, прочие - разгружаются."
+  html_portal_produce_portals_return    "Поезд возвращается через другой портал '"
+  html_viewdetails_wait_inactive        "Портал не действует."
+  html_viewdetails_producing            "Портал выпускает поезд."
+  html_viewdetails_consuming            "Портал забирает поезд."
+  propname-produce-time                 "Частота выпуска"
+  propname-regurgitate-time             "Задержка возвращения"
+  propname-reg-alternate-name           "Другой портал"
+  propname-help                         "Справка по порталам"
+  propdesc-produce-time                 "Частота выпуска новых поездов порталом:"
+  propdesc-regurgitate-time             "Задержка возвращения поездов в игру:"
+  propdesc-reg-alternate-name           "Поезд возвращается через портал:"
+  propdesc-help                         "Справка по порталам"
+  html_portal_option_oneway             "Односторонний?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_produce_load_none         "Поезд не загружается и не разгружается."
+  html_portal_produce_random_consist    "Случайным образом для создания выбирается один из следующих составов:"
+  html_viewdetails_unknown              "Состояние этого портала неизвестно."
+  html_viewdetails_wait_both            "Портал готовится выпустить либо забрать поезд."
+  html_viewdetails_wait_consume         "Портал готовится забрать поезд."
+  html_viewdetails_wait_produce         "Портал готовится вывести поезд."
+}
+
+string-table-cz
+{
+  html_portal_header                    "<b>Nastavení vjezdu</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "Pouze jednosměrný?: <a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "Směr: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "Standardní směr: <a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "Zachytit přijíždějící vlaky: <a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>Různá nastavení</b><br>"
+  html_portal_random_min                "Minimum: <a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "Maximum: <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>Seznam vlakových souprav</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>odstranit</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>Přidat novou soupravu</a><br>"
+  html_portal_produce_new_trains        "Vyrobit nové vlaky"
+  html_portal_produce_trains_every      "Vyrobit nové vlaky každých"
+  html_portal_produce_trains_real_mins  " skutečných minut"
+  html_portal_produce_random_consist    "Jedna z následujících souprav bude vybraná k vytvoření náhodně:"
+  html_portal_produce_consume_trains    "Pozřít vlaky"
+  html_portal_produce_return_after      "Vlak se vrátí po"
+  html_portal_produce_return_delay      " prodlevě</a> skutečných minut."
+  html_portal_produce_load_none         "Vlak není naložen či vyložen."
+  html_portal_produce_load_load_only    "Vlak je pouze naložen."
+  html_portal_produce_load_unload_only  "Vlak je pouze vyložen."
+  html_portal_produce_portals_return    "Vlak se vrátí náhradním vjezdem '"
+  html_viewdetails_wait_both            "Vjezd čeká na vytvoření či pohlcení vlaku."
+  html_viewdetails_wait_produce         "Vjezd čeká na vytvoření vlaku."
+  html_viewdetails_wait_consume         "Vjezd čeká na pozření vlaku."
+  html_viewdetails_wait_inactive        "Vjezd je neaktivní."
+  html_viewdetails_producing            "Vjezd vytváří vlak."
+  html_viewdetails_consuming            "Vjezd pohlcuje vlak."
+  html_viewdetails_unknown              "Tento vjezd do tunelu je v neznámém stavu."
+  propname-produce-time                 "Frekvence výroby"
+  propname-regurgitate-time             "Prodleva návratu"
+  propname-reg-alternate-name           "Náhradní vjezd"
+  propname-help                         "Nápověda vjezdu"
+  propdesc-produce-time                 "Vjezd vytvoří nový vlak každých:"
+  propdesc-regurgitate-time             "Vlak se vrátí do hry po:"
+  propdesc-reg-alternate-name           "Vlak se vrátí vjezdem:"
+  propdesc-help                         "Nápověda vjezdu"
+  html_portal_produce_load_both         "Prázdné vlaky jsou naloženy, ostatní vyloženy."
+}
+username-jp                             "ポータルベーシック"
+
+string-table-jp
+{
+  html_portal_header                    "<b>ポータルオプション</b><br>"
+  html_portal_footer                    "<br><br>"
+  html_portal_option_oneway             "一方向のみ？：<a href=live://property/$0oneway tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_oneway   "方向：<a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_direction_normal   "デフォルト方向：<a href=live://property/$0direction tooltip='$1'>$2</a><br>"
+  html_portal_option_cache_trains       "到着列車を確保：<a href=live://property/$0cachetrains tooltip='$1'>$2</a><br>"
+  html_portal_random_title              "<br><b>ランダム設定</b><br>"
+  html_portal_random_min                "最小：<a href=live://property/$0minimum tooltip='$1'>$2</a><br>"
+  html_portal_random_max                "最大： <a href=live://property/$0maximum tooltip='$1'>$2</a><br>"
+  html_portal_consist_title             "<br><b>列車編成プール</b><br>"
+  html_portal_consist_train             "<img kuid='$0'>$1<a href=live://property/$2removeconsist/$3 tooltip='$4'>消去</a><br>"
+  html_portal_consist_add               "<br><a href=live://property/$0addnew tooltip='$1'>新しい編成を追加</a><br>"
+  html_portal_produce_new_trains        "新たな列車を生産"
+  html_portal_produce_trains_every      "列車を生産する時間間隔"
+  html_portal_produce_trains_real_mins  " 実時間（分）"
+  html_portal_produce_random_consist    "生産には以下の車両編成のうちのひとつがランダムに選ばれます："
+  html_portal_produce_consume_trains    "列車を消費する"
+  html_portal_produce_return_after      "列車が戻るまでの時間"
+  html_portal_produce_return_delay      " 実時間での遅れの分数</a> 。"
+  html_portal_produce_load_none         "列車への荷積みや荷降ろしは行ないません。"
+  html_portal_produce_load_load_only    "列車では荷積みのみ行います。"
+  html_portal_produce_load_unload_only  "列車では荷降ろしのみ行います。"
+  html_portal_produce_load_both         "空の列車への荷積みを行い、その他の列車では荷降ろしを行います。"
+  html_portal_produce_portals_return    "列車が代わりのポータルを通って戻る"
+  html_viewdetails_wait_both            "ポータルは現在、列車の生産または消費のための待機中。"
+  html_viewdetails_wait_produce         "ポータルは現在、列車の生産のための待機中。"
+  html_viewdetails_wait_consume         "ポータルは現在、列車の消費のための待機中。"
+  html_viewdetails_wait_inactive        "ポータルは無効。"
+  html_viewdetails_producing            "ポータルが現在列車を作成中。"
+  html_viewdetails_consuming            "ポータルは現在列車を消費中。"
+  html_viewdetails_unknown              "このポータルトンネルの状態は不明です。"
+  propname-produce-time                 "生産頻度"
+  propname-regurgitate-time             "戻り遅延"
+  propname-reg-alternate-name           "代わりのポータル"
+  propname-help                         "ポータルのヘルプ"
+  propdesc-produce-time                 "ポータルが新しい列車を生産する時間間隔："
+  propdesc-regurgitate-time             "列車が戻りプレイ可能になるまでの時間："
+  propdesc-reg-alternate-name           "列車が以下のポータルを通って戻る："
+  propdesc-help                         "ポータルのヘルプ"
+}
+
+kuid-table
+{
+  0                                     <kuid:-3:10239>
+  1                                     <kuid:-3:10238>
+  2                                     <kuid:-1:15>
+  3                                     <kuid:-3:10164>
+}
