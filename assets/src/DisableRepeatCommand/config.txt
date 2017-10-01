@@ -1,16 +1,15 @@
 kind							"drivercommand"
-kuid							<KUID2:520252:100151:0>
+kuid							<KUID2:520252:100151:1>
 script							"DisableRepeatCommand"
 class							"DisableRepeatCommand"
 category-class					"YD"
 trainz-build					3.5
 supports-null-driver-character	1
-asset-filename					"enablerepeat"
 username						"Disable Repeat"
 author							"Fredrik Høisæther Rasch"
 contact-email					"fredrik.rasch@gmail.com"
 description						"Driver Schedule Command used to disable repetition of Driver Commands in the schedule of a Driver Character.
-This Command mirrors the Enable Repeat Command (<KUID2:192081:2:4>).
+This Command mirrors the Enable Repeat Command (KUID2:192081:2:4).
 Disabling Repetition is useful when you want parts of the commands in your schedule to be repeated at the end of execution, but do not want to enter a looping schedule.
 Disabling Repetition also comes in handy when creating complex schedules with conditional branching and inner loops.
 Development, Bug Tracking and the source code for this asset can be found on GitHub at: https://github.com/couven92/auran
