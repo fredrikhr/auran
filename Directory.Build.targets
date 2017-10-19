@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Target Name="CreateAssemblyInfoFromProperties" Inputs="$(MSBuildAllProjects)" Outputs="Properties\AssemblyInfo.cs">
+    <ItemGroup>
+      <AssemblyInfoAttribute Include="AssemblyTitle">
+        <_Parameter1>$(AssemblyName)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyDescription" Condition="'$(Description)'!=''">
+        <_Parameter1>$(Description)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyConfiguration">
+        <_Parameter1>$(Configuration)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyCompany">
+        <_Parameter1>$(Company)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyProduct">
+        <_Parameter1>$(Product)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyCopyright">
+        <_Parameter1>$(Copyright)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyInformationalVersion" Condition="'$(VersionSuffix)'==''">
+        <_Parameter1>$(VersionPrefix)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyInformationalVersion" Condition="'$(VersionSuffix)'!=''">
+        <_Parameter1>$(VersionPrefix)-$(VersionSuffix)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyVersion">
+        <_Parameter1>$(AssemblyVersion)</_Parameter1>
+      </AssemblyInfoAttribute>
+      <AssemblyInfoAttribute Include="AssemblyFileVersion">
+        <_Parameter1>$(FileVersion)</_Parameter1>
+      </AssemblyInfoAttribute>
+    </ItemGroup>
+    <!--<Message Importance="high" Text="@(AssemblyInfoAttribute)" />-->
+    <MakeDir Directories="Properties" Condition="!Exists('Properties')" />
+    <WriteCodeFragment AssemblyAttributes="@(AssemblyInfoAttribute)" Language="C#" OutputDirectory="Properties" OutputFile="AssemblyInfo.cs" />
+  </Target>
+</Project>

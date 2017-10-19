@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Common Package Metadata">
+    <Authors>Fredrik Høisæther Rasch</Authors>
+    <Copyright>Written by Fredrik Høisæther Rasch, $([System.DateTime]::Now.Year)</Copyright>
+  </PropertyGroup>
+  <PropertyGroup Label="Repository Metadata">
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/couven92/auran.git</RepositoryUrl>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PackageLicenseUrl>https://github.com/couven92/auran.git/raw/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/couven92/auran.git</PackageProjectUrl>
+  </PropertyGroup>
+  <PropertyGroup Label="BasePath">
+    <BaseOutputPath>$(MSBuildThisFileDirectory)bin\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Label="Version">
+    <VersionPrefix>0.1.0</VersionPrefix>
+    <FileVersion>$(VersionPrefix)</FileVersion>
+    <AssemblyVersion Condition="'$(BuildNumber)'==''">$(FileVersion)</AssemblyVersion>
+    <AssemblyVersion Condition="'$(BuildNumber)'!=''">$(FileVersion).$(BuildNumber)</AssemblyVersion>
+    <VersionSuffix Condition="'$(BuildNumber)'!='' And '$(VersionSuffix)'!=''">$(VersionSuffix)-b$(BuildNumber)</VersionSuffix>
+    <VersionSuffix Condition="'$(BuildNumber)'!='' And '$(VersionSuffix)'==''">$(VersionSuffix)b$(BuildNumber)</VersionSuffix>
+  </PropertyGroup>
+  <PropertyGroup Label="BasePathNative">
+    <OutDir>$(MSBuildThisFileDirectory)bin\$(Configuration)\$(Platform)\</OutDir>
+    <IntDir>$(MSBuildThisFileDirectory)obj\$(Configuration)\$(Platform)\$(MSBuildProjectName)\</IntDir>
+  </PropertyGroup>
+</Project>
