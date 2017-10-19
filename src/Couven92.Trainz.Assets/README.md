@@ -1,8 +1,8 @@
 # Trainz Simulator Asset Development
 
-My Trainz Assets (KUID starts with `520252`) are all developed in this repository and their sources are stored here in the [`src`](./src) subfolder.
+My Trainz Assets (KUID starts with `520252`) are all developed in this repository and their sources are stored here in this subfolder.
 
-Each subfolder within the [`src`](./src) folder constitutes an independant Trainz Asset that is declared by its corresponding config.txt file.
+Each subfolder here constitutes an independant Trainz Asset that is declared by its corresponding config.txt file.
 
 ## Permit Management System
 
