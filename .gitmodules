@@ -1,4 +1,4 @@
 [submodule "auran-ref"]
 	path = ref
-	url = https://github.com/couven92/auran.git
+	url = https://github.com/fredrikhr/auran.git
 	branch = auran-ref

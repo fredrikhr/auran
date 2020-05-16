@@ -12,7 +12,7 @@ description						"Driver Schedule Command used to disable repetition of Driver C
 This Command mirrors the Enable Repeat Command (KUID2:192081:2:4).
 Disabling Repetition is useful when you want parts of the commands in your schedule to be repeated at the end of execution, but do not want to enter a looping schedule.
 Disabling Repetition also comes in handy when creating complex schedules with conditional branching and inner loops.
-Development, Bug Tracking and the source code for this asset can be found on GitHub at: https://github.com/couven92/auran
+Development, Bug Tracking and the source code for this asset can be found on GitHub at: https://github.com/fredrikhr/auran
 "
 
 kuid-table
